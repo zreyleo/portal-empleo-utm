@@ -16,3 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('login/empresas', 'LoginController@login_empresas_get')->name('login.empresas_get');
+Route::post('login/empresas', 'LoginController@login_empresas_post')->name('login.empresas_post');
+
+Route::get('dashboard/empresas');
+
+Route::prefix('dashboard/empresas')->group(function () {
+    Route::resource('empleos', 'EmpleoController')
+        ->middleware('check.empresa.role.for.session');
+});
+
+// Route::resource('empleos', 'EmpleoController');
