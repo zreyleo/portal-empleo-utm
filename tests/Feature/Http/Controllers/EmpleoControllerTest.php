@@ -75,5 +75,21 @@ class EmpleoControllerTest extends TestCase
         ])->assertStatus(302);
     }
 
+    public function test_crate_form()
+    {
+        $this->session([
+            'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
+            'role' => EmpresaController::get_role()
+        ]);
 
+        $this->get(route('empleos.create'))
+            ->assertStatus(200)
+            ->assertSee('Crear una Oferta de Empleo');
+    }
+
+    // public function test_()
+    // {
+
+    // }
 }

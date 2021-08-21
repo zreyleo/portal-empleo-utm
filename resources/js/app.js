@@ -13,3 +13,12 @@ require('./bootstrap');
  */
 
 require('./components/Example');
+require('./components/FacultadesCarrerasSelects');
+
+$(document).ready(function () {
+
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+
+});

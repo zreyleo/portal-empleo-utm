@@ -9,8 +9,25 @@ use App\Http\Requests\EmpleoStoreRequest;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+
 class EmpleoController extends Controller
 {
+    public static function get_carreras()
+    {
+        $sql = 'select idescuela, es.nombre as "nombre_carrera", titulo_academico_m, fa.nombre as "nombre_facultad", fa.idfacultad as "idfacultad"
+        from esq_inscripciones.escuela es
+        INNER JOIN esq_inscripciones.facultad fa on es.idfacultad = fa.idfacultad
+        where titulo_academico_m is not null';
+
+        // $sql = 'select facultad.idfacultad, facultad.nombre from esq_inscripciones.facultad where facultad.idfacultad < 11';
+
+        $carreras = DB::connection('DB_db_sga_SCHEMA_esq_inscripciones')->select($sql);
+
+        return $carreras;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +44,7 @@ class EmpleoController extends Controller
 
         // dd($empleos);
 
-        return view('empresas.empleos')
+        return view('empleos.index')
             ->with('empresa', $empresa_data)
             ->with('empleos', $empleos);
     }
@@ -39,7 +56,11 @@ class EmpleoController extends Controller
      */
     public function create()
     {
-        //
+        $carreras = self::get_carreras();
+
+        return view('empleos.create')
+            ->with('carreras', $carreras)
+            ->with('empresa', EmpresaController::get_empresa_data());
     }
 
     /**
