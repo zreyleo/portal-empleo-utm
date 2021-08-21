@@ -13,6 +13,7 @@ class EmpresaController extends Controller
     {
         $empresa = [
             'id_empresa' => Session::get('id_empresa'),
+            'nombre_empresa' => Session::get('nombre_empresa'),
         ];
 
         return $empresa;

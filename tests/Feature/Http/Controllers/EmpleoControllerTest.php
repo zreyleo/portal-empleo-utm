@@ -35,9 +35,6 @@ class EmpleoControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        // dd(EmpresaController::get_role());
-        // dd(Session::get('role'));
-
         $this->post(route('empleos.store'), [
             'titulo' => 'Se necesita Ingeniero en Sistemas',
             'requerimientos' => 'Para hacer un CRUD',

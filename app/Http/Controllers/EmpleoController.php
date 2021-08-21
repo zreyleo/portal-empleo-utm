@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empleo;
+use App\Empresa;
 
 use App\Http\Requests\EmpleoStoreRequest;
 
@@ -17,7 +18,18 @@ class EmpleoController extends Controller
      */
     public function index()
     {
-        //
+        $empresa_data = EmpresaController::get_empresa_data();
+
+        $empresa = Empresa::find($empresa_data['id_empresa']);
+
+        // dd($empresa);
+        $empleos = $empresa->empleos;
+
+        // dd($empleos);
+
+        return view('empresas.empleos')
+            ->with('empresa', $empresa_data)
+            ->with('empleos', $empleos);
     }
 
     /**

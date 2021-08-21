@@ -34,9 +34,7 @@
 
                     <div class="form-group">
                         <label for="email">E-mail</label>
-                        <input type="email" name="email" id="email"
-                            class="form-control"
-                        />
+                        <input type="email" name="email" id="email" class="form-control" />
                     </div>
 
                     {{-- <div class="form-group">
@@ -47,11 +45,20 @@
                     </div> --}}
 
                     <div class="form-group mt-4">
-                        <input type="submit" value="Ingresar"
-                            class="btn btn-block btn-primary"
-                        />
+                        <input type="submit" value="Ingresar" class="btn btn-block btn-primary" />
                     </div>
                 </form>
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        Hay errores al ingresar.
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

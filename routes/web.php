@@ -17,6 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('landing');
 
+Route::get('logout', function () {
+    request()->session()->flush();
+    return redirect()->route('landing');
+})->name('logout');
+
 Route::get('login/empresas', 'LoginController@login_empresas_get')->name('login.empresas_get');
 Route::post('login/empresas', 'LoginController@login_empresas_post')->name('login.empresas_post');
 
