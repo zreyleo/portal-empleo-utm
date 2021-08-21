@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('landing');
 
 Route::get('login/empresas', 'LoginController@login_empresas_get')->name('login.empresas_get');
 Route::post('login/empresas', 'LoginController@login_empresas_post')->name('login.empresas_post');
 
-Route::get('dashboard/empresas');
+// Route::get('dashboard/empresas', 'P');
 
 Route::prefix('dashboard/empresas')->group(function () {
     Route::resource('empleos', 'EmpleoController')

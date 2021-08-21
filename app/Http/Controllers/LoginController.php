@@ -19,13 +19,12 @@ class LoginController extends Controller
             'email' => 'required'
         ]);
 
-        $empresa = Empresa::find('email', $data['email']);
-
-        // dd($empresa);
+        $empresa = Empresa::where('email', $data['email'])->get()[0];
 
         Session::put('id_empresa', $empresa->id_empresa);
+        Session::put('nombre_empresa', $empresa->nombre_empresa);
         Session::put('role', EmpresaController::get_role());
 
-        return redirect('empresas.dashboard');
+        return redirect()->route('empleos.index');
     }
 }
