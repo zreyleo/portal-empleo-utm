@@ -8,22 +8,22 @@
 
 <li>
     <a href="#empleos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-        <i class="fas fa-user-graduate"></i>
+        <i class="fas fa-briefcase"></i>
         Empleos
     </a>
-    {{-- <ul class="collapse list-unstyled" id="empleos">
+    <ul class="collapse list-unstyled" id="empleos">
         <li>
             <a href="{{ route('empleos.index') }}">Tus ofertas de empleo</a>
         </li>
         <li>
             <a href="{{ route('empleos.create') }}">Crear Oferta de empleo</a>
         </li>
-    </ul> --}}
+    </ul>
 </li>
 
 <li>
     <a href="#practicas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-        <i class="fas fa-briefcase"></i>
+        <i class="fas fa-user-graduate"></i>
         Prácticas
     </a>
     {{-- <ul class="collapse list-unstyled" id="practicas">

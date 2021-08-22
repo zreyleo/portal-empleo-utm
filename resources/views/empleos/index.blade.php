@@ -25,11 +25,11 @@
                         <td>{{ $empleo->titulo }}</td>
                         {{-- <td>{{ $empleo->aspirantes->count() }}</td> --}}
                         <td class="d-flex">
-                            {{-- <a href="{{ route('empleos.show', ['empleo' => $empleo->id]) }}"
+                            <a href="{{ route('empleos.show', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-success">Mostrar</a>
                             <a href="{{ route('empleos.edit', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-warning mx-2">Editar</a>
-                            <a href="{{ route('empleos.ver_aspirantes', ['empleo' => $empleo->id]) }}"
+                            {{-- <a href="{{ route('empleos.ver_aspirantes', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-info text-white mr-2">Ver Aspirantes</a>
                             <form action="{{ route('empleos.destroy', ['empleo' => $empleo->id]) }}" method="POST"
                                 onsubmit="

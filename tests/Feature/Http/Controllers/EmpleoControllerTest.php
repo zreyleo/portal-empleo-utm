@@ -122,6 +122,22 @@ class EmpleoControllerTest extends TestCase
             ->assertStatus(403);
     }
 
+    public function test_edit()
+    {
+        $this->session([
+            'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
+            'role' => EmpresaController::get_role()
+        ]);
+
+        $empleo = factory(Empleo::class)->create([
+            'empresa_id' => 44
+        ]);
+
+        $this->get(route('empleos.edit', $empleo->id))
+            ->assertStatus(200);
+    }
+
     // public function test_()
     // {
 

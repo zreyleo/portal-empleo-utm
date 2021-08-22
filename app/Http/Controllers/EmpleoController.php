@@ -113,7 +113,18 @@ class EmpleoController extends Controller
      */
     public function edit(Empleo $empleo)
     {
-        //
+        $empresa = get_session_empresa();
+
+        if ($empresa['id_empresa'] != $empleo->empresa_id) {
+            abort(403);
+        }
+
+        $carreras = self::get_carreras();
+
+        return view('empleos.edit')
+            ->with('empresa', $empresa)
+            ->with('carreras', $carreras)
+            ->with('empleo', $empleo);
     }
 
     /**
