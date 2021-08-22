@@ -14,7 +14,7 @@ use Tests\TestCase;
 
 class EmpleoControllerTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
     public function test_index_empty()
     {
@@ -136,6 +136,97 @@ class EmpleoControllerTest extends TestCase
 
         $this->get(route('empleos.edit', $empleo->id))
             ->assertStatus(200);
+    }
+
+    public function test_edit_policy()
+    {
+        $this->session([
+            'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
+            'role' => EmpresaController::get_role()
+        ]);
+
+        $empleo = factory(Empleo::class)->create([
+            'empresa_id' => 14
+        ]);
+
+        $this->get(route('empleos.show', $empleo->id))
+            ->assertStatus(403);
+    }
+
+    public function test_update()
+    {
+        $this->session([
+            'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
+            'role' => EmpresaController::get_role()
+        ]);
+
+        $empleo = factory(Empleo::class)->create([
+            'titulo' => 'Se necesita programador',
+            'empresa_id' => 44
+        ]);
+
+        $this->put(route('empleos.update', $empleo->id), [
+            'titulo' => 'Se necesita Ingeniero',
+            'requerimientos' => $empleo->requerimientos,
+            'carrera_id' => $empleo->carrera_id,
+        ])->assertRedirect(route('empleos.edit', $empleo->id));
+
+        $this->assertDatabaseHas('empleos',
+            [
+                'titulo' => 'Se necesita Ingeniero'
+            ]
+        );
+    }
+
+    public function test_update_policy()
+    {
+        $this->session([
+            'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
+            'role' => EmpresaController::get_role()
+        ]);
+
+        $empleo = factory(Empleo::class)->create([
+            'titulo' => 'Se necesita programador',
+            'empresa_id' => 14
+        ]);
+
+        $this->put(route('empleos.update', $empleo->id), [
+            'titulo' => 'Se necesita Ingeniero',
+            'requerimientos' => $empleo->requerimientos,
+            'carrera_id' => $empleo->carrera_id,
+        ])->assertStatus(403);
+    }
+
+    public function test_update_validate()
+    {
+        $this->session([
+            'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
+            'role' => EmpresaController::get_role()
+        ]);
+
+        $empleo = factory(Empleo::class)->create([
+            'titulo' => 'Se necesita programador',
+            'empresa_id' => 44
+        ]);
+
+        $this->put(route('empleos.update', $empleo->id), [
+            'titulo' => 'Se necesita Ingeniero en Sistemas',
+            'carrera_id' => 1,
+        ])->assertSessionHasErrors('requerimientos');
+
+        $this->put(route('empleos.update', $empleo->id), [
+            'requerimientos' => 'Para hacer un CRUD',
+            'carrera_id' => 1,
+        ])->assertSessionHasErrors('titulo');
+
+        $this->put(route('empleos.update', $empleo->id), [
+            'titulo' => 'Se necesita Ingeniero en Sistemas',
+            'requerimientos' => 'Para hacer un CRUD',
+        ])->assertSessionHasErrors('carrera_id');
     }
 
     // public function test_()

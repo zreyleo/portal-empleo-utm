@@ -49,7 +49,7 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'DB_ppp_sistema_SCHEMA_esq_portal_empleos_TESTS' => [
+        'DB_ppp_sistema_SCHEMA_esq_portal_empleos_tests' => [
             'driver' => 'pgsql',
             // 'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),

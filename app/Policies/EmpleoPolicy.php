@@ -30,7 +30,7 @@ class EmpleoPolicy
     //     return $empresa['id_empresa'] == $empleo->empresa_id;
     // }
 
-    public function show(?User $user, Empleo $empleo)
+    public function pass(?User $user, Empleo $empleo)
     {
         $empresa_data = get_session_empresa();
         // $empresa = Empresa::find($empresa_data['id_empresa']);

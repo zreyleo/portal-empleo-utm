@@ -6,6 +6,7 @@ use App\Empleo;
 use App\Empresa;
 
 use App\Http\Requests\EmpleoStoreRequest;
+use App\Http\Requests\EmpleoUpdateRequest;
 
 use Illuminate\Http\Request;
 
@@ -92,13 +93,13 @@ class EmpleoController extends Controller
     public function show(Empleo $empleo)
     {
         $empresa = get_session_empresa();
-        // $this->authorize('show', $empleo);
+        $this->authorize('pass', $empleo);
 
         // dd($empresa);
 
-        if ($empresa['id_empresa'] != $empleo->empresa_id) {
-            abort(403);
-        }
+        // if ($empresa['id_empresa'] != $empleo->empresa_id) {
+        //     abort(403);
+        // }
 
         return view('empleos.show')
             ->with('empleo', $empleo)
@@ -113,11 +114,12 @@ class EmpleoController extends Controller
      */
     public function edit(Empleo $empleo)
     {
+        $this->authorize('pass', $empleo);
         $empresa = get_session_empresa();
 
-        if ($empresa['id_empresa'] != $empleo->empresa_id) {
-            abort(403);
-        }
+        // if ($empresa['id_empresa'] != $empleo->empresa_id) {
+        //     abort(403);
+        // }
 
         $carreras = self::get_carreras();
 
@@ -134,9 +136,23 @@ class EmpleoController extends Controller
      * @param  \App\Empleo  $empleo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empleo $empleo)
+    public function update(EmpleoUpdateRequest $request, Empleo $empleo)
     {
-        //
+        $this->authorize('pass', $empleo);
+
+        $data = $request->validate([
+            'titulo' => 'required|min:8',
+            'requerimientos' => 'required',
+            'carrera_id' => 'required'
+        ]);
+
+        $empleo->titulo = $data['titulo'];
+        $empleo->requerimientos = $data['requerimientos'];
+        $empleo->carrera_id = $data['carrera_id'];
+
+        $empleo->save();
+
+        return redirect()->route('empleos.edit', $empleo->id);
     }
 
     /**
