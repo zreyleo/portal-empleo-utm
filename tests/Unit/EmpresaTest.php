@@ -6,11 +6,14 @@ use App\Empleo;
 use App\Empresa;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
 
 class EmpresaTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_get_slug()
     {
         $empresa = Empresa::find(44); // Empresa = EL DIARIO EDIASA

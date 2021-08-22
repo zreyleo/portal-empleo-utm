@@ -27,6 +27,8 @@ function FacultadesCarrerasSelects(props) {
     const [carrerasSelect, setCarrerasSelect] = useState(carrera_id || '');
     const [facultadSelect, setFacultadSelect] = useState(facultad || '');
 
+    // console.log(carrerasSelect);
+
     useEffect(() => {
         console.log(facultadSelect)
         const carreras = carrerasOriginalArray.filter(carrera => carrera.nombre_facultad == facultadSelect);
@@ -58,7 +60,7 @@ function FacultadesCarrerasSelects(props) {
                     className="form-control"
                     name="carrera_id"
                     id="carrera_id"
-                    defaultValue={carrerasSelect}
+                    value={carrerasSelect}
                     onChange={e => setCarrerasSelect(e.target.value)}
                 >
                     <option value="" disabled>-- seleccione --</option>

@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'DB_ppp_sistema_SCHEMA_esq_portal_empleos'),
 
     /*
     |--------------------------------------------------------------------------

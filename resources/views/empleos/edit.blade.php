@@ -14,6 +14,8 @@
 
 @section('page-content')
 
+<a href="{{ route('empleos.index') }}" class="btn btn-outline-danger my-3">volver</a>
+
 <h2 class="my-3 text-center">Formulario para editar una oferta de empleo</h2>
 
 <div class="row mb-3">
@@ -53,7 +55,7 @@
                 </select>
             </div> --}}
 
-            <div id="empleos-form-selects" data-carreras="{{ json_encode($carreras) }}"
+            <div id="facultades-carreras-selects" data-carreras="{{ json_encode($carreras) }}"
                 data-carrera_id="{{ $empleo->carrera_id }}"
             ></div>
 

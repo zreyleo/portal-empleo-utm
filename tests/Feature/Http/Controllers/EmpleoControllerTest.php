@@ -18,7 +18,6 @@ class EmpleoControllerTest extends TestCase
 
     public function test_index_empty()
     {
-        // $empleo = factory(Empleo::class)->create();
         $this->session([
             'id_empresa' => 44,
             'role' => EmpresaController::get_role()
@@ -26,7 +25,27 @@ class EmpleoControllerTest extends TestCase
 
         $response = $this->get(route('empleos.index'));
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+            ->assertSee('No ofertas de empleo creadas');
+    }
+
+    public function test_index_with_data()
+    {
+        $empleos = factory(Empleo::class, 10)->create([
+            'empresa_id' => 44
+        ]);
+
+        // dd($empleos);
+
+        $this->session([
+            'id_empresa' => 44,
+            'role' => EmpresaController::get_role()
+        ]);
+
+        $response = $this->get(route('empleos.index'));
+
+        $response->assertStatus(200)
+            ->assertSee('Ver');
     }
 
     public function test_store()
@@ -227,6 +246,42 @@ class EmpleoControllerTest extends TestCase
             'titulo' => 'Se necesita Ingeniero en Sistemas',
             'requerimientos' => 'Para hacer un CRUD',
         ])->assertSessionHasErrors('carrera_id');
+    }
+
+    public function test_destroy()
+    {
+        $this->session([
+            'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
+            'role' => EmpresaController::get_role()
+        ]);
+
+        $empleo = factory(Empleo::class)->create([
+            'empresa_id' => 44
+        ]);
+
+        $this->delete(route('empleos.destroy', $empleo->id))
+            ->assertRedirect(route('empleos.index'));
+
+        $this->assertDatabaseMissing('empleos', [
+            'titulo' => $empleo->titulo
+        ]);
+    }
+
+    public function test_destroy_policy()
+    {
+        $this->session([
+            'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
+            'role' => EmpresaController::get_role()
+        ]);
+
+        $empleo = factory(Empleo::class)->create([
+            'empresa_id' => 14
+        ]);
+
+        $this->delete(route('empleos.destroy', $empleo->id))
+            ->assertStatus(403);
     }
 
     // public function test_()

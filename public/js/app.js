@@ -66028,7 +66028,8 @@ function FacultadesCarrerasSelects(props) {
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(facultad || ''),
       _useState6 = _slicedToArray(_useState5, 2),
       facultadSelect = _useState6[0],
-      setFacultadSelect = _useState6[1];
+      setFacultadSelect = _useState6[1]; // console.log(carrerasSelect);
+
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     console.log(facultadSelect);
@@ -66064,7 +66065,7 @@ function FacultadesCarrerasSelects(props) {
     className: "form-control",
     name: "carrera_id",
     id: "carrera_id",
-    defaultValue: carrerasSelect,
+    value: carrerasSelect,
     onChange: function onChange(e) {
       return setCarrerasSelect(e.target.value);
     }
@@ -66106,8 +66107,8 @@ if (document.getElementById('facultades-carreras-selects')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/regzam/Escritorio/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/regzam/Escritorio/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

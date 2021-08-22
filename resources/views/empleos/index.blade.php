@@ -18,7 +18,7 @@
             </thead>
             <tbody>
 
-                @foreach ($empleos as $empleo)
+                @forelse ($empleos as $empleo)
 
                     <tr>
                         <td scope="row">{{ $empleo->id }}</td>
@@ -26,11 +26,11 @@
                         {{-- <td>{{ $empleo->aspirantes->count() }}</td> --}}
                         <td class="d-flex">
                             <a href="{{ route('empleos.show', ['empleo' => $empleo->id]) }}"
-                                class="btn btn-success">Mostrar</a>
+                                class="btn btn-success">Ver</a>
                             <a href="{{ route('empleos.edit', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-warning mx-2">Editar</a>
                             {{-- <a href="{{ route('empleos.ver_aspirantes', ['empleo' => $empleo->id]) }}"
-                                class="btn btn-info text-white mr-2">Ver Aspirantes</a>
+                                class="btn btn-info text-white mr-2">Ver Aspirantes</a> --}}
                             <form action="{{ route('empleos.destroy', ['empleo' => $empleo->id]) }}" method="POST"
                                 onsubmit="
                                 if (!confirm('Desea Eliminar?')) {
@@ -41,11 +41,17 @@
                                 @csrf
                                 @method('DELETE')
                                 <input type="submit" value="Eliminar" class="btn btn-danger">
-                            </form> --}}
+                            </form>
                         </td>
                     </tr>
 
-                @endforeach
+                    @empty
+
+                    <tr>
+                        <td colspan="4">No ofertas de empleo creadas</td>
+                    </tr>
+
+                @endforelse
             </tbody>
         </table>
 

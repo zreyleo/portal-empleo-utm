@@ -163,6 +163,10 @@ class EmpleoController extends Controller
      */
     public function destroy(Empleo $empleo)
     {
-        //
+        $this->authorize('pass', $empleo);
+
+        $empleo->delete();
+
+        return redirect()->route('empleos.index');
     }
 }
