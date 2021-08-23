@@ -77,7 +77,7 @@ class EmpleoController extends Controller
         Empleo::create([
             'titulo' => $request['titulo'],
             'requerimientos' => $request['requerimientos'],
-            'carrera_id' => $request['carrera_id'],
+            'carrera_id' => $request['carrera'],
             'empresa_id' => $empresa['id_empresa']
         ]);
 
@@ -140,15 +140,15 @@ class EmpleoController extends Controller
     {
         $this->authorize('pass', $empleo);
 
-        $data = $request->validate([
-            'titulo' => 'required|min:8',
-            'requerimientos' => 'required',
-            'carrera_id' => 'required'
-        ]);
+        // $data = $request->validate([
+        //     'titulo' => 'required|min:8',
+        //     'requerimientos' => 'required',
+        //     'carrera' => 'required'
+        // ]);
 
-        $empleo->titulo = $data['titulo'];
-        $empleo->requerimientos = $data['requerimientos'];
-        $empleo->carrera_id = $data['carrera_id'];
+        $empleo->titulo = $request['titulo'];
+        $empleo->requerimientos = $request['requerimientos'];
+        $empleo->carrera_id = $request['carrera'];
 
         $empleo->save();
 

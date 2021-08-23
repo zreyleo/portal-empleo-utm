@@ -25,4 +25,9 @@ class Empresa extends Model
     {
         return $this->hasMany(Empleo::class, 'empresa_id', 'id_empresa');
     }
+
+    public function practicas()
+    {
+        return $this->hasMany(Practica::class, 'empresa_id', 'id_empresa');
+    }
 }

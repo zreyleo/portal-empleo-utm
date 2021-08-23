@@ -38,7 +38,7 @@ function FacultadesCarrerasSelects(props) {
     return (
         <Fragment>
             <div className="form-group">
-                <label htmlFor="area">Area</label>
+                <label htmlFor="area">&Aacute;rea</label>
                 <select
                     className="form-control"
                     id="area"
@@ -55,11 +55,11 @@ function FacultadesCarrerasSelects(props) {
             </div>
 
             <div className="form-group">
-                <label htmlFor="carrera_id">Carrera</label>
+                <label htmlFor="carrera">Carrera</label>
                 <select
                     className="form-control"
-                    name="carrera_id"
-                    id="carrera_id"
+                    name="carrera"
+                    id="carrera"
                     value={carrerasSelect}
                     onChange={e => setCarrerasSelect(e.target.value)}
                 >

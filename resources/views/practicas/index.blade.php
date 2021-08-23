@@ -2,7 +2,7 @@
 
 @section('page-content')
 
-    <h2 class="my-5 text-center">Tus Ofertas de Empleo</h2>
+    <h2 class="my-5 text-center">Tus Ofertas de Pr&aacute;cticas</h2>
 
     {{-- {{ $empleos }} --}}
 
@@ -18,21 +18,21 @@
             </thead>
             <tbody>
 
-                @forelse ($empleos as $empleo)
+                @forelse ($practicas as $practica)
 
                     <tr>
-                        <td scope="row">{{ $empleo->id }}</td>
-                        <td>{{ $empleo->titulo }}</td>
-                        {{-- <td>{{ $empleo->aspirantes->count() }}</td> --}}
+                        <td scope="row">{{ $practica->id }}</td>
+                        <td>{{ $practica->titulo }}</td>
+                        {{-- <td>{{ $practica->aspirantes->count() }}</td> --}}
                         <td>&nbsp;</td>
                         <td class="d-flex">
-                            <a href="{{ route('empleos.show', ['empleo' => $empleo->id]) }}"
+                            <a href="{{ route('practicas.show', ['practica' => $practica->id]) }}"
                                 class="btn btn-success">Ver</a>
-                            <a href="{{ route('empleos.edit', ['empleo' => $empleo->id]) }}"
+                            <a href="{{ route('practicas.edit', ['practica' => $practica->id]) }}"
                                 class="btn btn-warning mx-2">Editar</a>
-                            {{-- <a href="{{ route('empleos.ver_aspirantes', ['empleo' => $empleo->id]) }}"
+                            {{-- <a href="{{ route('practicas.ver_aspirantes', ['practica' => $practica->id]) }}"
                                 class="btn btn-info text-white mr-2">Ver Aspirantes</a> --}}
-                            <form action="{{ route('empleos.destroy', ['empleo' => $empleo->id]) }}" method="POST"
+                            <form action="{{ route('practicas.destroy', ['practica' => $practica->id]) }}" method="POST"
                                 onsubmit="
                                 if (!confirm('Desea Eliminar?')) {
                                     event.preventDefault();
@@ -49,7 +49,7 @@
                     @empty
 
                     <tr>
-                        <td colspan="4">No ofertas de empleo creadas</td>
+                        <td colspan="4">No hay ofertas de practica creadas.</td>
                     </tr>
 
                 @endforelse

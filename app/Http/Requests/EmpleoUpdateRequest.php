@@ -30,7 +30,7 @@ class EmpleoUpdateRequest extends FormRequest
         return [
             'titulo' => 'required|min:8',
             'requerimientos' => 'required',
-            'carrera_id' => 'required',
+            'carrera' => 'required',
         ];
     }
 }

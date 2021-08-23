@@ -30,6 +30,9 @@ Route::post('login/empresas', 'LoginController@login_empresas_post')->name('logi
 Route::prefix('dashboard/empresas')->group(function () {
     Route::resource('empleos', 'EmpleoController')
         ->middleware('check.empresa.role.for.session');
+
+    Route::resource('practicas', 'PracticaController')
+        ->middleware('check.empresa.role.for.session');
 });
 
 // Route::resource('empleos', 'EmpleoController');

@@ -3,12 +3,11 @@
 namespace App\Http\Requests;
 
 use App\Http\Controllers\EmpresaController;
-
 use Illuminate\Foundation\Http\FormRequest;
 
 use Illuminate\Support\Facades\Session;
 
-class EmpleoStoreRequest extends FormRequest
+class PracticaStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +29,7 @@ class EmpleoStoreRequest extends FormRequest
         return [
             'titulo' => 'required|min:8',
             'requerimientos' => 'required',
-            'carrera' => 'required',
+            'facultad_id' => 'required',
         ];
     }
 }

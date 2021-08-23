@@ -66042,7 +66042,7 @@ function FacultadesCarrerasSelects(props) {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "area"
-  }, "Area"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+  }, "\xC1rea"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
     className: "form-control",
     id: "area",
     value: facultadSelect,
@@ -66060,11 +66060,11 @@ function FacultadesCarrerasSelects(props) {
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "carrera_id"
+    htmlFor: "carrera"
   }, "Carrera"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
     className: "form-control",
-    name: "carrera_id",
-    id: "carrera_id",
+    name: "carrera",
+    id: "carrera",
     value: carrerasSelect,
     onChange: function onChange(e) {
       return setCarrerasSelect(e.target.value);

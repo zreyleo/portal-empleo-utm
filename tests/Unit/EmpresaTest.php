@@ -29,4 +29,13 @@ class EmpresaTest extends TestCase
         $empresa = Empresa::find(44); // Empresa = EL DIARIO EDIASA
         $this->assertInstanceOf(Collection::class, $empresa->empleos);
     }
+
+    public function test_practicas_of_empresa_are_a_collection()
+    {
+        factory(Empleo::class)->create([
+            'empresa_id' => 44
+        ]);
+        $empresa = Empresa::find(44); // Empresa = EL DIARIO EDIASA
+        $this->assertInstanceOf(Collection::class, $empresa->practicas);
+    }
 }

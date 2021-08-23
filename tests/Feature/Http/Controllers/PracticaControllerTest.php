@@ -2,18 +2,16 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Empleo;
-
 use App\Http\Controllers\EmpresaController;
+
+use App\Practica;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 
-use Illuminate\Support\Facades\Session;
-
 use Tests\TestCase;
 
-class EmpleoControllerTest extends TestCase
+class PracticaControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -21,36 +19,36 @@ class EmpleoControllerTest extends TestCase
     {
         $this->session([
             'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
             'role' => EmpresaController::get_role()
         ]);
 
-        factory(Empleo::class, 2)->create([
+        factory(Practica::class)->create([
             'empresa_id' => 14
         ]);
 
-        $response = $this->get(route('empleos.index'));
+        $response = $this->get(route('practicas.index'));
 
         $response->assertStatus(200)
-            ->assertSee('No ofertas de empleo creadas');
+            ->assertSee('No hay ofertas de practica creadas.');
     }
 
     public function test_index_with_data()
     {
-        factory(Empleo::class, 2)->create([
-            'empresa_id' => 44
-        ]);
-
-        // dd($empleos);
-
         $this->session([
             'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
             'role' => EmpresaController::get_role()
         ]);
 
-        $response = $this->get(route('empleos.index'));
+        $practica = factory(Practica::class)->create([
+            'empresa_id' => 44
+        ]);
+
+        $response = $this->get(route('practicas.index'));
 
         $response->assertStatus(200)
-            ->assertSee('Ver');
+            ->assertSee($practica->titulo);
     }
 
     public function test_store()
@@ -60,11 +58,15 @@ class EmpleoControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $this->post(route('empleos.store'), [
-            'titulo' => 'Se necesita Ingeniero en Sistemas',
+        $this->post(route('practicas.store'), [
+            'titulo' => 'Se buscan pasantes',
             'requerimientos' => 'Para hacer un CRUD',
-            'carrera' => 1,
-        ])->assertRedirect(route('empleos.index'));
+            'facultad_id' => 1,
+        ])->assertRedirect(route('practicas.index'));
+
+        $this->assertDatabaseHas('practicas', [
+            'titulo' => 'Se buscan pasantes'
+        ]);
     }
 
     public function test_store_validate()
@@ -74,29 +76,29 @@ class EmpleoControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $this->post(route('empleos.store'), [
-            'titulo' => 'Se necesita Ingeniero en Sistemas',
-            'carrera' => 1,
+        $this->post(route('practicas.store'), [
+            'titulo' => 'Se buscan pasantes',
+            'facultad_id' => 1,
         ])->assertSessionHasErrors('requerimientos');
 
-        $this->post(route('empleos.store'), [
+        $this->post(route('practicas.store'), [
             'requerimientos' => 'Para hacer un CRUD',
-            'carrera' => 1,
+            'facultad_id' => 1,
         ])->assertSessionHasErrors('titulo');
 
-        $this->post(route('empleos.store'), [
-            'titulo' => 'Se necesita Ingeniero en Sistemas',
+        $this->post(route('practicas.store'), [
+            'titulo' => 'Se buscan pasantes',
             'requerimientos' => 'Para hacer un CRUD',
-        ])->assertSessionHasErrors('carrera');
+        ])->assertSessionHasErrors('facultad_id');
 
         $this->session([
             'role' => 'ESTUDIANTE'
         ]);
 
-        $this->post(route('empleos.store'), [
-            'titulo' => 'Se necesita Ingeniero en Sistemas',
+        $this->post(route('practicas.store'), [
+            'titulo' => 'Se buscan pasantes',
             'requerimientos' => 'Para hacer un CRUD',
-            'carrera' => 1,
+            'facultad_id' => 1,
         ])->assertStatus(302);
     }
 
@@ -108,9 +110,10 @@ class EmpleoControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $this->get(route('empleos.create'))
+        $this->get(route('practicas.create'))
             ->assertStatus(200)
-            ->assertSee('Crear una Oferta de Empleo');
+            ->assertSee('Crear una Oferta de Práctica')
+            ->assertSee('Área');
     }
 
     public function test_show()
@@ -121,13 +124,13 @@ class EmpleoControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $empleo = factory(Empleo::class)->create([
+        $practica = factory(Practica::class)->create([
             'empresa_id' => 44
         ]);
 
-        $this->get(route('empleos.show', $empleo->id))
+        $this->get(route('practicas.show', $practica->id))
             ->assertStatus(200)
-            ->assertSee($empleo->titulo);
+            ->assertSee($practica->titulo);
     }
 
     public function test_show_policy()
@@ -142,7 +145,7 @@ class EmpleoControllerTest extends TestCase
             'empresa_id' => 14
         ]);
 
-        $this->get(route('empleos.show', $empleo->id))
+        $this->get(route('practicas.show', $empleo->id))
             ->assertStatus(403);
     }
 
@@ -158,7 +161,7 @@ class EmpleoControllerTest extends TestCase
             'empresa_id' => 44
         ]);
 
-        $this->get(route('empleos.edit', $empleo->id))
+        $this->get(route('practicas.edit', $empleo->id))
             ->assertStatus(200);
     }
 
@@ -174,7 +177,7 @@ class EmpleoControllerTest extends TestCase
             'empresa_id' => 14
         ]);
 
-        $this->get(route('empleos.show', $empleo->id))
+        $this->get(route('practicas.show', $empleo->id))
             ->assertStatus(403);
     }
 
@@ -191,13 +194,13 @@ class EmpleoControllerTest extends TestCase
             'empresa_id' => 44
         ]);
 
-        $this->put(route('empleos.update', $empleo->id), [
+        $this->put(route('practicas.update', $empleo->id), [
             'titulo' => 'Se necesita Ingeniero',
             'requerimientos' => $empleo->requerimientos,
-            'carrera' => $empleo->carrera_id,
-        ])->assertRedirect(route('empleos.edit', $empleo->id));
+            'facultad_id' => $empleo->facultad_id,
+        ])->assertRedirect(route('practicas.edit', $empleo->id));
 
-        $this->assertDatabaseHas('empleos',
+        $this->assertDatabaseHas('practicas',
             [
                 'titulo' => 'Se necesita Ingeniero'
             ]
@@ -217,10 +220,10 @@ class EmpleoControllerTest extends TestCase
             'empresa_id' => 14
         ]);
 
-        $this->put(route('empleos.update', $empleo->id), [
+        $this->put(route('practicas.update', $empleo->id), [
             'titulo' => 'Se necesita Ingeniero',
             'requerimientos' => $empleo->requerimientos,
-            'carrera' => $empleo->carrera_id,
+            'facultad_id' => $empleo->facultad_id,
         ])->assertStatus(403);
     }
 
@@ -237,20 +240,20 @@ class EmpleoControllerTest extends TestCase
             'empresa_id' => 44
         ]);
 
-        $this->put(route('empleos.update', $empleo->id), [
-            'titulo' => 'Se necesita Ingeniero en Sistemas',
-            'carrera' => 1,
+        $this->put(route('practicas.update', $empleo->id), [
+            'titulo' => 'Se buscan pasantes',
+            'facultad_id' => 1,
         ])->assertSessionHasErrors('requerimientos');
 
-        $this->put(route('empleos.update', $empleo->id), [
+        $this->put(route('practicas.update', $empleo->id), [
             'requerimientos' => 'Para hacer un CRUD',
-            'carrera' => 1,
+            'facultad_id' => 1,
         ])->assertSessionHasErrors('titulo');
 
-        $this->put(route('empleos.update', $empleo->id), [
-            'titulo' => 'Se necesita Ingeniero en Sistemas',
+        $this->put(route('practicas.update', $empleo->id), [
+            'titulo' => 'Se buscan pasantes',
             'requerimientos' => 'Para hacer un CRUD',
-        ])->assertSessionHasErrors('carrera');
+        ])->assertSessionHasErrors('facultad_id');
     }
 
     public function test_destroy()
@@ -265,10 +268,10 @@ class EmpleoControllerTest extends TestCase
             'empresa_id' => 44
         ]);
 
-        $this->delete(route('empleos.destroy', $empleo->id))
-            ->assertRedirect(route('empleos.index'));
+        $this->delete(route('practicas.destroy', $empleo->id))
+            ->assertRedirect(route('practicas.index'));
 
-        $this->assertDatabaseMissing('empleos', [
+        $this->assertDatabaseMissing('practicas', [
             'titulo' => $empleo->titulo
         ]);
     }
@@ -285,7 +288,7 @@ class EmpleoControllerTest extends TestCase
             'empresa_id' => 14
         ]);
 
-        $this->delete(route('empleos.destroy', $empleo->id))
+        $this->delete(route('practicas.destroy', $empleo->id))
             ->assertStatus(403);
     }
 

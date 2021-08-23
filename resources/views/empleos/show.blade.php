@@ -4,7 +4,7 @@
 
 {{-- {{ $empleo }} --}}
 
-<a href="{{ route('empleos.index') }}" class="btn btn-outline-danger my-3">volver</a>
+<a href="{{ url()->previous() }}" class="btn btn-outline-danger my-3">volver</a>
 
 <h1 class="text-center my-5">{{ $empleo->titulo }}</h1>
 

@@ -26,14 +26,14 @@
         <i class="fas fa-user-graduate"></i>
         Prácticas
     </a>
-    {{-- <ul class="collapse list-unstyled" id="practicas">
+    <ul class="collapse list-unstyled" id="practicas">
         <li>
             <a href="{{ route('practicas.index') }}">Tus ofertas de Pr&aacute;cticas</a>
         </li>
         <li>
             <a href="{{ route('practicas.create') }}">Crear Oferta de Pr&aacute;cticas</a>
         </li>
-    </ul> --}}
+    </ul>
 </li>
 
 @endsection

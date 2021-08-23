@@ -39,8 +39,8 @@
                 @enderror
             </div>
 
-            <div id="facultades-carreras-selects" data-carreras="{{ json_encode($carreras) }}">
-            hola
+            <div id="facultades-carreras-selects"
+                data-carreras="{{ json_encode($carreras) }}">
             </div>
 
             <div class="form-group">
