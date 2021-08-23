@@ -141,7 +141,7 @@ class PracticaControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $empleo = factory(Empleo::class)->create([
+        $empleo = factory(Practica::class)->create([
             'empresa_id' => 14
         ]);
 
@@ -157,12 +157,13 @@ class PracticaControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $empleo = factory(Empleo::class)->create([
+        $practica = factory(Practica::class)->create([
             'empresa_id' => 44
         ]);
 
-        $this->get(route('practicas.edit', $empleo->id))
-            ->assertStatus(200);
+        $this->get(route('practicas.edit', $practica->id))
+            ->assertStatus(200)
+            ->assertSee($practica->titulo);
     }
 
     public function test_edit_policy()
@@ -173,11 +174,11 @@ class PracticaControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $empleo = factory(Empleo::class)->create([
+        $practica = factory(Practica::class)->create([
             'empresa_id' => 14
         ]);
 
-        $this->get(route('practicas.show', $empleo->id))
+        $this->get(route('practicas.show', $practica->id))
             ->assertStatus(403);
     }
 
@@ -189,20 +190,21 @@ class PracticaControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $empleo = factory(Empleo::class)->create([
+        $practica = factory(Practica::class)->create([
             'titulo' => 'Se necesita programador',
             'empresa_id' => 44
         ]);
 
-        $this->put(route('practicas.update', $empleo->id), [
-            'titulo' => 'Se necesita Ingeniero',
-            'requerimientos' => $empleo->requerimientos,
-            'facultad_id' => $empleo->facultad_id,
-        ])->assertRedirect(route('practicas.edit', $empleo->id));
+        $this->put(route('practicas.update', $practica->id), [
+            'titulo' => 'Se necesita programador en javascript',
+            'requerimientos' => $practica->requerimientos,
+            'area' => $practica->facultad_id,
+        ])->assertRedirect(route('practicas.edit', $practica->id));
+
 
         $this->assertDatabaseHas('practicas',
             [
-                'titulo' => 'Se necesita Ingeniero'
+                'titulo' => 'Se necesita programador en javascript'
             ]
         );
     }
@@ -215,15 +217,15 @@ class PracticaControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $empleo = factory(Empleo::class)->create([
+        $practica = factory(Practica::class)->create([
             'titulo' => 'Se necesita programador',
             'empresa_id' => 14
         ]);
 
-        $this->put(route('practicas.update', $empleo->id), [
+        $this->put(route('practicas.update', $practica->id), [
             'titulo' => 'Se necesita Ingeniero',
-            'requerimientos' => $empleo->requerimientos,
-            'facultad_id' => $empleo->facultad_id,
+            'requerimientos' => $practica->requerimientos,
+            'area' => $practica->facultad_id,
         ])->assertStatus(403);
     }
 
@@ -235,25 +237,25 @@ class PracticaControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $empleo = factory(Empleo::class)->create([
+        $practica = factory(Practica::class)->create([
             'titulo' => 'Se necesita programador',
             'empresa_id' => 44
         ]);
 
-        $this->put(route('practicas.update', $empleo->id), [
+        $this->put(route('practicas.update', $practica->id), [
             'titulo' => 'Se buscan pasantes',
-            'facultad_id' => 1,
+            'area' => 1,
         ])->assertSessionHasErrors('requerimientos');
 
-        $this->put(route('practicas.update', $empleo->id), [
+        $this->put(route('practicas.update', $practica->id), [
             'requerimientos' => 'Para hacer un CRUD',
-            'facultad_id' => 1,
+            'area' => 1,
         ])->assertSessionHasErrors('titulo');
 
-        $this->put(route('practicas.update', $empleo->id), [
+        $this->put(route('practicas.update', $practica->id), [
             'titulo' => 'Se buscan pasantes',
             'requerimientos' => 'Para hacer un CRUD',
-        ])->assertSessionHasErrors('facultad_id');
+        ])->assertSessionHasErrors('area');
     }
 
     public function test_destroy()
@@ -264,15 +266,15 @@ class PracticaControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $empleo = factory(Empleo::class)->create([
+        $practica = factory(Practica::class)->create([
             'empresa_id' => 44
         ]);
 
-        $this->delete(route('practicas.destroy', $empleo->id))
+        $this->delete(route('practicas.destroy', $practica->id))
             ->assertRedirect(route('practicas.index'));
 
         $this->assertDatabaseMissing('practicas', [
-            'titulo' => $empleo->titulo
+            'id' => $practica->id
         ]);
     }
 
@@ -284,11 +286,11 @@ class PracticaControllerTest extends TestCase
             'role' => EmpresaController::get_role()
         ]);
 
-        $empleo = factory(Empleo::class)->create([
+        $practica = factory(Practica::class)->create([
             'empresa_id' => 14
         ]);
 
-        $this->delete(route('practicas.destroy', $empleo->id))
+        $this->delete(route('practicas.destroy', $practica->id))
             ->assertStatus(403);
     }
 

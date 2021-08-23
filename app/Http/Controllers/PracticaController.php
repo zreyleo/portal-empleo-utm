@@ -6,7 +6,7 @@ use App\Empresa;
 use App\Practica;
 
 use App\Http\Requests\PracticaStoreRequest;
-
+use App\Http\Requests\PracticaUpdateRequest;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -83,6 +83,8 @@ class PracticaController extends Controller
      */
     public function show(Practica $practica)
     {
+        $this->authorize('pass', $practica);
+
         $empresa = get_session_empresa();
 
         return view('practicas.show')
@@ -98,7 +100,16 @@ class PracticaController extends Controller
      */
     public function edit(Practica $practica)
     {
-        //
+        $this->authorize('pass', $practica);
+
+        $empresa = get_session_empresa();
+
+        $facultades = self::get_facultades();
+
+        return view('practicas.edit')
+            ->with('practica', $practica)
+            ->with('facultades', $facultades)
+            ->with('empresa', $empresa);
     }
 
     /**
@@ -108,9 +119,17 @@ class PracticaController extends Controller
      * @param  \App\Practica  $practica
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Practica $practica)
+    public function update(PracticaUpdateRequest $request, Practica $practica)
     {
-        //
+        $this->authorize('pass', $practica);
+
+        $practica->titulo = $request->titulo;
+        $practica->requerimientos = $request->requerimientos;
+        $practica->facultad_id = $request->area;
+
+        $practica->save();
+
+        return redirect()->route('practicas.edit', $practica);
     }
 
     /**
@@ -121,6 +140,10 @@ class PracticaController extends Controller
      */
     public function destroy(Practica $practica)
     {
-        //
+        $this->authorize('pass', $practica);
+
+        $practica->delete();
+
+        return redirect()->route('practicas.index');
     }
 }
