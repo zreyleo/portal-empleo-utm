@@ -67,7 +67,7 @@ class PracticaController extends Controller
 
         Practica::create([
             'titulo' => $request['titulo'],
-            'facultad_id' => $request['facultad_id'],
+            'facultad_id' => $request['area'],
             'requerimientos' => $request['requerimientos'],
             'empresa_id' => $empresa['id_empresa']
         ]);

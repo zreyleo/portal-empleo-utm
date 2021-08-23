@@ -61,7 +61,7 @@ class PracticaControllerTest extends TestCase
         $this->post(route('practicas.store'), [
             'titulo' => 'Se buscan pasantes',
             'requerimientos' => 'Para hacer un CRUD',
-            'facultad_id' => 1,
+            'area' => 1,
         ])->assertRedirect(route('practicas.index'));
 
         $this->assertDatabaseHas('practicas', [
@@ -78,18 +78,18 @@ class PracticaControllerTest extends TestCase
 
         $this->post(route('practicas.store'), [
             'titulo' => 'Se buscan pasantes',
-            'facultad_id' => 1,
+            'area' => 1,
         ])->assertSessionHasErrors('requerimientos');
 
         $this->post(route('practicas.store'), [
             'requerimientos' => 'Para hacer un CRUD',
-            'facultad_id' => 1,
+            'area' => 1,
         ])->assertSessionHasErrors('titulo');
 
         $this->post(route('practicas.store'), [
             'titulo' => 'Se buscan pasantes',
             'requerimientos' => 'Para hacer un CRUD',
-        ])->assertSessionHasErrors('facultad_id');
+        ])->assertSessionHasErrors('area');
 
         $this->session([
             'role' => 'ESTUDIANTE'
@@ -98,7 +98,7 @@ class PracticaControllerTest extends TestCase
         $this->post(route('practicas.store'), [
             'titulo' => 'Se buscan pasantes',
             'requerimientos' => 'Para hacer un CRUD',
-            'facultad_id' => 1,
+            'area' => 1,
         ])->assertStatus(302);
     }
 

@@ -38,11 +38,11 @@
             </div>
 
             <div class="form-group">
-                <label for="facultad_id">Área</label>
+                <label for="area">Área</label>
                 <select
-                    class="form-control @error ('facultad_id') is-invalid @enderror"
-                    id="facultad_id"
-                    name="facultad_id"
+                    class="form-control @error ('area') is-invalid @enderror"
+                    id="area"
+                    name="area"
                 >
                     <option value="" selected disabled>-- seleccione --</option>
 
@@ -51,7 +51,7 @@
                     @endforeach
                 </select>
 
-                @error('facultad_id')
+                @error('area')
                     <span
                         class="invalid-feedback d-block" role="alert"
                     >{{ $message }}</span>

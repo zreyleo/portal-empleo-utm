@@ -29,7 +29,7 @@ class PracticaStoreRequest extends FormRequest
         return [
             'titulo' => 'required|min:8',
             'requerimientos' => 'required',
-            'facultad_id' => 'required',
+            'area' => 'required',
         ];
     }
 }
