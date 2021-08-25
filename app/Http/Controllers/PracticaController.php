@@ -146,4 +146,15 @@ class PracticaController extends Controller
 
         return redirect()->route('practicas.index');
     }
+
+    public function practicas_offers_for_estudiantes()
+    {
+        $estudiante = get_session_estudiante();
+
+        $practicas = Practica::where('facultad_id', $estudiante['idfacultad'])->latest()->get();
+
+        return view('estudiantes.practicas')
+            ->with('practicas', $practicas)
+            ->with('estudiante', $estudiante);
+    }
 }

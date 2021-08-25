@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Http\Controllers\EmpresaController;
-
+use App\Http\Controllers\EstudianteController;
 use App\Practica;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -292,6 +292,22 @@ class PracticaControllerTest extends TestCase
 
         $this->delete(route('practicas.destroy', $practica->id))
             ->assertStatus(403);
+    }
+
+    public function test_view_practicas_offers_to_estudiantes()
+    {
+        $practicas = factory(Practica::class, 2)->create([
+            'facultad_id' => 2
+        ]);
+
+        $this->session([
+            'role' => EstudianteController::get_role(),
+            'idfacultad' => 2,
+        ]);
+
+        $this->get(route('estudiantes.practicas_offers'))
+            ->assertStatus(200)
+            ->assertSee($practicas[0]->titulo);
     }
 
     // public function test_()

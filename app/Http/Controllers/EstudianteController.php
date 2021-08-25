@@ -15,6 +15,8 @@ class EstudianteController extends Controller
         $estudiante = [
             'id_personal' => Session::get('id_personal'),
             'nombres' => Session::get('nombres'),
+            'idescuela' => Session::get('idescuela'),
+            'idfacultad' => Session::get('idfacultad'),
             'role' => Session::get('role'),
         ];
 

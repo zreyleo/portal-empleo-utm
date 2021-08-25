@@ -43,6 +43,17 @@ Route::prefix('login')->group(function () {
 Route::get('dashboard/estudiantes', 'EstudianteController@dashboard')
     ->name('estudiantes.dashboard');
 
+// Route::prefix('dashboard/estudiantes', function () {
+//     Route::get('practicas', 'PracticaController@practicas_offers_for_estudiantes')
+//         ->middleware('check.estudiante.role.for.session')
+//         ->name('estudiantes.practicas_offers');
+// });
+
+Route::get('dashboard/estudiantes/practicas', 'PracticaController@practicas_offers_for_estudiantes')
+    ->middleware('check.estudiante.role.for.session')
+    ->name('estudiantes.practicas_offers');
+
+// routes for empresas
 Route::prefix('dashboard/empresas')->group(function () {
     Route::resource('empleos', 'EmpleoController')
         ->middleware('check.empresa.role.for.session');

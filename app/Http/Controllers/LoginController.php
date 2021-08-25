@@ -98,10 +98,10 @@ class LoginController extends Controller
 
     public function choose_carrera_get()
     {
-        $estudiante = EstudianteController::get_estudiante_data();
+        $estudiante_id = request()->session()->get('id_personal');
 
         $carreras = DB::connection('DB_db_sga')->select(self::SQL_FOR_GETTING_THE_ESTUDIANTE_CARRERAS, [
-            'idestudiante' => $estudiante['id_personal']
+            'idestudiante' => $estudiante_id
         ]);
 
         // dd($carreras);
@@ -117,10 +117,10 @@ class LoginController extends Controller
 
         $request->session()->put('idescuela', $request['carrera']);
 
-        $estudiante = EstudianteController::get_estudiante_data();
+        $estudiante_id = $request->session()->get('id_personal');
 
         $carreras = DB::connection('DB_db_sga')->select(self::SQL_FOR_GETTING_THE_ESTUDIANTE_CARRERAS, [
-            'idestudiante' => $estudiante['id_personal']
+            'idestudiante' => $estudiante_id
         ]);
 
         foreach ($carreras as $carrera) {

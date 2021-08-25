@@ -25,4 +25,24 @@ class LoginControllerTest extends TestCase
         ])->assertStatus(302)
         ->assertSessionHasErrors();
     }
+
+    public function test_login_estudiante_process()
+    {
+        $this->post(route('login.estudiantes_post'), [
+            'email' => 'rzambrano2041@utm.edu.ec'
+        ])->assertStatus(302)
+        ->assertRedirect(route('login.choose_carrera_get'));
+
+        $this->post(route('login.choose_carrera_post'), [
+            'carrera' => 1 // id of ingenieria en sistemas
+        ])->assertRedirect(route('estudiantes.dashboard'));
+    }
+
+    public function test_login_estudiante_username_not_found()
+    {
+        $this->post(route('login.estudiantes_post'), [
+            'email' => 'no_existe_este_correo@no_existe_este_dominio.ec'
+        ])->assertStatus(302)
+        ->assertSessionHasErrors();
+    }
 }

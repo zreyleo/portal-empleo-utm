@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmpresaController;
-
+use App\Http\Controllers\EstudianteController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
@@ -35,5 +35,12 @@ if (!function_exists('get_session_empresa')) {
     function get_session_empresa()
     {
         return EmpresaController::get_empresa_data();
+    }
+}
+
+if (!function_exists('get_session_estudiante')) {
+    function get_session_estudiante()
+    {
+        return EstudianteController::get_estudiante_data();
     }
 }

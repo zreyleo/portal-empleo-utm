@@ -1,10 +1,8 @@
 <?php
 
-use App\Practica;
-
 use Illuminate\Database\Seeder;
 
-class PracticaSeeder extends Seeder
+class EstudiantePracticaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +11,6 @@ class PracticaSeeder extends Seeder
      */
     public function run()
     {
-        factory(Practica::class, 10)->create();
+        //
     }
 }
