@@ -26,7 +26,9 @@
     </nav>
 
     <div class="container">
-        <h1>Bienvenido al portal de empleo</h1>
+
+        @yield('login_form')
+
     </div>
 
 </body>

@@ -22,10 +22,26 @@ Route::get('logout', function () {
     return redirect()->route('landing');
 })->name('logout');
 
-Route::get('login/empresas', 'LoginController@login_empresas_get')->name('login.empresas_get');
-Route::post('login/empresas', 'LoginController@login_empresas_post')->name('login.empresas_post');
+// Login
+Route::prefix('login')->group(function () {
+    Route::get('empresas', 'LoginController@empresas_get')->name('login.empresas_get');
+    Route::post('empresas', 'LoginController@empresas_post')->name('login.empresas_post');
+
+    Route::get('estudiantes', 'LoginController@estudiantes_get')->name('login.estudiantes_get');
+    Route::post('estudiantes', 'LoginController@estudiantes_post')->name('login.estudiantes_post');
+
+    Route::prefix('estudiantes')->group(function () {
+        Route::get('carrera', 'LoginController@choose_carrera_get')->name('login.choose_carrera_get')
+            ->middleware('check.estudiante.role.for.session');
+
+        Route::post('carrera', 'LoginController@choose_carrera_post')->name('login.choose_carrera_post')
+            ->middleware('check.estudiante.role.for.session');
+    });
+});
 
 // Route::get('dashboard/empresas', 'P');
+Route::get('dashboard/estudiantes', 'EstudianteController@dashboard')
+    ->name('estudiantes.dashboard');
 
 Route::prefix('dashboard/empresas')->group(function () {
     Route::resource('empleos', 'EmpleoController')

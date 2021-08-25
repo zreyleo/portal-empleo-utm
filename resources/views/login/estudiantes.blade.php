@@ -2,15 +2,15 @@
 
 @section('login_form')
 
-    <h2 class="text-center my-5">Login de Empresas</h2>
+    <h2 class="text-center my-5">Login de Estudiantes</h2>
 
     <div class="row">
         <div class="col-md-4 mx-auto">
-            <form action="{{ route('login.empresas_post') }}" method="POST">
+            <form action="{{ route('login.estudiantes_post') }}" method="POST">
                 @csrf
 
                 <div class="form-group">
-                    <label for="email">E-mail</label>
+                    <label for="email">E-mail Institucional</label>
                     <input type="email" name="email" id="email" class="form-control" />
                 </div>
 
