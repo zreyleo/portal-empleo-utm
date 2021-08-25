@@ -2,7 +2,7 @@
 
 @section('page-content')
 
-{{$practicas}}
+{{-- {{$practicas}} --}}
 
 <h2 class="text-center my-5">Ofertas para hacer Pr&aacute;cticas Pre Profesionales</h2>
 
@@ -27,7 +27,9 @@
             <td>{{ $practica->titulo }}</td>
             <td>{{ $practica->cupo }}</td>
             <td class="d-flex">
-                {{-- <a href="{{ route('estudiantes.practicas_show', ['practica' => $practica->id]) }}" class="btn btn-success">Ver</a> --}}
+                <a href="{{ route('estudiantes.practica_details_for_estudiante', ['practica' => $practica->id]) }}"
+                    class="btn btn-success"
+                >Ver</a>
             </td>
         </tr>
 

@@ -157,4 +157,13 @@ class PracticaController extends Controller
             ->with('practicas', $practicas)
             ->with('estudiante', $estudiante);
     }
+
+    public function practica_details_for_estudiante(Practica $practica)
+    {
+        $estudiante = get_session_estudiante();
+
+        return view('estudiantes.practica_details')
+            ->with('practica', $practica)
+            ->with('estudiante', $estudiante);
+    }
 }

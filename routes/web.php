@@ -39,20 +39,6 @@ Route::prefix('login')->group(function () {
     });
 });
 
-// Route::get('dashboard/empresas', 'P');
-Route::get('dashboard/estudiantes', 'EstudianteController@dashboard')
-    ->name('estudiantes.dashboard');
-
-// Route::prefix('dashboard/estudiantes', function () {
-//     Route::get('practicas', 'PracticaController@practicas_offers_for_estudiantes')
-//         ->middleware('check.estudiante.role.for.session')
-//         ->name('estudiantes.practicas_offers');
-// });
-
-Route::get('dashboard/estudiantes/practicas', 'PracticaController@practicas_offers_for_estudiantes')
-    ->middleware('check.estudiante.role.for.session')
-    ->name('estudiantes.practicas_offers');
-
 // routes for empresas
 Route::prefix('dashboard/empresas')->group(function () {
     Route::resource('empleos', 'EmpleoController')
@@ -62,4 +48,30 @@ Route::prefix('dashboard/empresas')->group(function () {
         ->middleware('check.empresa.role.for.session');
 });
 
-// Route::resource('empleos', 'EmpleoController');
+
+// Route::get('dashboard/estudiantes', 'EstudianteController@dashboard')
+//     ->middleware('check.estudiante.role.for.session')
+//     ->name('estudiantes.dashboard');
+
+// Route::get('dashboard/estudiantes/practicas', 'PracticaController@practicas_offers_for_estudiantes')
+//     ->middleware('check.estudiante.role.for.session')
+//     ->name('estudiantes.practicas_offers');
+
+// Route::get('dashboard/estudiantes/practicas/{practica}', 'PracticaController@practica_details_for_estudiante')
+//     ->middleware('check.estudiante.role.for.session')
+//     ->name('estudiantes.practica_details_for_estudiante');
+
+Route::prefix('dashboard/estudiantes')->group(function () {
+    Route::get('', 'EstudianteController@dashboard')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes.dashboard');
+
+    Route::get('practicas', 'PracticaController@practicas_offers_for_estudiantes')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes.practicas_offers');
+
+    Route::get('practicas/{practica}', 'PracticaController@practica_details_for_estudiante')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes.practica_details_for_estudiante');
+
+});

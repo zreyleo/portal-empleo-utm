@@ -310,6 +310,24 @@ class PracticaControllerTest extends TestCase
             ->assertSee($practicas[0]->titulo);
     }
 
+    public function test_view_practica_details_to_estudiante()
+    {
+        $practica = factory(Practica::class)->create([
+            'facultad_id' => 2
+        ]);
+
+        $this->session([
+            'role' => EstudianteController::get_role(),
+            'idfacultad' => 2,
+        ]);
+
+        $this->get(route('estudiantes.practica_details_for_estudiante', ['practica' => $practica->id]))
+            ->assertStatus(200)
+            ->assertSee($practica->titulo)
+            ->assertSee($practica->empresa->nombre_empresa)
+            ->assertSee($practica->requerimientos);
+    }
+
     // public function test_()
     // {
 
