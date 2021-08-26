@@ -15,6 +15,9 @@ class CreateEstudiantePracticasTable extends Migration
     {
         Schema::create('estudiantes_practicas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('estudiante_id');
+            $table->unsignedBigInteger('practica_id');
+            $table->foreign('practica_id')->references('id')->on('practicas');
             $table->timestamps();
         });
     }

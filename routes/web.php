@@ -74,4 +74,11 @@ Route::prefix('dashboard/estudiantes')->group(function () {
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes.practica_details_for_estudiante');
 
+    Route::post('practicas/{practica}', 'EstudiantePracticaController@store')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes_practicas.store');
+
+    Route::get('estudiantes_practicas', 'EstudiantePracticaController@index')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes_practicas.index');
 });

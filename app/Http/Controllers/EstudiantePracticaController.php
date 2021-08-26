@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\EstudiantePractica;
+use App\Practica;
 use Illuminate\Http\Request;
 
 class EstudiantePracticaController extends Controller
@@ -14,7 +15,16 @@ class EstudiantePracticaController extends Controller
      */
     public function index()
     {
-        //
+        $estudiante = get_session_estudiante();
+
+        // dd($estudiante);
+
+        $estudiantes_practicas = EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])
+            ->latest()->get();
+
+        return view('estudiantes.estudiantes_practicas')
+            ->with('estudiantes_practicas', $estudiantes_practicas)
+            ->with('estudiante', $estudiante);
     }
 
     /**
@@ -33,9 +43,20 @@ class EstudiantePracticaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Practica $practica)
     {
-        //
+        // dd($practica);
+
+        $estudiante = get_session_estudiante();
+
+        // dd($practica);
+
+        EstudiantePractica::create([
+            'estudiante_id' => $estudiante['id_personal'],
+            'practica_id' => $practica->id,
+        ]);
+
+        return redirect()->route('estudiantes_practicas.index');
     }
 
     /**

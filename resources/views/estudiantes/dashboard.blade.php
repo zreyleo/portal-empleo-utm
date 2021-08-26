@@ -28,10 +28,10 @@
     </a>
     <ul class="collapse list-unstyled" id="practicas">
         <li>
-            <a href="{{ route('practicas.index') }}">Tus ofertas de Pr&aacute;cticas</a>
+            <a href="{{ route('estudiantes.practicas_offers') }}">Ver Ofertas de Pr&aacute;cticas</a>
         </li>
         <li>
-            <a href="{{ route('practicas.create') }}">Crear Oferta de Pr&aacute;cticas</a>
+            <a href="{{ route('estudiantes_practicas.index') }}">Ver mis pr&aacute;cticas</a>
         </li>
     </ul>
 </li>
