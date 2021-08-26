@@ -11224,3 +11224,39 @@ table.table tbody tr td span.badge {
   color: #a30021;
 }
 
+/* ---------------------------------------------------
+    NOTIFICACION
+----------------------------------------------------- */
+
+.notificacion {
+  position: fixed;
+  top: 60px;
+  right: 1rem;
+  padding: 10px 20px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  font-size: 1rem;
+  text-transform: uppercase;
+  border-radius: 5px;
+  z-index: 999;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.sombra {
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.correcto {
+  background-color: #b3f175;
+  color: green;
+}
+
+.error {
+  background-color: #ee94a6;
+  color: #a30021;
+}
+

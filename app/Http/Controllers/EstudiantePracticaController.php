@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EstudiantePractica;
 use App\Practica;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EstudiantePracticaController extends Controller
@@ -50,6 +51,18 @@ class EstudiantePracticaController extends Controller
         $estudiante = get_session_estudiante();
 
         // dd($practica);
+
+        if (EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])->get()->count() > 0) {
+            $last_estudiante_practica = EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])
+                ->latest()->get()[0];
+
+            $date_last_estudiante_practica = Carbon::create($last_estudiante_practica->created_at->format('d.m.Y'));
+
+            if ($date_last_estudiante_practica->addMonth()->greaterThan(now())) {
+                add_error('No es posible reservar otro cupo de una practica hasta despues de un mes');
+                return redirect()->route('estudiantes.practicas_offers');
+            }
+        }
 
         EstudiantePractica::create([
             'estudiante_id' => $estudiante['id_personal'],

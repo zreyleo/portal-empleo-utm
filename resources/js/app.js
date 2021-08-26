@@ -14,6 +14,9 @@ require('./bootstrap');
 
 require('./components/Example');
 require('./components/FacultadesCarrerasSelects');
+require('./components/Notificacion');
+
+// console.log('hola')
 
 $(document).ready(function () {
 
