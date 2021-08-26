@@ -30,6 +30,20 @@
                 <a href="{{ route('estudiantes.practica_details_for_estudiante', ['practica' => $estudiante_practica->practica->id]) }}"
                     class="btn btn-success"
                 >Ver</a>
+                <form action="{{ route('estudiantes_practicas.destroy', ['estudiante_practica' => $estudiante_practica->id]) }}"
+                    method="post"
+                    onsubmit="
+                        if (!confirm('Desea Eliminar?')) {
+                            event.preventDefault();
+                            return;
+                        }
+                    "
+                >
+                    @csrf
+                    @method('DELETE')
+
+                    <input type="submit" value="Eliminar" class="btn btn-danger">
+                </form>
             </td>
         </tr>
 

@@ -81,4 +81,8 @@ Route::prefix('dashboard/estudiantes')->group(function () {
     Route::get('estudiantes_practicas', 'EstudiantePracticaController@index')
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes_practicas.index');
+
+    Route::delete('estudiantes_practicas/{estudiante_practica}', 'EstudiantePracticaController@destroy')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes_practicas.destroy');
 });

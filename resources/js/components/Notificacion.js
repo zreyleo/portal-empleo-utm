@@ -8,12 +8,10 @@ const Notificacion = ({ mensaje, clase }) => {
 
     useEffect(() => {
         setClases(`visible text-white ${clase}`);
-        console.log('hola');
         setTimeout(() => {
             setClases('');
 
             setTimeout(() => {
-                console.log('ciao');
                 setVisible(false);
             }, 500);
         }, 2500);

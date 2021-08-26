@@ -64,10 +64,16 @@ class EstudiantePracticaController extends Controller
             }
         }
 
-        EstudiantePractica::create([
-            'estudiante_id' => $estudiante['id_personal'],
-            'practica_id' => $practica->id,
-        ]);
+        try {
+            EstudiantePractica::create([
+                'estudiante_id' => $estudiante['id_personal'],
+                'practica_id' => $practica->id,
+            ]);
+        } catch (\Throwable $th) {
+            add_error('No es posible reservar una misma oferta de practica mas de una vez');
+            return redirect()->route('estudiantes.practicas_offers');
+        }
+
 
         return redirect()->route('estudiantes_practicas.index');
     }
@@ -112,8 +118,12 @@ class EstudiantePracticaController extends Controller
      * @param  \App\EstudiantePractica  $estudiantePractica
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EstudiantePractica $estudiantePractica)
+    public function destroy(EstudiantePractica $estudiante_practica)
     {
-        //
+        $this->authorize('pass', $estudiante_practica);
+
+        $estudiante_practica->delete();
+
+        return redirect()->route('estudiantes_practicas.index');
     }
 }
