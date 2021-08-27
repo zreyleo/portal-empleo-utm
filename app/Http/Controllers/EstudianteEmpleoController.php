@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Empleo;
 use App\EstudianteEmpleo;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,14 @@ class EstudianteEmpleoController extends Controller
      */
     public function index()
     {
-        //
+        $estudiante = get_session_estudiante();
+
+        $estudiantes_empleos = EstudianteEmpleo::where('estudiante_id', $estudiante['id_personal'])
+            ->latest()->get();
+
+        return view('estudiantes.estudiantes_empleos')
+            ->with('estudiantes_empleos', $estudiantes_empleos)
+            ->with('estudiante', $estudiante);
     }
 
     /**
@@ -33,9 +41,22 @@ class EstudianteEmpleoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Empleo $empleo)
     {
-        //
+        $estudiante = get_session_estudiante();
+
+        // dd($empleo);
+        try {
+            EstudianteEmpleo::create([
+                'estudiante_id' => $estudiante['id_personal'],
+                'empleo_id' => $empleo->id
+            ]);
+        } catch (\Throwable $th) {
+            add_error('Ya se concedió sus datos para esta oferta de empleo');
+            return redirect()->route('estudiantes.empleos_offers');
+        }
+
+        return redirect()->route('estudiantes_empleos.index');
     }
 
     /**

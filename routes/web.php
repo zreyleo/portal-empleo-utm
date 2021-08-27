@@ -37,19 +37,6 @@ Route::prefix('dashboard/empresas')->group(function () {
         ->middleware('check.empresa.role.for.session');
 });
 
-
-// Route::get('dashboard/estudiantes', 'EstudianteController@dashboard')
-//     ->middleware('check.estudiante.role.for.session')
-//     ->name('estudiantes.dashboard');
-
-// Route::get('dashboard/estudiantes/practicas', 'PracticaController@practicas_offers_for_estudiantes')
-//     ->middleware('check.estudiante.role.for.session')
-//     ->name('estudiantes.practicas_offers');
-
-// Route::get('dashboard/estudiantes/practicas/{practica}', 'PracticaController@practica_details_for_estudiante')
-//     ->middleware('check.estudiante.role.for.session')
-//     ->name('estudiantes.practica_details_for_estudiante');
-
 Route::prefix('dashboard/estudiantes')->group(function () {
     Route::get('', 'EstudianteController@dashboard')
         ->middleware('check.estudiante.role.for.session')
@@ -88,6 +75,10 @@ Route::prefix('dashboard/estudiantes')->group(function () {
     Route::get('empleos/{empleo}', 'EmpleoController@empleo_details_for_estudiante')
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes.empleo_details_for_estudiante');
+
+    Route::get('estudiantes_empleos', 'EstudianteEmpleoController@index')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes_empleos.index');
 
     Route::post('empleos/{empleo}', 'EstudianteEmpleoController@store')
         ->middleware('check.estudiante.role.for.session')

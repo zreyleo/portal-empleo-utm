@@ -3,6 +3,9 @@
 namespace Tests\Feature;
 
 use App\Empleo;
+
+use App\Http\Controllers\EstudianteController;
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 
@@ -10,6 +13,8 @@ use Tests\TestCase;
 
 class EstudianteEmpleoControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -22,19 +27,40 @@ class EstudianteEmpleoControllerTest extends TestCase
         ]);
     }
 
-    public function text_estudiante_can_post_to_empleo_offer()
+    public function test_estudiante_can_post_to_empleo_offer()
     {
+        $this->withoutExceptionHandling();
         $empleo = factory(Empleo::class)->create([
             'carrera_id' => 1
         ]);
 
-        $this->post(route('estudiantes.empleos_offers', ['empleo' => $empleo->id]))
-            ->assertRedirect(route('estudiantes_emplos.index'));
+        $this->post(route('estudiantes_empleos.store', ['empleo' => $empleo->id]))
+            ->assertRedirect(route('estudiantes_empleos.index'));
 
         $this->assertDatabaseHas('estudiantes_empleos', [
             'estudiante_id' => 66710,
             'empleo_id' => $empleo->id
         ]);
+    }
+
+    public function test_estudiante_can_not_post_to_empleo_offer_twice()
+    {
+        $this->withoutExceptionHandling();
+        $empleo = factory(Empleo::class)->create([
+            'carrera_id' => 1
+        ]);
+
+        $this->post(route('estudiantes_empleos.store', ['empleo' => $empleo->id]))
+            ->assertRedirect(route('estudiantes_empleos.index'));
+
+        $this->assertDatabaseHas('estudiantes_empleos', [
+            'estudiante_id' => 66710,
+            'empleo_id' => $empleo->id
+        ]);
+
+        $this->post(route('estudiantes_empleos.store', ['empleo' => $empleo->id]))
+            ->assertRedirect(route('estudiantes.empleos_offers'))
+            ->assertSessionHasErrors();
     }
 
     // public function text_()

@@ -13,9 +13,13 @@ class CreateEstudianteEmpleosTable extends Migration
      */
     public function up()
     {
-        Schema::create('estudiante_empleos', function (Blueprint $table) {
+        Schema::create('estudiantes_empleos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('estudiante_id');
+            $table->unsignedBigInteger('empleo_id');
             $table->timestamps();
+            $table->foreign('empleo_id')->references('id')->on('empleos');
+            $table->unique(['estudiante_id', 'empleo_id']);
         });
     }
 
@@ -26,6 +30,6 @@ class CreateEstudianteEmpleosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estudiante_empleos');
+        Schema::dropIfExists('estudiantes_empleos');
     }
 }
