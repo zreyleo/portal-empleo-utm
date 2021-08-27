@@ -97,6 +97,8 @@ class EstudiantePracticaController extends Controller
 
     public function show_empresa_contact_info(EstudiantePractica $estudiante_practica)
     {
+        $this->authorize('pass', $estudiante_practica);
+
         $estudiante = get_session_estudiante();
 
         $empresa = $estudiante_practica->practica->empresa;

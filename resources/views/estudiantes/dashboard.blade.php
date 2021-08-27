@@ -31,7 +31,7 @@
             <a href="{{ route('estudiantes.practicas_offers') }}">Ver Ofertas de Pr&aacute;cticas</a>
         </li>
         <li>
-            <a href="{{ route('estudiantes_practicas.index') }}">Ver mis pr&aacute;cticas</a>
+            <a href="{{ route('estudiantes_practicas.index') }}">Ver mis reservaciones de pr&aacute;cticas</a>
         </li>
     </ul>
 </li>

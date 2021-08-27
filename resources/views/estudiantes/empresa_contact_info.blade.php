@@ -4,6 +4,10 @@
 
 {{-- {{ $empresa }} --}}
 
+<div class="my-3">
+    <a href="{{ route('estudiantes_practicas.index') }}" class="btn btn-outline-danger">Volver</a>
+</div>
+
 <h2 class="text-center my-5">Informaci&oacute;n de Contacto</h2>
 
 <p><strong>Nombre de la empresa:</strong> {{ $empresa->nombre_empresa }}</p>

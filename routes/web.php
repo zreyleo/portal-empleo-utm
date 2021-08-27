@@ -2,17 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 })->name('landing');
@@ -66,6 +55,7 @@ Route::prefix('dashboard/estudiantes')->group(function () {
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes.dashboard');
 
+    // practicas for estudiantes
     Route::get('practicas', 'PracticaController@practicas_offers_for_estudiantes')
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes.practicas_offers');
@@ -89,4 +79,9 @@ Route::prefix('dashboard/estudiantes')->group(function () {
     Route::delete('estudiantes_practicas/{estudiante_practica}', 'EstudiantePracticaController@destroy')
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes_practicas.destroy');
+
+    // empleos for estudiantes
+    Route::get('empleos', 'EmpleoController@empleos_offers_for_estudiantes')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes.empleos_offers');
 });

@@ -4,7 +4,7 @@
 
 {{-- {{$practicas}} --}}
 
-<h2 class="text-center my-5">Mis Pr&aacute;cticas</h2>
+<h2 class="text-center my-5">Mis Reservaciones de Pr&aacute;cticas</h2>
 
 {{-- {{ $estudiantes_practicas }} --}}
 
@@ -17,6 +17,7 @@
         <tr>
             <th scope="col">Titulo</th>
             <th scope="col">Cupo</th>
+            <th scope="col">Empresa</th>
             <th scope="col">Opciones</th>
         </tr>
     </thead>
@@ -26,6 +27,7 @@
         <tr>
             <td>{{ $estudiante_practica->practica->titulo }}</td>
             <td>{{ $estudiante_practica->practica->cupo }}</td>
+            <td>{{ $estudiante_practica->practica->empresa->nombre_empresa }}</td>
             <td class="d-flex">
                 <a href="{{ route('estudiantes.practica_details_for_estudiante', ['practica' => $estudiante_practica->practica->id]) }}"
                     class="btn btn-success"
@@ -35,7 +37,7 @@
                     href="{{
                         route('estudiantes_practicas.show_empresa_contact_info', ['estudiante_practica' => $estudiante_practica])
                     }}"
-                    class="btn btn-info"
+                    class="btn btn-info text-white mx-2"
                 >
                     Contacto
                 </a>

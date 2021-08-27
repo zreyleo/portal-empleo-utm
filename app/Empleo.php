@@ -18,4 +18,9 @@ class Empleo extends Model
     {
         return $this->belongsTo(Empresa::class, 'empresa_id', 'id_empresa');
     }
+
+    public function escuela()
+    {
+        return $this->belongsTo(Escuela::class, 'carrera_id', 'idescuela');
+    }
 }

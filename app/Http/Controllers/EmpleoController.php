@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Empleo;
 use App\Empresa;
+use App\Escuela;
 
 use App\Http\Requests\EmpleoStoreRequest;
 use App\Http\Requests\EmpleoUpdateRequest;
@@ -168,5 +169,21 @@ class EmpleoController extends Controller
         $empleo->delete();
 
         return redirect()->route('empleos.index');
+    }
+
+    public function empleos_offers_for_estudiantes()
+    {
+        $estudiante = get_session_estudiante();
+
+        $escuela = Escuela::find($estudiante['idescuela']);
+
+        // dd($escuela);
+
+        $empleos = $escuela->empleos;
+
+        return view('estudiantes.empleos')
+            ->with('estudiante', $estudiante)
+            ->with('escuela', $escuela)
+            ->with('empleos', $empleos);
     }
 }

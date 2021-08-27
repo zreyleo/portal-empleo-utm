@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Empleo;
 
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\EstudianteController;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -287,6 +288,22 @@ class EmpleoControllerTest extends TestCase
 
         $this->delete(route('empleos.destroy', $empleo->id))
             ->assertStatus(403);
+    }
+
+    public function test_estudiante_can_see_empleos_offers()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->session([
+            'id_personal' => 66710, // id_personal of a random estudiante
+            'idfacultad' => 2,
+            'idescuela' => 1, // id = ingenieria en sistemas
+            'role' => EstudianteController::get_role()
+        ]);
+
+        $response = $this->get(route('estudiantes.empleos_offers'));
+
+        $response->assertStatus(200);
     }
 
     // public function test_()
