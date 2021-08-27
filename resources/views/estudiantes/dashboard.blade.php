@@ -13,10 +13,10 @@
     </a>
     <ul class="collapse list-unstyled" id="empleos">
         <li>
-            <a href="{{ route('empleos.index') }}">Tus ofertas de empleo</a>
+            <a href="{{ route('estudiantes.empleos_offers') }}">Ofertas de empleo</a>
         </li>
         <li>
-            <a href="{{ route('empleos.create') }}">Crear Oferta de empleo</a>
+            <a href="{{ route('empleos.create') }}">Tus solicitudes</a>
         </li>
     </ul>
 </li>

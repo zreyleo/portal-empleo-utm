@@ -35,8 +35,8 @@
                 <td>{{ $empleo->titulo }}</td>
                 <td>{{ $empleo->empresa->nombre_empresa }}</td>
                 <td class="d-flex">
-                    {{-- <a href="{{ route('estudiantes.practica_details_for_estudiante', ['practica' => $practica->id]) }}"
-                        class="btn btn-success">Ver</a> --}}
+                    <a href="{{ route('estudiantes.empleo_details_for_estudiante', ['empleo' => $empleo->id]) }}"
+                        class="btn btn-success">Ver</a>
                 </td>
             </tr>
 

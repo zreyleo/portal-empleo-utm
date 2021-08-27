@@ -292,8 +292,6 @@ class EmpleoControllerTest extends TestCase
 
     public function test_estudiante_can_see_empleos_offers()
     {
-        $this->withoutExceptionHandling();
-
         $this->session([
             'id_personal' => 66710, // id_personal of a random estudiante
             'idfacultad' => 2,
@@ -304,6 +302,26 @@ class EmpleoControllerTest extends TestCase
         $response = $this->get(route('estudiantes.empleos_offers'));
 
         $response->assertStatus(200);
+    }
+
+    public function test_estudiante_can_see_a_empleo_details()
+    {
+        $this->withoutExceptionHandling();
+        $this->session([
+            'id_personal' => 66710, // id_personal of a random estudiante
+            'idfacultad' => 2,
+            'idescuela' => 1, // id = ingenieria en sistemas
+            'role' => EstudianteController::get_role()
+        ]);
+
+        $empleo = factory(Empleo::class)->create([
+            'carrera_id' => 1
+        ]);
+
+        $response = $this->get(route('estudiantes.empleo_details_for_estudiante', ['empleo' => $empleo->id]));
+
+        $response->assertStatus(200)
+            ->assertSee($empleo->titulo);
     }
 
     // public function test_()

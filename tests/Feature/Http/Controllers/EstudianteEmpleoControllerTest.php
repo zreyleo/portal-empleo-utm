@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Empleo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+
 use Tests\TestCase;
 
 class EstudianteEmpleoControllerTest extends TestCase
@@ -20,15 +22,23 @@ class EstudianteEmpleoControllerTest extends TestCase
         ]);
     }
 
-    // /**
-    //  * A basic feature test example.
-    //  *
-    //  * @return void
-    //  */
-    // public function testExample()
-    // {
-    //     $response = $this->get('/');
+    public function text_estudiante_can_post_to_empleo_offer()
+    {
+        $empleo = factory(Empleo::class)->create([
+            'carrera_id' => 1
+        ]);
 
-    //     $response->assertStatus(200);
+        $this->post(route('estudiantes.empleos_offers', ['empleo' => $empleo->id]))
+            ->assertRedirect(route('estudiantes_emplos.index'));
+
+        $this->assertDatabaseHas('estudiantes_empleos', [
+            'estudiante_id' => 66710,
+            'empleo_id' => $empleo->id
+        ]);
+    }
+
+    // public function text_()
+    // {
+
     // }
 }
