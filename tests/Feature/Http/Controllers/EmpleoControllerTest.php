@@ -18,6 +18,17 @@ class EmpleoControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->session([
+            'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
+            'role' => EmpresaController::get_role()
+        ]);
+    }
+
     public function test_index_empty()
     {
         $this->session([
@@ -116,6 +127,8 @@ class EmpleoControllerTest extends TestCase
 
     public function test_show()
     {
+        $this->withoutExceptionHandling();
+
         $this->session([
             'id_empresa' => 44,
             'nombre_empresa' => 'EL DIARIO EDIASA',

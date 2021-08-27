@@ -71,36 +71,17 @@ class EstudianteEmpleoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\EstudianteEmpleo  $estudianteEmpleo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(EstudianteEmpleo $estudianteEmpleo)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\EstudianteEmpleo  $estudianteEmpleo
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, EstudianteEmpleo $estudianteEmpleo)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\EstudianteEmpleo  $estudianteEmpleo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EstudianteEmpleo $estudianteEmpleo)
+    public function destroy(EstudianteEmpleo $estudiante_empleo)
     {
-        //
+        $this->authorize('pass', $estudiante_empleo);
+
+        $estudiante_empleo->delete();
+
+        return redirect()->route('estudiantes_empleos.index');
     }
 }

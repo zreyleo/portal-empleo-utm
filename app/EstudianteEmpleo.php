@@ -11,4 +11,9 @@ class EstudianteEmpleo extends Model
     protected $fillable = [
         'estudiante_id', 'empleo_id'
     ];
+
+    public function empleo()
+    {
+        return $this->belongsTo(Empleo::class, 'empleo_id', 'id');
+    }
 }

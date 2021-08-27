@@ -76,12 +76,16 @@ Route::prefix('dashboard/estudiantes')->group(function () {
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes.empleo_details_for_estudiante');
 
+    Route::post('empleos/{empleo}', 'EstudianteEmpleoController@store')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes_empleos.store');
+
     Route::get('estudiantes_empleos', 'EstudianteEmpleoController@index')
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes_empleos.index');
 
-    Route::post('empleos/{empleo}', 'EstudianteEmpleoController@store')
+    Route::delete('estudiantes_empleos/{estudiante_empleo}', 'EstudianteEmpleoController@destroy')
         ->middleware('check.estudiante.role.for.session')
-        ->name('estudiantes_empleos.store');
+        ->name('estudiantes_empleos.destroy');
 
 });

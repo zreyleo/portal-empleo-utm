@@ -93,18 +93,24 @@ class EmpleoController extends Controller
      */
     public function show(Empleo $empleo)
     {
-        $empresa = get_session_empresa();
         $this->authorize('pass', $empleo);
 
-        // dd($empresa);
+        $empresa = get_session_empresa();
 
-        // if ($empresa['id_empresa'] != $empleo->empresa_id) {
-        //     abort(403);
-        // }
+        $escuela = $empleo->escuela;
+
+        $carrera = '';
+
+        // prevention for possible testing error
+        if ($escuela) {
+            $carrera = $escuela->nombre;
+        }
+
 
         return view('empleos.show')
             ->with('empleo', $empleo)
-            ->with('empresa', get_session_empresa());
+            ->with('carrera', $carrera)
+            ->with('empresa', $empresa);
     }
 
     /**

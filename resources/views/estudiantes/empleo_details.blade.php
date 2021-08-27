@@ -7,10 +7,10 @@
     <div class="w-full d-flex justify-content-between">
         <a href="{{ route('estudiantes.empleos_offers') }}" class="btn btn-outline-danger my-3">Volver</a>
 
-        {{-- <form action="{{ route('estudiantes_practicas.store', ['practica' => $practica->id]) }}" method="post">
+        <form action="{{ route('estudiantes_empleos.store', ['empleo' => $empleo->id]) }}" method="post">
             @csrf
-            <input type="submit" class="btn btn-outline-primary my-3" value="Reservar un cupo">
-        </form> --}}
+            <input type="submit" class="btn btn-outline-primary my-3" value="Postular">
+        </form>
     </div>
 
     <h1 class="text-center">{{ $empleo->titulo }}</h1>

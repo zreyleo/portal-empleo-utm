@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Empleo;
-
+use App\EstudianteEmpleo;
 use App\Http\Controllers\EstudianteController;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,7 +29,6 @@ class EstudianteEmpleoControllerTest extends TestCase
 
     public function test_estudiante_can_post_to_empleo_offer()
     {
-        $this->withoutExceptionHandling();
         $empleo = factory(Empleo::class)->create([
             'carrera_id' => 1
         ]);
@@ -45,7 +44,6 @@ class EstudianteEmpleoControllerTest extends TestCase
 
     public function test_estudiante_can_not_post_to_empleo_offer_twice()
     {
-        $this->withoutExceptionHandling();
         $empleo = factory(Empleo::class)->create([
             'carrera_id' => 1
         ]);
@@ -63,7 +61,27 @@ class EstudianteEmpleoControllerTest extends TestCase
             ->assertSessionHasErrors();
     }
 
-    // public function text_()
+    public function test_estudiante_can_delete_its_own_estudiante_empleo_record()
+    {
+        $empleo = factory(Empleo::class)->create([
+            'carrera_id' => 1
+        ]);
+
+        $estudiante_empleo = factory(EstudianteEmpleo::class)->create([
+            'estudiante_id' => 66710,
+            'empleo_id' => $empleo->id
+        ]);
+
+        $this->delete(route('estudiantes_empleos.destroy', ['estudiante_empleo' => $estudiante_empleo->id]))
+            ->assertRedirect(route('estudiantes_empleos.index'));
+
+        $this->assertDatabaseMissing('estudiantes_empleos', [
+            'estudiante_id' => 66710,
+            'empleo_id' => $empleo->id
+        ]);
+    }
+
+    // public function test_()
     // {
 
     // }
