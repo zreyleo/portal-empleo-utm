@@ -6,6 +6,7 @@ use App\EstudiantePractica;
 use App\Practica;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EstudiantePracticaController extends Controller
 {
@@ -26,16 +27,6 @@ class EstudiantePracticaController extends Controller
         return view('estudiantes.estudiantes_practicas')
             ->with('estudiantes_practicas', $estudiantes_practicas)
             ->with('estudiante', $estudiante);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -90,29 +81,6 @@ class EstudiantePracticaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\EstudiantePractica  $estudiantePractica
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(EstudiantePractica $estudiantePractica)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\EstudiantePractica  $estudiantePractica
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, EstudiantePractica $estudiantePractica)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\EstudiantePractica  $estudiantePractica
@@ -125,5 +93,34 @@ class EstudiantePracticaController extends Controller
         $estudiante_practica->delete();
 
         return redirect()->route('estudiantes_practicas.index');
+    }
+
+    public function show_empresa_contact_info(EstudiantePractica $estudiante_practica)
+    {
+        $estudiante = get_session_estudiante();
+
+        $empresa = $estudiante_practica->practica->empresa;
+
+        $sql_location = '
+            select provincia.nombre as "provincia", canton.nombre as "canton", parroquia.nombre as "parroquia"
+            from view_provincia provincia inner join view_canton canton on canton.idprovincia = provincia.idprovincia
+                inner join view_parroquia parroquia on parroquia.idcanton = canton.idcanton
+            where provincia.idprovincia = :idprovincia
+                and canton.idcanton = :idcanton
+                and parroquia.idparroquia = :idparroquia
+        ';
+
+        // dd($empresa->id_provincia);
+
+        $location = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_location, [
+            'idprovincia' => $empresa->id_provincia,
+            'idcanton' => $empresa->id_canton,
+            'idparroquia' => $empresa->id_parroquia,
+        ])[0];
+
+        return view('estudiantes.empresa_contact_info')
+            ->with('empresa', $empresa)
+            ->with('estudiante', $estudiante)
+            ->with('location', $location);
     }
 }

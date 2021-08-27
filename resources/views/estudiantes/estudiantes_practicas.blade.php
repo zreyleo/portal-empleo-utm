@@ -29,7 +29,17 @@
             <td class="d-flex">
                 <a href="{{ route('estudiantes.practica_details_for_estudiante', ['practica' => $estudiante_practica->practica->id]) }}"
                     class="btn btn-success"
-                >Ver</a>
+                >Ver Detalles</a>
+
+                <a
+                    href="{{
+                        route('estudiantes_practicas.show_empresa_contact_info', ['estudiante_practica' => $estudiante_practica])
+                    }}"
+                    class="btn btn-info"
+                >
+                    Contacto
+                </a>
+
                 <form action="{{ route('estudiantes_practicas.destroy', ['estudiante_practica' => $estudiante_practica->id]) }}"
                     method="post"
                     onsubmit="

@@ -82,6 +82,10 @@ Route::prefix('dashboard/estudiantes')->group(function () {
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes_practicas.index');
 
+    Route::get('estudiantes_practicas/{estudiante_practica}/empresa_contacto_info', 'EstudiantePracticaController@show_empresa_contact_info')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes_practicas.show_empresa_contact_info');
+
     Route::delete('estudiantes_practicas/{estudiante_practica}', 'EstudiantePracticaController@destroy')
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes_practicas.destroy');
