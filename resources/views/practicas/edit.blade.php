@@ -16,10 +16,13 @@
 
 <h2 class="my-3 text-center">Editar una Oferta de Práctica</h2>
 
+{{ $practica->cupo }}
+
 <div class="row mb-3">
     <div class="col-md-8 mx-auto">
-        <form action="{{ route('practicas.store') }}" method="POST" novalidate>
+        <form action="{{ route('practicas.update', ['practica' => $practica->id]) }}" method="POST" novalidate>
             @csrf
+            @method('PUT')
 
             <div class="form-group">
                 <label for="titulo">T&iacute;tulo</label>
@@ -68,7 +71,7 @@
                     name="cupo"
                     min="1"
                     step="1"
-                    value="{{ old('cupo') ? old('cupo') : 1 }}"
+                    value="{{ $practica->cupo }}"
                 >
 
                 @error('cupo')
@@ -86,7 +89,7 @@
                     type="hidden"
                     id="requerimientos"
                     name="requerimientos"
-                    value="{{ old('requerimientos') }}"
+                    value="{{ $practica->requerimientos }}"
                 />
 
                 <trix-editor input="requerimientos" class="@error ('requerimientos') is-invalid @enderror"></trix-editor>
@@ -104,7 +107,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Crear Oferta</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
 
     </div>

@@ -26,7 +26,7 @@
     </nav>
 
     <div class="container">
-        <h1>Bienvenido al portal de empleo</h1>
+        <h1 class="my-5">Bienvenido al portal de empleo</h1>
     </div>
 
 </body>

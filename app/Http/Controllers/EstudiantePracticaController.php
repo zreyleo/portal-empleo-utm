@@ -24,7 +24,7 @@ class EstudiantePracticaController extends Controller
         $estudiantes_practicas = EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])
             ->latest()->get();
 
-        return view('estudiantes.estudiantes_practicas')
+        return view('estudiantes_practicas.index')
             ->with('estudiantes_practicas', $estudiantes_practicas)
             ->with('estudiante', $estudiante);
     }
@@ -93,6 +93,18 @@ class EstudiantePracticaController extends Controller
         $estudiante_practica->delete();
 
         return redirect()->route('estudiantes_practicas.index');
+    }
+
+
+    public function show_practica_details(EstudiantePractica $estudiante_practica)
+    {
+        $estudiante = get_session_estudiante();
+
+        $practica = $estudiante_practica->practica;
+
+        return view('estudiantes_practicas.show_practica_details')
+            ->with('practica', $practica)
+            ->with('estudiante', $estudiante);
     }
 
     public function show_empresa_contact_info(EstudiantePractica $estudiante_practica)

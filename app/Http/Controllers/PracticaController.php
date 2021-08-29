@@ -125,6 +125,7 @@ class PracticaController extends Controller
 
         $practica->titulo = $request->titulo;
         $practica->requerimientos = $request->requerimientos;
+        $practica->cupo = $request->cupo;
         $practica->facultad_id = $request->area;
 
         $practica->save();

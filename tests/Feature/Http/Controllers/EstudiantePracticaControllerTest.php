@@ -121,6 +121,27 @@ class EstudiantePracticaControllerTest extends TestCase
             ->assertSee($estudiante_practica->practica->empresa->nombre_empresa);
     }
 
+    public function test_see_practica_from_estudiante_practica_record()
+    {
+        $practica = factory(Practica::class)->create([
+            'facultad_id' => 2
+        ]);
+
+        $this->post(route('estudiantes_practicas.store', ['practica' => $practica->id]))
+            ->assertRedirect(route('estudiantes_practicas.index'));
+
+        $estudiante_practica = EstudiantePractica::where([
+            'estudiante_id' => 66710,
+            'practica_id' => $practica->id,
+        ])->get()[0];
+
+        $this->get(route('estudiantes_practicas.show_practica_details', ['estudiante_practica' => $estudiante_practica->id]))
+            ->assertStatus(200)
+            ->assertSee($practica->titulo)
+            ->assertSee($practica->empresa->nombre_empresa)
+            ->assertSee($practica->requerimientos);
+    }
+
     // public function test_()
     // {
 
