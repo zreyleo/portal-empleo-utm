@@ -20,7 +20,7 @@ class EstudianteEmpleoController extends Controller
         $estudiantes_empleos = EstudianteEmpleo::where('estudiante_id', $estudiante['id_personal'])
             ->latest()->get();
 
-        return view('estudiantes.estudiantes_empleos')
+        return view('estudiantes_empleos.index')
             ->with('estudiantes_empleos', $estudiantes_empleos)
             ->with('estudiante', $estudiante);
     }
@@ -83,5 +83,19 @@ class EstudianteEmpleoController extends Controller
         $estudiante_empleo->delete();
 
         return redirect()->route('estudiantes_empleos.index');
+    }
+
+    public function show_empleo_details(EstudianteEmpleo $estudiante_empleo)
+    {
+        $this->authorize('pass', $estudiante_empleo);
+
+        $estudiante = get_session_estudiante();
+
+        $empleo = $estudiante_empleo->empleo;
+
+        return view('estudiantes_empleos.show_empleo_details')
+            ->with('estudiante', $estudiante)
+            ->with('empleo', $empleo)
+            ->with('estudiante_empleo', $estudiante_empleo);
     }
 }

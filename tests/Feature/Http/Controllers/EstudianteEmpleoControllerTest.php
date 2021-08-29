@@ -81,6 +81,22 @@ class EstudianteEmpleoControllerTest extends TestCase
         ]);
     }
 
+    public function test_see_empleo_from_estudiante_empleo_record()
+    {
+        $empleo = factory(Empleo::class)->create([
+            'carrera_id' => 1
+        ]);
+
+        $estudiante_empleo = factory(EstudianteEmpleo::class)->create([
+            'estudiante_id' => 66710,
+            'empleo_id' => $empleo->id
+        ]);
+
+        $this->get(route('estudiantes_empleos.show_empleo_details', ['estudiante_empleo' => $estudiante_empleo]))
+            ->assertStatus(200)
+            ->assertSee($estudiante_empleo->empleo->titulo);
+    }
+
     // public function test_()
     // {
 

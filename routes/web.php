@@ -88,4 +88,8 @@ Route::prefix('dashboard/estudiantes')->group(function () {
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes_empleos.destroy');
 
+    Route::get('estudiantes_empleos/{estudiante_empleo}', 'EstudianteEmpleoController@show_empleo_details')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes_empleos.show_empleo_details');
+
 });

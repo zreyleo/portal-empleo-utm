@@ -16,7 +16,7 @@
             <a href="{{ route('estudiantes.empleos_offers') }}">Ofertas de empleo</a>
         </li>
         <li>
-            <a href="{{ route('empleos.create') }}">Tus solicitudes</a>
+            <a href="{{ route('estudiantes_empleos.index') }}">Tus postulaciones</a>
         </li>
     </ul>
 </li>

@@ -99,12 +99,7 @@ class EmpleoController extends Controller
 
         $escuela = $empleo->escuela;
 
-        $carrera = '';
-
-        // prevention for possible testing error
-        if ($escuela) {
-            $carrera = $escuela->nombre;
-        }
+        $carrera = $escuela ? $escuela->nombre : '';
 
 
         return view('empleos.show')

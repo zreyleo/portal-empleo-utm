@@ -39,11 +39,11 @@
                         <form
                             action="{{ route('estudiantes_empleos.destroy', ['estudiante_empleo' => $estudiante_empleo->id]) }}"
                             method="post" onsubmit="
-                                if (!confirm('Desea Eliminar?')) {
-                                    event.preventDefault();
-                                    return;
-                                }
-                            ">
+                            if (!confirm('Desea Eliminar?')) {
+                                event.preventDefault();
+                                return;
+                            }
+                        ">
                             @csrf
                             @method('DELETE')
 
