@@ -14,9 +14,9 @@
 
 @section('page-content')
 
-<h2 class="my-3 text-center">Editar una Oferta de Práctica</h2>
+<a href="{{ route('practicas.index') }}" class="btn btn-outline-danger my-3">Volver</a>
 
-{{ $practica->cupo }}
+<h2 class="my-3 text-center">Editar una Oferta de Práctica</h2>
 
 <div class="row mb-3">
     <div class="col-md-8 mx-auto">

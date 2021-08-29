@@ -195,10 +195,13 @@ class PracticaControllerTest extends TestCase
             'empresa_id' => 44
         ]);
 
+        $this->withoutExceptionHandling();
+
         $this->put(route('practicas.update', $practica->id), [
             'titulo' => 'Se necesita programador en javascript',
-            'requerimientos' => $practica->requerimientos,
             'area' => $practica->facultad_id,
+            'cupo' => 3,
+            'requerimientos' => $practica->requerimientos
         ])->assertRedirect(route('practicas.edit', $practica->id));
 
 

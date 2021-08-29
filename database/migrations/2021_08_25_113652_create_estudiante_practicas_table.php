@@ -18,7 +18,7 @@ class CreateEstudiantePracticasTable extends Migration
             $table->unsignedBigInteger('estudiante_id');
             $table->unsignedBigInteger('practica_id');
             $table->timestamps();
-            $table->foreign('practica_id')->references('id')->on('practicas');
+            $table->foreign('practica_id')->references('id')->on('practicas')->onDelete('cascade');
             $table->unique(['estudiante_id', 'practica_id']);
         });
     }

@@ -18,7 +18,7 @@ class CreateEstudianteEmpleosTable extends Migration
             $table->unsignedBigInteger('estudiante_id');
             $table->unsignedBigInteger('empleo_id');
             $table->timestamps();
-            $table->foreign('empleo_id')->references('id')->on('empleos');
+            $table->foreign('empleo_id')->references('id')->on('empleos')->onDelete('cascade');
             $table->unique(['estudiante_id', 'empleo_id']);
         });
     }
