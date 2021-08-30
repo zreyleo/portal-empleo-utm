@@ -36,7 +36,7 @@
                     <td>{{ $practica->cupo }}</td>
                     <td>{{ $practica->empresa->nombre_empresa }}</td>
                     <td class="d-flex">
-                        <a href="{{ route('estudiantes.practica_details_for_estudiante', ['practica' => $practica->id]) }}"
+                        <a href="{{ route('practicas.show_practica_details', ['practica' => $practica->id]) }}"
                             class="btn btn-success">Ver</a>
                     </td>
                 </tr>

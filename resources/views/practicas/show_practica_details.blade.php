@@ -5,7 +5,7 @@
     {{-- {{ $practica }} --}}
 
     <div class="w-full d-flex justify-content-between">
-        <a href="{{ route('estudiantes.practicas_offers') }}" class="btn btn-outline-danger my-3">volver</a>
+        <a href="{{ route('practicas.show_practicas_offers') }}" class="btn btn-outline-danger my-3">volver</a>
 
         <form action="{{ route('estudiantes_practicas.store', ['practica' => $practica->id]) }}" method="post">
             @csrf

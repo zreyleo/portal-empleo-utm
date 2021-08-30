@@ -27,7 +27,7 @@
                 <label for="titulo">Titulo de la oferta</label>
                 <input
                     type="text"
-                    class="form-control"
+                    class="form-control @error ('titulo') is-invalid @enderror"
                     name="titulo"
                     value="{{ old('titulo') }}"
                 >
@@ -40,7 +40,9 @@
             </div>
 
             <div id="facultades-carreras-selects"
-                data-carreras="{{ json_encode($carreras) }}">
+                data-carreras="{{ json_encode($carreras) }}"
+                data-invalid="@error ('carrera') true @enderror"
+            >
             </div>
 
             <div class="form-group">
@@ -53,7 +55,15 @@
                     value="{{ old('requerimientos') }}"
                 />
 
-                <trix-editor input="requerimientos"></trix-editor>
+                <trix-editor input="requerimientos"
+                    class="form-control  @error ('requerimientos') is-invalid @enderror"
+                ></trix-editor>
+
+                @error('requerimientos')
+                    <span
+                        class="invalid-feedback d-block" role="alert"
+                    >{{ $message }}</span>
+                @enderror
             </div>
 
             <button type="submit" class="btn btn-primary">Guardar Oferta</button>

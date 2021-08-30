@@ -47,7 +47,9 @@
                     <option value="" selected disabled>-- seleccione --</option>
 
                     @foreach ($facultades as $facultad)
-                        <option value="{{ $facultad->idfacultad }}">{{ $facultad->nombre }}</option>
+                        <option value="{{ $facultad->idfacultad }}"
+                            {{ old('area') == $facultad->idfacultad ? 'selected' : '' }}
+                        >{{ $facultad->nombre }}</option>
                     @endforeach
                 </select>
 

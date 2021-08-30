@@ -30,13 +30,19 @@ Route::prefix('login')->group(function () {
 
 // routes for empresas
 Route::prefix('dashboard/empresas')->group(function () {
+    // empleos
     Route::resource('empleos', 'EmpleoController')
         ->middleware('check.empresa.role.for.session');
 
-    Route::get('empleos/{empleo}/estudiantes_empleos', 'EmpleoController@estudiantes_empleos')
+    Route::get('empleos/{empleo}/estudiantes_empleos', 'EmpleoController@show_estudiantes_empleos')
         ->middleware('check.empresa.role.for.session')
-        ->name('empleos.estudiantes_empleos');
+        ->name('empleos.show_estudiantes_empleos');
 
+    Route::get('estudiantes_empleos/{estudiante_empleo}', 'EstudianteEmpleoController@show_estudiante_data')
+        ->middleware('check.empresa.role.for.session')
+        ->name('estudiantes_empleos.show_estudiante_data');
+
+    // practicas
     Route::resource('practicas', 'PracticaController')
         ->middleware('check.empresa.role.for.session');
 });
@@ -48,13 +54,13 @@ Route::prefix('dashboard/estudiantes')->group(function () {
         ->name('estudiantes.dashboard');
 
     // practicas for estudiantes
-    Route::get('practicas', 'PracticaController@practicas_offers_for_estudiantes')
+    Route::get('practicas', 'PracticaController@show_practicas_offers')
         ->middleware('check.estudiante.role.for.session')
-        ->name('estudiantes.practicas_offers');
+        ->name('practicas.show_practicas_offers');
 
-    Route::get('practicas/{practica}', 'PracticaController@practica_details_for_estudiante')
+    Route::get('practicas/{practica}', 'PracticaController@show_practica_details')
         ->middleware('check.estudiante.role.for.session')
-        ->name('estudiantes.practica_details_for_estudiante');
+        ->name('practicas.show_practica_details');
 
     Route::post('practicas/{practica}', 'EstudiantePracticaController@store')
         ->middleware('check.estudiante.role.for.session')
@@ -64,7 +70,10 @@ Route::prefix('dashboard/estudiantes')->group(function () {
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes_practicas.index');
 
-    Route::get('estudiantes_practicas/{estudiante_practica}/empresa_contacto_info', 'EstudiantePracticaController@show_empresa_contact_info')
+    Route::get(
+        'estudiantes_practicas/{estudiante_practica}/empresa_contacto_info',
+        'EstudiantePracticaController@show_empresa_contact_info'
+    )
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes_practicas.show_empresa_contact_info');
 
@@ -77,13 +86,13 @@ Route::prefix('dashboard/estudiantes')->group(function () {
         ->name('estudiantes_practicas.show_practica_details');
 
     // empleos for estudiantes
-    Route::get('empleos', 'EmpleoController@empleos_offers_for_estudiantes')
+    Route::get('empleos', 'EmpleoController@show_empleos_offers')
         ->middleware('check.estudiante.role.for.session')
-        ->name('estudiantes.empleos_offers');
+        ->name('empleos.show_empleos_offers');
 
-    Route::get('empleos/{empleo}', 'EmpleoController@empleo_details_for_estudiante')
+    Route::get('empleos/{empleo}', 'EmpleoController@show_empleo_details')
         ->middleware('check.estudiante.role.for.session')
-        ->name('estudiantes.empleo_details_for_estudiante');
+        ->name('empleos.show_empleo_details');
 
     Route::post('empleos/{empleo}', 'EstudianteEmpleoController@store')
         ->middleware('check.estudiante.role.for.session')

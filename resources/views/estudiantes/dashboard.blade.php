@@ -13,7 +13,7 @@
     </a>
     <ul class="collapse list-unstyled" id="empleos">
         <li>
-            <a href="{{ route('estudiantes.empleos_offers') }}">Ofertas de empleo</a>
+            <a href="{{ route('empleos.show_empleos_offers') }}">Ofertas de empleo</a>
         </li>
         <li>
             <a href="{{ route('estudiantes_empleos.index') }}">Tus postulaciones</a>
@@ -28,7 +28,7 @@
     </a>
     <ul class="collapse list-unstyled" id="practicas">
         <li>
-            <a href="{{ route('estudiantes.practicas_offers') }}">Ver Ofertas de Pr&aacute;cticas</a>
+            <a href="{{ route('practicas.show_practicas_offers') }}">Ver Ofertas de Pr&aacute;cticas</a>
         </li>
         <li>
             <a href="{{ route('estudiantes_practicas.index') }}">Ver mis reservaciones de pr&aacute;cticas</a>

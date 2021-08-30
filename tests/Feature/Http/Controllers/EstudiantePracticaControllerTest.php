@@ -58,7 +58,7 @@ class EstudiantePracticaControllerTest extends TestCase
             ->assertRedirect(route('estudiantes_practicas.index'));
 
         $this->post(route('estudiantes_practicas.store', ['practica' => $practica_2->id]))
-            ->assertRedirect(route('estudiantes.practicas_offers'))
+            ->assertRedirect(route('estudiantes_practicas.index'))
             ->assertSessionHasErrors();
     }
 
@@ -73,7 +73,7 @@ class EstudiantePracticaControllerTest extends TestCase
             ->assertRedirect(route('estudiantes_practicas.index'));
 
         $this->post(route('estudiantes_practicas.store', ['practica' => $practica->id]))
-            ->assertRedirect(route('estudiantes.practicas_offers'))
+            ->assertRedirect(route('estudiantes_practicas.index'))
             ->assertSessionHasErrors();
     }
 
@@ -121,7 +121,7 @@ class EstudiantePracticaControllerTest extends TestCase
             ->assertSee($estudiante_practica->practica->empresa->nombre_empresa);
     }
 
-    public function test_see_practica_from_estudiante_practica_record()
+    public function test_show_practica_from_estudiante_practica_record()
     {
         $practica = factory(Practica::class)->create([
             'facultad_id' => 2

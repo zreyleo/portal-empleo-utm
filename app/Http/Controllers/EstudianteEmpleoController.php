@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Empleo;
 use App\EstudianteEmpleo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EstudianteEmpleoController extends Controller
 {
@@ -53,7 +54,7 @@ class EstudianteEmpleoController extends Controller
             ]);
         } catch (\Throwable $th) {
             add_error('Ya se concedió sus datos para esta oferta de empleo');
-            return redirect()->route('estudiantes.empleos_offers');
+            return redirect()->route('empleos.show_empleos_offers');
         }
 
         return redirect()->route('estudiantes_empleos.index');
@@ -97,5 +98,34 @@ class EstudianteEmpleoController extends Controller
             ->with('estudiante', $estudiante)
             ->with('empleo', $empleo)
             ->with('estudiante_empleo', $estudiante_empleo);
+    }
+
+    public function show_estudiante_data(EstudianteEmpleo $estudiante_empleo)
+    {
+        $this->authorize('check_empresa_owner', $estudiante_empleo);
+
+        $empresa = get_session_empresa();
+
+        // dd($aspirante);
+
+        $empleo = $estudiante_empleo->empleo;
+
+        $cedula_aspirante = $estudiante_empleo->personal->cedula;
+
+        $sql_datos_aspirante = "
+            select *
+            from f_obtiene_persona_str('$cedula_aspirante');
+        ";
+
+        $result = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_datos_aspirante)[0];
+
+        // dd($result);
+
+        $datos_aspirante = $result;
+
+        return view('estudiantes_empleos.show_estudiante_data')
+            ->with('empresa', $empresa)
+            ->with('empleo', $empleo)
+            ->with('datos_aspirante', $datos_aspirante);
     }
 }

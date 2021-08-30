@@ -297,8 +297,9 @@ class PracticaControllerTest extends TestCase
             ->assertStatus(403);
     }
 
-    public function test_view_practicas_offers_to_estudiantes()
+    public function test_show_practicas_offers_to_estudiantes()
     {
+        $this->withoutExceptionHandling();
         $practicas = factory(Practica::class, 2)->create([
             'facultad_id' => 2
         ]);
@@ -308,7 +309,7 @@ class PracticaControllerTest extends TestCase
             'idfacultad' => 2,
         ]);
 
-        $this->get(route('estudiantes.practicas_offers'))
+        $this->get(route('practicas.show_practicas_offers'))
             ->assertStatus(200)
             ->assertSee($practicas[0]->titulo);
     }

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 function FacultadesCarrerasSelects(props) {
-    const { carreras, carrera_id } = props;
+    const { carreras, carrera_id, invalid } = props;
     const carrerasOriginalArray = JSON.parse(carreras);
 
     // console.log(carrera_id);
@@ -26,13 +26,14 @@ function FacultadesCarrerasSelects(props) {
     const [carrerasSelectOptions, setCarrerasSelectOptions] = useState([]);
     const [carrerasSelect, setCarrerasSelect] = useState(carrera_id || '');
     const [facultadSelect, setFacultadSelect] = useState(facultad || '');
+    const [facultadesCarrerasSelectsClasses, setFacultadesCarrerasSelectClasses] = useState('form-control');
 
     // console.log(carrerasSelect);
 
     useEffect(() => {
-        console.log(facultadSelect)
         const carreras = carrerasOriginalArray.filter(carrera => carrera.nombre_facultad == facultadSelect);
         setCarrerasSelectOptions(carreras)
+        setFacultadesCarrerasSelectClasses(invalid ? 'form-control is-invalid' : 'form-control')
     }, [facultadSelect]);
 
     return (
@@ -40,7 +41,7 @@ function FacultadesCarrerasSelects(props) {
             <div className="form-group">
                 <label htmlFor="area">&Aacute;rea</label>
                 <select
-                    className="form-control"
+                    className={facultadesCarrerasSelectsClasses}
                     id="area"
                     value={facultadSelect}
                     onChange={e => setFacultadSelect(e.target.value)}
@@ -52,12 +53,19 @@ function FacultadesCarrerasSelects(props) {
                         ))
                     }
                 </select>
+                {
+                    invalid ? (
+                        <span
+                            className="invalid-feedback d-block" role="alert"
+                        >Seleccione una area para despues seleccionar una carrera.</span>
+                    ) : null
+                }
             </div>
 
             <div className="form-group">
                 <label htmlFor="carrera">Carrera</label>
                 <select
-                    className="form-control"
+                    className={facultadesCarrerasSelectsClasses}
                     name="carrera"
                     id="carrera"
                     value={carrerasSelect}
@@ -70,6 +78,13 @@ function FacultadesCarrerasSelects(props) {
                         ))
                     }
                 </select>
+                {
+                    invalid ? (
+                        <span
+                            className="invalid-feedback d-block" role="alert"
+                        >El campo carrera es obligatorio.</span>
+                    ) : null
+                }
             </div>
         </Fragment>
     );

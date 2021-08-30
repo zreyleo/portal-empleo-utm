@@ -73,6 +73,8 @@ class EmpleoController extends Controller
      */
     public function store(EmpleoStoreRequest $request)
     {
+
+        // dd('hola');
         $empresa = EmpresaController::get_empresa_data();
 
         Empleo::create([
@@ -172,7 +174,7 @@ class EmpleoController extends Controller
         return redirect()->route('empleos.index');
     }
 
-    public function empleos_offers_for_estudiantes()
+    public function show_empleos_offers()
     {
         $estudiante = get_session_estudiante();
 
@@ -182,22 +184,22 @@ class EmpleoController extends Controller
 
         $empleos = $escuela->empleos;
 
-        return view('estudiantes.empleos')
+        return view('empleos.show_empleos_offers')
             ->with('estudiante', $estudiante)
             ->with('escuela', $escuela)
             ->with('empleos', $empleos);
     }
 
-    public function empleo_details_for_estudiante(Empleo $empleo)
+    public function show_empleo_details(Empleo $empleo)
     {
         $estudiante = get_session_estudiante();
 
-        return view('estudiantes.empleo_details')
+        return view('empleos.show_empleo_details')
             ->with('empleo', $empleo)
             ->with('estudiante', $estudiante);
     }
 
-    public function estudiantes_empleos(Empleo $empleo)
+    public function show_estudiantes_empleos(Empleo $empleo)
     {
         $this->authorize('pass', $empleo);
 
@@ -205,7 +207,7 @@ class EmpleoController extends Controller
 
         $estudiantes_empleos = $empleo->estudiantes_empleos;
 
-        return view('empleos.estudiantes_empleos')
+        return view('empleos.show_estudiantes_empleos')
             ->with('empleo', $empleo)
             ->with('estudiantes_empleos', $estudiantes_empleos)
             ->with('empresa', $empresa);

@@ -22,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-       @foreach ($estudiantes_practicas as $estudiante_practica)
+       @forelse($estudiantes_practicas as $estudiante_practica)
 
         <tr>
             <td>{{ $estudiante_practica->practica->titulo }}</td>
@@ -59,7 +59,13 @@
             </td>
         </tr>
 
-       @endforeach
+        @empty
+
+        <tr>
+            <td colspan="4">No se ha resevado ninguna pr&aacute;ctica</td>
+        </tr>
+
+       @endforelse
     </tbody>
 </table>
 

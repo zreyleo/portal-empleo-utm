@@ -51,7 +51,6 @@ class EstudiantePracticaController extends Controller
 
             if ($date_last_estudiante_practica->addMonth()->greaterThan(now())) {
                 add_error('No es posible reservar otro cupo de una practica hasta despues de un mes');
-                return redirect()->route('estudiantes.practicas_offers');
             }
         }
 
@@ -62,7 +61,6 @@ class EstudiantePracticaController extends Controller
             ]);
         } catch (\Throwable $th) {
             add_error('No es posible reservar una misma oferta de practica mas de una vez');
-            return redirect()->route('estudiantes.practicas_offers');
         }
 
 
@@ -98,6 +96,8 @@ class EstudiantePracticaController extends Controller
 
     public function show_practica_details(EstudiantePractica $estudiante_practica)
     {
+        $this->authorize('pass', $estudiante_practica);
+
         $estudiante = get_session_estudiante();
 
         $practica = $estudiante_practica->practica;
@@ -132,7 +132,7 @@ class EstudiantePracticaController extends Controller
             'idparroquia' => $empresa->id_parroquia,
         ])[0];
 
-        return view('estudiantes.empresa_contact_info')
+        return view('estudiantes_practicas.show_empresa_contact_info')
             ->with('empresa', $empresa)
             ->with('estudiante', $estudiante)
             ->with('location', $location);

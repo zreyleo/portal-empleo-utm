@@ -49,9 +49,8 @@ class EmpleoControllerTest extends TestCase
 
         // dd($empleos);
 
-        $response = $this->get(route('empleos.index'));
-
-        $response->assertStatus(200)
+        $this->get(route('empleos.index'))
+            ->assertStatus(200)
             ->assertSee('Ver');
     }
 
@@ -66,11 +65,6 @@ class EmpleoControllerTest extends TestCase
 
     public function test_store_validate()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'role' => EmpresaController::get_role()
-        ]);
-
         $this->post(route('empleos.store'), [
             'titulo' => 'Se necesita Ingeniero en Sistemas',
             'carrera' => 1,
@@ -290,6 +284,7 @@ class EmpleoControllerTest extends TestCase
 
     public function test_estudiante_can_see_empleos_offers()
     {
+        $this->withoutExceptionHandling();
         $this->session([
             'id_personal' => 66710, // id_personal of a random estudiante
             'idfacultad' => 2,
@@ -297,7 +292,7 @@ class EmpleoControllerTest extends TestCase
             'role' => EstudianteController::get_role()
         ]);
 
-        $response = $this->get(route('estudiantes.empleos_offers'));
+        $response = $this->get(route('empleos.show_empleos_offers'));
 
         $response->assertStatus(200);
     }
@@ -315,7 +310,7 @@ class EmpleoControllerTest extends TestCase
             'carrera_id' => 1
         ]);
 
-        $response = $this->get(route('estudiantes.empleo_details_for_estudiante', ['empleo' => $empleo->id]));
+        $response = $this->get(route('empleos.show_empleo_details', ['empleo' => $empleo->id]));
 
         $response->assertStatus(200)
             ->assertSee($empleo->titulo);
@@ -374,7 +369,7 @@ class EmpleoControllerTest extends TestCase
             'empleo_id' => $empleo->id
         ]);
 
-        $this->get(route('empleos.estudiantes_empleos', ['empleo' => $empleo->id]))
+        $this->get(route('empleos.show_estudiantes_empleos', ['empleo' => $empleo->id]))
             ->assertStatus(200)
             ->assertSee($estudiantes_empleos[0]->personal->nombres_completos);
     }

@@ -4,7 +4,9 @@
 
 {{-- {{ var_dump($datos_aspirante) }} --}}
 
-<h2 class="text-center my-3">Datos del aspirante</h2>
+<a href="{{ route('empleos.show_estudiantes_empleos', ['empleo' => $empleo->id]) }}" class="btn btn-outline-danger my-3">volver</a>
+
+<h2 class="text-center my-2">Datos del aspirante</h2>
 
 <p><strong class="text-uppercase">Nombre completo: </strong>{{ $datos_aspirante->apellido1 }} {{ $datos_aspirante->apellido2 }} {{ $datos_aspirante->nombres }}</p>
 <p><strong class="text-uppercase">C&eacute;dula: </strong>{{ $datos_aspirante->cedula }}</p>

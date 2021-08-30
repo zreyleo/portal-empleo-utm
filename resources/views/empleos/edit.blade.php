@@ -28,7 +28,7 @@
                 <label for="titulo">Titulo de la oferta</label>
                 <input
                     type="text"
-                    class="form-control"
+                    class="form-control @error ('titulo') is-invalid @enderror"
                     name="titulo"
                     value="{{ $empleo->titulo }}"
                 >
@@ -40,23 +40,9 @@
                 @enderror
             </div>
 
-            {{-- <div class="form-group">
-                <label for="carrera">Carreras</label>
-                <select
-                    class="form-control"
-                    id="carrera"
-                    name="carrera"
-                >
-                    <option value="" selected disabled>-- seleccione --</option>
-
-                    @foreach ($carreras as $carrera)
-                        <option value="{{ $carrera->idescuela }}">{{ $carrera->nombre_carrera }}</option>
-                    @endforeach
-                </select>
-            </div> --}}
-
             <div id="facultades-carreras-selects" data-carreras="{{ json_encode($carreras) }}"
                 data-carrera_id="{{ $empleo->carrera_id }}"
+                data-invalid="@error ('carrera') true @enderror"
             ></div>
 
             <div class="form-group">
@@ -69,7 +55,15 @@
                     value="{{ $empleo->requerimientos }}"
                 />
 
-                <trix-editor input="requerimientos"></trix-editor>
+                <trix-editor input="requerimientos"
+                    class="form-control @error ('requerimientos') is-invalid @enderror"
+                ></trix-editor>
+
+                @error('requerimientos')
+                    <span
+                        class="invalid-feedback d-block" role="alert"
+                    >{{ $message }}</span>
+                @enderror
             </div>
 
             <button type="submit" class="btn btn-primary">Guardar Oferta</button>

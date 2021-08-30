@@ -66001,7 +66001,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function FacultadesCarrerasSelects(props) {
   var carreras = props.carreras,
-      carrera_id = props.carrera_id;
+      carrera_id = props.carrera_id,
+      invalid = props.invalid;
   var carrerasOriginalArray = JSON.parse(carreras); // console.log(carrera_id);
 
   var facultad = '';
@@ -66031,22 +66032,27 @@ function FacultadesCarrerasSelects(props) {
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(facultad || ''),
       _useState6 = _slicedToArray(_useState5, 2),
       facultadSelect = _useState6[0],
-      setFacultadSelect = _useState6[1]; // console.log(carrerasSelect);
+      setFacultadSelect = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('form-control'),
+      _useState8 = _slicedToArray(_useState7, 2),
+      facultadesCarrerasSelectsClasses = _useState8[0],
+      setFacultadesCarrerasSelectClasses = _useState8[1]; // console.log(carrerasSelect);
 
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    console.log(facultadSelect);
     var carreras = carrerasOriginalArray.filter(function (carrera) {
       return carrera.nombre_facultad == facultadSelect;
     });
     setCarrerasSelectOptions(carreras);
+    setFacultadesCarrerasSelectClasses(invalid ? 'form-control is-invalid' : 'form-control');
   }, [facultadSelect]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "area"
   }, "\xC1rea"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-    className: "form-control",
+    className: facultadesCarrerasSelectsClasses,
     id: "area",
     value: facultadSelect,
     onChange: function onChange(e) {
@@ -66060,12 +66066,15 @@ function FacultadesCarrerasSelects(props) {
       value: facultad,
       key: i
     }, facultad);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  })), invalid ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, "Seleccione una area para despues seleccionar una carrera.") : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "carrera"
   }, "Carrera"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-    className: "form-control",
+    className: facultadesCarrerasSelectsClasses,
     name: "carrera",
     id: "carrera",
     value: carrerasSelect,
@@ -66080,7 +66089,10 @@ function FacultadesCarrerasSelects(props) {
       key: option.idescuela,
       value: option.idescuela
     }, option.nombre_carrera);
-  }))));
+  })), invalid ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, "El campo carrera es obligatorio.") : null));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (FacultadesCarrerasSelects);
@@ -66136,11 +66148,9 @@ var Notificacion = function Notificacion(_ref) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     setClases("visible text-white ".concat(clase));
-    console.log('hola');
     setTimeout(function () {
       setClases('');
       setTimeout(function () {
-        console.log('ciao');
         setVisible(false);
       }, 500);
     }, 2500);
@@ -66182,8 +66192,8 @@ if (document.getElementById('notificacion')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/vagrant/code/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/vagrant/code/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

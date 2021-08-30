@@ -26,4 +26,12 @@ class EstudianteEmpleoPolicy
 
         return $estudiante_empleo->estudiante_id == $estudiante['id_personal'];
     }
+
+
+    public function check_empresa_owner(?User $user, EstudianteEmpleo $estudiante_empleo)
+    {
+        $empresa = get_session_empresa();
+
+        return $estudiante_empleo->empleo->empresa_id == $empresa['id_empresa'];
+    }
 }

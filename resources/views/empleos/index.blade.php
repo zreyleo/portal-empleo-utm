@@ -32,7 +32,7 @@
                             <a href="{{ route('empleos.edit', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-warning mx-2">Editar</a>
 
-                            <a href="{{ route('empleos.estudiantes_empleos', ['empleo' => $empleo->id]) }}"
+                            <a href="{{ route('empleos.show_estudiantes_empleos', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-info text-white mr-2">Ver Aspirantes</a>
 
                             <form action="{{ route('empleos.destroy', ['empleo' => $empleo->id]) }}" method="POST"
