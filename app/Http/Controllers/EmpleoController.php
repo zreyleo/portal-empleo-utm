@@ -196,4 +196,18 @@ class EmpleoController extends Controller
             ->with('empleo', $empleo)
             ->with('estudiante', $estudiante);
     }
+
+    public function estudiantes_empleos(Empleo $empleo)
+    {
+        $this->authorize('pass', $empleo);
+
+        $empresa = get_session_empresa();
+
+        $estudiantes_empleos = $empleo->estudiantes_empleos;
+
+        return view('empleos.estudiantes_empleos')
+            ->with('empleo', $empleo)
+            ->with('estudiantes_empleos', $estudiantes_empleos)
+            ->with('empresa', $empresa);
+    }
 }

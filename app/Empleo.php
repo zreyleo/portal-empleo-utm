@@ -23,4 +23,9 @@ class Empleo extends Model
     {
         return $this->belongsTo(Escuela::class, 'carrera_id', 'idescuela');
     }
+
+    public function estudiantes_empleos()
+    {
+        return $this->hasMany(EstudianteEmpleo::class, 'empleo_id', 'id');
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Empleo;
+use App\EstudianteEmpleo;
 
 use Illuminate\Database\Seeder;
 
@@ -17,8 +18,12 @@ class DatabaseSeeder extends Seeder
         $this->call(PracticaSeeder::class);
         $this->call(EmpleoSeeder::class);
 
-        factory(Empleo::class, 5)->create([
-            'carrera_id' => 1
+        $empleo = factory(Empleo::class)->create([
+            'empresa_id' => 44
+        ]);
+
+        factory(EstudianteEmpleo::class, 5)->create([
+            'empleo_id' => $empleo->id
         ]);
     }
 }

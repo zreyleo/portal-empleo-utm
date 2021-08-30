@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Empleo;
-
+use App\EstudianteEmpleo;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstudianteController;
 
@@ -31,11 +31,6 @@ class EmpleoControllerTest extends TestCase
 
     public function test_index_empty()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'role' => EmpresaController::get_role()
-        ]);
-
         factory(Empleo::class, 2)->create([
             'empresa_id' => 14
         ]);
@@ -54,11 +49,6 @@ class EmpleoControllerTest extends TestCase
 
         // dd($empleos);
 
-        $this->session([
-            'id_empresa' => 44,
-            'role' => EmpresaController::get_role()
-        ]);
-
         $response = $this->get(route('empleos.index'));
 
         $response->assertStatus(200)
@@ -67,11 +57,6 @@ class EmpleoControllerTest extends TestCase
 
     public function test_store()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'role' => EmpresaController::get_role()
-        ]);
-
         $this->post(route('empleos.store'), [
             'titulo' => 'Se necesita Ingeniero en Sistemas',
             'requerimientos' => 'Para hacer un CRUD',
@@ -319,7 +304,6 @@ class EmpleoControllerTest extends TestCase
 
     public function test_estudiante_can_see_a_empleo_details()
     {
-        $this->withoutExceptionHandling();
         $this->session([
             'id_personal' => 66710, // id_personal of a random estudiante
             'idfacultad' => 2,
@@ -335,6 +319,64 @@ class EmpleoControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertSee($empleo->titulo);
+    }
+
+    public function test_empresa_can_delete_empleo_offer_even_when_it_has_estudiante_empleo_records_related()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->session([]);
+
+        $this->session([
+            'id_personal' => 66710, // id_personal of a random estudiante
+            'idfacultad' => 2,
+            'idescuela' => 1, // id = ingenieria en sistemas
+            'role' => EstudianteController::get_role()
+        ]);
+
+        $empleo = factory(Empleo::class)->create([
+            'empresa_id' => 44,
+            'carrera_id' => 1
+        ]);
+
+        $this->post(route('estudiantes_empleos.store', ['empleo' => $empleo->id]))
+            ->assertRedirect(route('estudiantes_empleos.index'));
+
+        $this->session([]);
+
+        $this->session([
+            'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
+            'role' => EmpresaController::get_role()
+        ]);
+
+        $this->delete(route('empleos.destroy', $empleo->id))
+            ->assertRedirect(route('empleos.index'));
+
+        $this->assertDatabaseMissing('empleos', [
+                'id' => $empleo->id
+        ]);
+
+        $this->assertDatabaseMissing('estudiantes_empleos', [
+            'estudiante_id' => 66710,
+            'empleo_id' => $empleo->id,
+        ]);
+    }
+
+    public function test_empresas_can_see_a_table_with_the_estudiantes_names()
+    {
+        $this->withoutExceptionHandling();
+        $empleo = factory(Empleo::class)->create([
+            'empresa_id' => 44
+        ]);
+
+        $estudiantes_empleos = factory(EstudianteEmpleo::class, 2)->create([
+            'empleo_id' => $empleo->id
+        ]);
+
+        $this->get(route('empleos.estudiantes_empleos', ['empleo' => $empleo->id]))
+            ->assertStatus(200)
+            ->assertSee($estudiantes_empleos[0]->personal->nombres_completos);
     }
 
     // public function test_()

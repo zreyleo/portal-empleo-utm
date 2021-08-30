@@ -16,4 +16,9 @@ class EstudianteEmpleo extends Model
     {
         return $this->belongsTo(Empleo::class, 'empleo_id', 'id');
     }
+
+    public function personal()
+    {
+        return $this->belongsTo(Personal::class, 'estudiante_id', 'idpersonal');
+    }
 }

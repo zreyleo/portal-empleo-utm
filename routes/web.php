@@ -33,10 +33,15 @@ Route::prefix('dashboard/empresas')->group(function () {
     Route::resource('empleos', 'EmpleoController')
         ->middleware('check.empresa.role.for.session');
 
+    Route::get('empleos/{empleo}/estudiantes_empleos', 'EmpleoController@estudiantes_empleos')
+        ->middleware('check.empresa.role.for.session')
+        ->name('empleos.estudiantes_empleos');
+
     Route::resource('practicas', 'PracticaController')
         ->middleware('check.empresa.role.for.session');
 });
 
+// routes form estudiantes
 Route::prefix('dashboard/estudiantes')->group(function () {
     Route::get('', 'EstudianteController@dashboard')
         ->middleware('check.estudiante.role.for.session')

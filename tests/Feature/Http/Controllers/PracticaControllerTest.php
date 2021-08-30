@@ -313,6 +313,48 @@ class PracticaControllerTest extends TestCase
             ->assertSee($practicas[0]->titulo);
     }
 
+    public function test_empresa_can_delete_practica_offer_even_when_it_has_estudiante_practica_records_related()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->session([]);
+
+        $this->session([
+            'id_personal' => 66710, // id_personal of a random estudiante
+            'idfacultad' => 2,
+            'idescuela' => 1, // id = ingenieria en sistemas
+            'role' => EstudianteController::get_role()
+        ]);
+
+        $practica = factory(Practica::class)->create([
+            'empresa_id' => 44,
+            'facultad_id' => 1
+        ]);
+
+        $this->post(route('estudiantes_practicas.store', ['practica' => $practica->id]))
+            ->assertRedirect(route('estudiantes_practicas.index'));
+
+        $this->session([]);
+
+        $this->session([
+            'id_empresa' => 44,
+            'nombre_empresa' => 'EL DIARIO EDIASA',
+            'role' => EmpresaController::get_role()
+        ]);
+
+        $this->delete(route('practicas.destroy', $practica->id))
+            ->assertRedirect(route('practicas.index'));
+
+        $this->assertDatabaseMissing('practicas', [
+                'id' => $practica->id
+        ]);
+
+        $this->assertDatabaseMissing('estudiantes_practicas', [
+            'estudiante_id' => 66710,
+            'practica_id' => $practica->id,
+        ]);
+    }
+
     // public function test_()
     // {
 

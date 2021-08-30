@@ -28,10 +28,13 @@
                         <td class="d-flex">
                             <a href="{{ route('empleos.show', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-success">Ver</a>
+
                             <a href="{{ route('empleos.edit', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-warning mx-2">Editar</a>
-                            {{-- <a href="{{ route('empleos.ver_aspirantes', ['empleo' => $empleo->id]) }}"
-                                class="btn btn-info text-white mr-2">Ver Aspirantes</a> --}}
+
+                            <a href="{{ route('empleos.estudiantes_empleos', ['empleo' => $empleo->id]) }}"
+                                class="btn btn-info text-white mr-2">Ver Aspirantes</a>
+
                             <form action="{{ route('empleos.destroy', ['empleo' => $empleo->id]) }}" method="POST"
                                 onsubmit="
                                 if (!confirm('Desea Eliminar?')) {

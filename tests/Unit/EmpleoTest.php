@@ -6,6 +6,8 @@ use App\Empleo;
 use App\Empresa;
 use App\Escuela;
 
+use Illuminate\Database\Eloquent\Collection;
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
@@ -33,5 +35,14 @@ class EmpleoTest extends TestCase
 
         // dd($empleo);
         $this->assertInstanceOf(Escuela::class, $empleo->escuela);
+    }
+
+    public function test_estudiantes_empleos_of_empleo_are_a_collection()
+    {
+        $empleo = factory(Empleo::class)->create([
+            'empresa_id' => 44
+        ]);
+
+        $this->assertInstanceOf(Collection::class, $empleo->estudiantes_empleos);
     }
 }
