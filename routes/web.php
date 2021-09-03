@@ -110,4 +110,16 @@ Route::prefix('dashboard/estudiantes')->group(function () {
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes_empleos.show_empleo_details');
 
+    // perfil
+    Route::get('perfil', 'PerfilController@show')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('perfil.show');
+
+    Route::get('perfil/edit', 'PerfilController@edit')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('perfil.edit');
+
+    Route::put('perfil', 'PerfilController@update')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('perfil.update');
 });

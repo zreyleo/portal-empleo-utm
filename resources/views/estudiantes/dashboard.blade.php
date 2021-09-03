@@ -7,6 +7,10 @@
 @section('enlaces')
 
 <li>
+    <a href="{{ route('perfil.show') }}">
+        <i class="fas fa-user"></i>
+        Perfil
+    </a>
     <a href="#empleos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fas fa-briefcase"></i>
         Empleos

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstudianteController;
+use App\Perfil;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
@@ -42,5 +43,14 @@ if (!function_exists('get_session_estudiante')) {
     function get_session_estudiante()
     {
         return EstudianteController::get_estudiante_data();
+    }
+}
+
+if (!function_exists('current_session_estudiante_has_perfil')) {
+    function current_session_estudiante_has_perfil()
+    {
+        $estudiante = get_session_estudiante();
+
+        return Perfil::where('personal_id', $estudiante['id_personal'])->first() ?: false;
     }
 }

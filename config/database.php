@@ -49,21 +49,6 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'DB_ppp_sistema_SCHEMA_esq_portal_empleos_tests' => [
-            'driver' => 'pgsql',
-            // 'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'schema' => 'esq_portal_empleos_tests',
-            'sslmode' => 'prefer',
-        ],
-
         'DB_ppp_sistema_SCHEMA_public' => [
             'driver' => 'pgsql',
             // 'url' => env('DATABASE_URL'),

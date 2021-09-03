@@ -16,4 +16,9 @@ class Personal extends Model
     {
         return $this->apellido . " " . $this->apellido2 . " " . $this->nombres;
     }
+
+    public function perfil()
+    {
+        return $this->hasOne(Perfil::class, 'personal_id', 'idpersonal');
+    }
 }

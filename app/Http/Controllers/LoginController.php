@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
-
+use App\Perfil;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -122,6 +122,14 @@ class LoginController extends Controller
         $carreras = DB::connection('DB_db_sga')->select(self::SQL_FOR_GETTING_THE_ESTUDIANTE_CARRERAS, [
             'idestudiante' => $estudiante_id
         ]);
+
+        $perfil = Perfil::where('personal_id', $estudiante_id)->first();
+
+        if (!$perfil) {
+            $perfil = Perfil::create([
+                'personal_id' => $estudiante_id
+            ]);
+        }
 
         foreach ($carreras as $carrera) {
             # code...
