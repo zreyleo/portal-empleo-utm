@@ -126,6 +126,7 @@ class EstudianteEmpleoController extends Controller
         return view('estudiantes_empleos.show_estudiante_data')
             ->with('empresa', $empresa)
             ->with('empleo', $empleo)
+            ->with('estudiante_empleo', $estudiante_empleo)
             ->with('datos_aspirante', $datos_aspirante);
     }
 }

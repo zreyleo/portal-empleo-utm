@@ -25,5 +25,9 @@ class DatabaseSeeder extends Seeder
         factory(EstudianteEmpleo::class, 5)->create([
             'empleo_id' => $empleo->id
         ]);
+        factory(EstudianteEmpleo::class)->create([
+            'empleo_id' => $empleo->id,
+            'estudiante_id' => 66710
+        ]);
     }
 }
