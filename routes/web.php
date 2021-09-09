@@ -28,6 +28,9 @@ Route::prefix('login')->group(function () {
     });
 });
 
+// registro de nuevas empresas
+Route::get('/registro', 'NewEmpresaController@create')->name('new_empresas.create');
+
 // routes for empresas
 Route::prefix('dashboard/empresas')->group(function () {
     // empleos
