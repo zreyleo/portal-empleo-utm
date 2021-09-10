@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\NewEmpresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NewEmpresaController extends Controller
 {

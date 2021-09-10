@@ -4,7 +4,9 @@
 
 <h2 class="my-5 text-center">¿Su empresa es nueva? Reg&iacute;strese con Nostros</h2>
 
-<form class="row">
+<form class="row" action="{{ route('new_empresas.store') }}" method="POST">
+    @csrf
+
     <fieldset class="col-md-4">
         <legend>Informaci&oacute;n de la Persona que registra la Empresa</legend>
         <div class="form-group">
@@ -34,7 +36,11 @@
 
         <div class="form-group">
             <label for="genero">G&eacute;nero</label>
-            <input type="text" class="form-control" id="genero" name="genero">
+            <select name="genero" id="genero" class="form-control">
+                <option selected disabled>-- seleccione --</option>
+                <option value="M">MASCULINO</option>
+                <option value="F">FEMENINO</option>
+            </select>
         </div>
     </fieldset>
 
@@ -45,6 +51,26 @@
             <label for="ruc">RUC</label>
             <input type="text" class="form-control" id="ruc" name="ruc">
         </div>
+
+        <div class="form-group">
+            <label for="nombre_empresa">Nombre de la Empresa</label>
+            <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa">
+        </div>
+
+        <div id="provincias-cantones-parroquias-selects"
+        >
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email de contacto</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email de contacto</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+
     </fieldset>
 </form>
 

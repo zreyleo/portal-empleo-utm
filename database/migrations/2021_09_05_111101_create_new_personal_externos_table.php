@@ -15,13 +15,13 @@ class CreateNewPersonalExternosTable extends Migration
     {
         Schema::create('nuevo_personal_externo', function (Blueprint $table) {
             $table->id();
-            $table->string('nombres');
+            $table->string('cedula')->unique();
             $table->string('apellido_p');
             $table->string('apellido_m');
-            $table->string('cedula');
+            $table->string('nombres');
             $table->string('titulo');
-            $table->enum('estado', [0, 1])->default(1); // 0 = no disponible, 1 = disponible
             $table->enum('genero', ['M', 'F']); // 0 = no disponible, 1 = disponible
+            $table->enum('estado', [0, 1])->default(1); // 0 = no disponible, 1 = disponible
             $table->timestamps();
         });
     }

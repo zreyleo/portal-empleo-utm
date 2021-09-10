@@ -15,6 +15,7 @@ require('./bootstrap');
 require('./components/Example');
 require('./components/FacultadesCarrerasSelects');
 require('./components/Notificacion');
+require('./components/ProvinciasCantonesParroquiasSelects');
 
 // console.log('hola')
 

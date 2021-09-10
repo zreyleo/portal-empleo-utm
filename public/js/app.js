@@ -65875,7 +65875,9 @@ __webpack_require__(/*! ./components/Example */ "./resources/js/components/Examp
 
 __webpack_require__(/*! ./components/FacultadesCarrerasSelects */ "./resources/js/components/FacultadesCarrerasSelects.js");
 
-__webpack_require__(/*! ./components/Notificacion */ "./resources/js/components/Notificacion.js"); // console.log('hola')
+__webpack_require__(/*! ./components/Notificacion */ "./resources/js/components/Notificacion.js");
+
+__webpack_require__(/*! ./components/ProvinciasCantonesParroquiasSelects */ "./resources/js/components/ProvinciasCantonesParroquiasSelects.js"); // console.log('hola')
 
 
 $(document).ready(function () {
@@ -66174,6 +66176,172 @@ if (document.getElementById('notificacion')) {
 
 /***/ }),
 
+/***/ "./resources/js/components/ProvinciasCantonesParroquiasSelects.js":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/ProvinciasCantonesParroquiasSelects.js ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+function ProvinciasCantonesParroquiasSelects(props) {
+  var _React$createElement, _React$createElement2;
+
+  // const { url } = props;
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      provincias = _useState2[0],
+      setProvincias = _useState2[1]; // array de provincias
+
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      idProvincia = _useState4[0],
+      setIdProvincia = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      cantones = _useState6[0],
+      setCantones = _useState6[1]; // array de provincias
+
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState8 = _slicedToArray(_useState7, 2),
+      idCanton = _useState8[0],
+      setIdCanton = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState10 = _slicedToArray(_useState9, 2),
+      parroquias = _useState10[0],
+      setParroquias = _useState10[1]; // array de provincias
+
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState12 = _slicedToArray(_useState11, 2),
+      idParroquia = _useState12[0],
+      setIdParroquia = _useState12[1];
+
+  var baseUrl = window.location.origin + '/api/provincias'; // url para prubeas en el servidor de la universidad
+  // const baseUrl = window.location.origin + '/portal-empleo-utm/public' + '/api/';
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    fetch(baseUrl).then(function (response) {
+      return response.json();
+    }).then(function (provincias) {
+      return setProvincias(provincias);
+    });
+  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    setCantones([]);
+    setIdCanton('');
+
+    if (idProvincia) {
+      fetch("".concat(baseUrl, "/").concat(idProvincia)).then(function (response) {
+        return response.json();
+      }).then(function (cantones) {
+        return setCantones(cantones);
+      });
+    }
+  }, [idProvincia]);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    setParroquias([]);
+    setIdParroquia('');
+
+    if (idCanton) {
+      fetch("".concat(baseUrl, "/").concat(idProvincia, "/").concat(idCanton)).then(function (response) {
+        return response.json();
+      }).then(function (parroquias) {
+        return setParroquias(parroquias);
+      });
+    }
+  }, [idProvincia, idCanton]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "id_provincia"
+  }, "Provincia"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    id: "id_provincia",
+    className: "form-control",
+    value: idProvincia,
+    onChange: function onChange(e) {
+      return setIdProvincia(e.target.value);
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "",
+    disabled: true
+  }, "-- seleccione --"), provincias.map(function (provincia) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      key: provincia.idprovincia,
+      value: provincia.idprovincia
+    }, provincia.nombre);
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "id_canton"
+  }, "Cant\xF3n"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", (_React$createElement = {
+    className: "form-control",
+    id: "id_canton"
+  }, _defineProperty(_React$createElement, "className", "form-control"), _defineProperty(_React$createElement, "value", idCanton), _defineProperty(_React$createElement, "onChange", function onChange(e) {
+    return setIdCanton(e.target.value);
+  }), _React$createElement), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "",
+    disabled: true
+  }, "-- seleccione --"), cantones.map(function (canton) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      key: canton.idcanton,
+      value: canton.idcanton
+    }, canton.nombre);
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "id_parroquia"
+  }, "Parroquia"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", (_React$createElement2 = {
+    className: "form-control",
+    id: "id_parroquia"
+  }, _defineProperty(_React$createElement2, "className", "form-control"), _defineProperty(_React$createElement2, "value", idParroquia), _defineProperty(_React$createElement2, "onChange", function onChange(e) {
+    return setIdParroquia(e.target.value);
+  }), _React$createElement2), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "",
+    disabled: true
+  }, "-- seleccione --"), parroquias.map(function (parroquia) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      key: parroquia.idparroquia,
+      value: parroquia.idparroquia
+    }, parroquia.nombre);
+  }))));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ProvinciasCantonesParroquiasSelects);
+
+if (document.getElementById('provincias-cantones-parroquias-selects')) {
+  var props = Object.assign({}, document.getElementById('provincias-cantones-parroquias-selects').dataset);
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ProvinciasCantonesParroquiasSelects, props), document.getElementById('provincias-cantones-parroquias-selects'));
+}
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -66192,8 +66360,8 @@ if (document.getElementById('notificacion')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/vagrant/code/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/vagrant/code/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/regynald/Sitios/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/regynald/Sitios/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
