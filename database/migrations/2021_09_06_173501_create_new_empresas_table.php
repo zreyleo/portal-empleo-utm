@@ -21,12 +21,12 @@ class CreateNewEmpresasTable extends Migration
             $table->unsignedBigInteger('id_canton');
             $table->unsignedBigInteger('id_parroquia');
             $table->string('direccion');
+            $table->string('email')->unique();
+            $table->string('telefono')->unique();
             $table->text('descripcion');
             $table->enum('tipo', [0, 1]); // 1 = publica; 0 = privada
-            $table->string('telefono')->unique();
-            $table->string('email')->unique();
-            $table->foreignId('id_representante')->references('id')->on('nuevo_personal_externo');
             $table->enum('estado', [0, 1])->default(1); // 1 = disponible; 0 = no disponible
+            $table->foreignId('id_representante')->references('id')->on('nuevo_personal_externo');
             $table->timestamps();
         });
     }

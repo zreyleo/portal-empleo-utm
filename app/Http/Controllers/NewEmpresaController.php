@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreNewEmpresaRequest;
 use App\NewEmpresa;
+use App\NewPersonalExterno;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -34,9 +36,42 @@ class NewEmpresaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreNewEmpresaRequest $request)
     {
-        //
+
+        // $nuevo_personal_externo = new NewPersonalExterno([
+        //     'cedula' => $request->cedula,
+        //     'apellido_p' => $request->apellido_p,
+        //     'apellido_m' => $request->apellido_m,
+        //     'nombres' => $request->nombres,
+        //     'titulo' => $request->titulo,
+        //     'genero' => $request->genero
+        // ]);
+
+        // $nuevo_personal_externo->save();
+
+        NewEmpresa::create([
+            'ruc' => $request->ruc,
+            'nombre_empresa' => $request->nombre_empresa,
+            'id_provincia' => $request->provincia,
+            'id_canton' => $request->canton,
+            'id_parroquia' => $request->parroquia,
+            'direccion' => $request->direccion,
+            'email' => $request->email,
+            'telefono' => $request->telefono,
+            'descripcion' => $request->descripcion,
+            'tipo' => $request->tipo,
+            'id_representante' => NewPersonalExterno::create([
+                'cedula' => $request->cedula,
+                'apellido_p' => $request->apellido_p,
+                'apellido_m' => $request->apellido_m,
+                'nombres' => $request->nombres,
+                'titulo' => $request->titulo,
+                'genero' => $request->genero
+            ])->id
+        ]);
+
+        return redirect()->route('landing');
     }
 
     /**

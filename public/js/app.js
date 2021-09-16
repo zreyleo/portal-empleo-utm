@@ -66209,39 +66209,62 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function ProvinciasCantonesParroquiasSelects(props) {
   var _React$createElement, _React$createElement2;
 
-  // const { url } = props;
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+  var provinciaValue = props.provinciaValue,
+      cantonValue = props.cantonValue,
+      parroquiaValue = props.parroquiaValue; // valores antiguos
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(provinciaValue || ''),
       _useState2 = _slicedToArray(_useState, 2),
-      provincias = _useState2[0],
-      setProvincias = _useState2[1]; // array de provincias
+      preProvinciaValue = _useState2[0],
+      setPreProvinciaValue = _useState2[1];
 
-
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(cantonValue || ''),
       _useState4 = _slicedToArray(_useState3, 2),
-      idProvincia = _useState4[0],
-      setIdProvincia = _useState4[1];
+      preCantonValue = _useState4[0],
+      setPreCantonValue = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(parroquiaValue || ''),
       _useState6 = _slicedToArray(_useState5, 2),
-      cantones = _useState6[0],
-      setCantones = _useState6[1]; // array de provincias
+      preParroquiaValue = _useState6[0],
+      setPreParroquiaValue = _useState6[1];
 
+  var provinciaError = props.provinciaError,
+      cantonError = props.cantonError,
+      parroquiaError = props.parroquiaError; // errores
+  // console.log(props);
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
       _useState8 = _slicedToArray(_useState7, 2),
-      idCanton = _useState8[0],
-      setIdCanton = _useState8[1];
+      provincias = _useState8[0],
+      setProvincias = _useState8[1]; // array de provincias
 
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
       _useState10 = _slicedToArray(_useState9, 2),
-      parroquias = _useState10[0],
-      setParroquias = _useState10[1]; // array de provincias
+      idProvincia = _useState10[0],
+      setIdProvincia = _useState10[1];
 
-
-  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
       _useState12 = _slicedToArray(_useState11, 2),
-      idParroquia = _useState12[0],
-      setIdParroquia = _useState12[1];
+      cantones = _useState12[0],
+      setCantones = _useState12[1]; // array de provincias
+
+
+  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState14 = _slicedToArray(_useState13, 2),
+      idCanton = _useState14[0],
+      setIdCanton = _useState14[1];
+
+  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState16 = _slicedToArray(_useState15, 2),
+      parroquias = _useState16[0],
+      setParroquias = _useState16[1]; // array de provincias
+
+
+  var _useState17 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState18 = _slicedToArray(_useState17, 2),
+      idParroquia = _useState18[0],
+      setIdParroquia = _useState18[1];
 
   var baseUrl = window.location.origin + '/api/provincias'; // url para prubeas en el servidor de la universidad
   // const baseUrl = window.location.origin + '/portal-empleo-utm/public' + '/api/';
@@ -66250,7 +66273,12 @@ function ProvinciasCantonesParroquiasSelects(props) {
     fetch(baseUrl).then(function (response) {
       return response.json();
     }).then(function (provincias) {
-      return setProvincias(provincias);
+      setProvincias(provincias);
+
+      if (preProvinciaValue) {
+        setIdProvincia(provinciaValue);
+        setPreProvinciaValue('');
+      }
     });
   }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -66261,7 +66289,12 @@ function ProvinciasCantonesParroquiasSelects(props) {
       fetch("".concat(baseUrl, "/").concat(idProvincia)).then(function (response) {
         return response.json();
       }).then(function (cantones) {
-        return setCantones(cantones);
+        setCantones(cantones);
+
+        if (preCantonValue) {
+          setIdCanton(cantonValue);
+          setPreCantonValue('');
+        }
       });
     }
   }, [idProvincia]);
@@ -66273,7 +66306,12 @@ function ProvinciasCantonesParroquiasSelects(props) {
       fetch("".concat(baseUrl, "/").concat(idProvincia, "/").concat(idCanton)).then(function (response) {
         return response.json();
       }).then(function (parroquias) {
-        return setParroquias(parroquias);
+        setParroquias(parroquias);
+
+        if (preParroquiaValue) {
+          setIdParroquia(parroquiaValue);
+          setPreParroquiaValue('');
+        }
       });
     }
   }, [idProvincia, idCanton]);
@@ -66283,7 +66321,8 @@ function ProvinciasCantonesParroquiasSelects(props) {
     htmlFor: "id_provincia"
   }, "Provincia"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
     id: "id_provincia",
-    className: "form-control",
+    className: "form-control ".concat(provinciaError && 'is-invalid'),
+    name: "provincia",
     value: idProvincia,
     onChange: function onChange(e) {
       return setIdProvincia(e.target.value);
@@ -66296,14 +66335,17 @@ function ProvinciasCantonesParroquiasSelects(props) {
       key: provincia.idprovincia,
       value: provincia.idprovincia
     }, provincia.nombre);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  })), provinciaError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, provinciaError)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "id_canton"
   }, "Cant\xF3n"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", (_React$createElement = {
     className: "form-control",
     id: "id_canton"
-  }, _defineProperty(_React$createElement, "className", "form-control"), _defineProperty(_React$createElement, "value", idCanton), _defineProperty(_React$createElement, "onChange", function onChange(e) {
+  }, _defineProperty(_React$createElement, "className", "form-control ".concat(cantonError && 'is-invalid')), _defineProperty(_React$createElement, "name", "canton"), _defineProperty(_React$createElement, "value", idCanton), _defineProperty(_React$createElement, "onChange", function onChange(e) {
     return setIdCanton(e.target.value);
   }), _React$createElement), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
     value: "",
@@ -66313,14 +66355,17 @@ function ProvinciasCantonesParroquiasSelects(props) {
       key: canton.idcanton,
       value: canton.idcanton
     }, canton.nombre);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  })), cantonError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, cantonError)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "id_parroquia"
   }, "Parroquia"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", (_React$createElement2 = {
     className: "form-control",
     id: "id_parroquia"
-  }, _defineProperty(_React$createElement2, "className", "form-control"), _defineProperty(_React$createElement2, "value", idParroquia), _defineProperty(_React$createElement2, "onChange", function onChange(e) {
+  }, _defineProperty(_React$createElement2, "className", "form-control ".concat(parroquiaError && 'is-invalid')), _defineProperty(_React$createElement2, "name", "parroquia"), _defineProperty(_React$createElement2, "value", idParroquia), _defineProperty(_React$createElement2, "onChange", function onChange(e) {
     return setIdParroquia(e.target.value);
   }), _React$createElement2), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
     value: "",
@@ -66330,7 +66375,10 @@ function ProvinciasCantonesParroquiasSelects(props) {
       key: parroquia.idparroquia,
       value: parroquia.idparroquia
     }, parroquia.nombre);
-  }))));
+  })), parroquiaError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, parroquiaError)));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (ProvinciasCantonesParroquiasSelects);

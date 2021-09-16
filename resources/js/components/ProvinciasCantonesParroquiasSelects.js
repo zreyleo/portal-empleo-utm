@@ -2,7 +2,15 @@ import React, { Fragment, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 function ProvinciasCantonesParroquiasSelects(props) {
-    // const { url } = props;
+    const { provinciaValue, cantonValue, parroquiaValue } = props // valores antiguos
+
+    const [preProvinciaValue, setPreProvinciaValue] = useState(provinciaValue || '');
+    const [preCantonValue, setPreCantonValue] = useState(cantonValue || '');
+    const [preParroquiaValue, setPreParroquiaValue] = useState(parroquiaValue || '');
+
+
+    const { provinciaError, cantonError, parroquiaError } = props; // errores
+    // console.log(props);
 
     const [provincias, setProvincias] = useState([]); // array de provincias
     const [idProvincia, setIdProvincia] = useState('');
@@ -21,7 +29,14 @@ function ProvinciasCantonesParroquiasSelects(props) {
     useEffect(() => {
         fetch(baseUrl)
             .then(response => response.json())
-            .then(provincias => setProvincias(provincias));
+            .then(provincias => {
+                setProvincias(provincias)
+
+                if (preProvinciaValue) {
+                    setIdProvincia(provinciaValue)
+                    setPreProvinciaValue('');
+                }
+            });
     }, []);
 
     useEffect(() => {
@@ -31,7 +46,14 @@ function ProvinciasCantonesParroquiasSelects(props) {
         if (idProvincia) {
             fetch(`${baseUrl}/${idProvincia}`)
                 .then(response => response.json())
-                .then(cantones => setCantones(cantones));
+                .then(cantones => {
+                    setCantones(cantones)
+
+                    if (preCantonValue) {
+                        setIdCanton(cantonValue)
+                        setPreCantonValue('');
+                    }
+                });
         }
     }, [idProvincia]);
 
@@ -41,7 +63,14 @@ function ProvinciasCantonesParroquiasSelects(props) {
         if (idCanton) {
             fetch(`${baseUrl}/${idProvincia}/${idCanton}`)
                 .then(response => response.json())
-                .then(parroquias => setParroquias(parroquias));
+                .then(parroquias => {
+                    setParroquias(parroquias)
+
+                    if (preParroquiaValue) {
+                        setIdParroquia(parroquiaValue)
+                        setPreParroquiaValue('');
+                    }
+                });
         }
     }, [idProvincia, idCanton]);
 
@@ -51,7 +80,8 @@ function ProvinciasCantonesParroquiasSelects(props) {
                 <label htmlFor="id_provincia">Provincia</label>
                 <select
                     id="id_provincia"
-                    className="form-control"
+                    className={`form-control ${provinciaError && 'is-invalid'}`}
+                    name="provincia"
                     value={idProvincia}
                     onChange={e => setIdProvincia(e.target.value)}
                 >
@@ -65,14 +95,21 @@ function ProvinciasCantonesParroquiasSelects(props) {
                             )
                         })
                     }
+
                 </select>
+                {
+                    provinciaError && (
+                        <span className="invalid-feedback d-block" role="alert">{ provinciaError }</span>
+                    )
+                }
             </div>
 
             <div className="form-group">
                 <label htmlFor="id_canton">Cant&oacute;n</label>
                 <select className="form-control"
                     id="id_canton"
-                    className="form-control"
+                    className={`form-control ${cantonError && 'is-invalid'}`}
+                    name="canton"
                     value={idCanton}
                     onChange={e => setIdCanton(e.target.value)}
                 >
@@ -87,13 +124,19 @@ function ProvinciasCantonesParroquiasSelects(props) {
                         })
                     }
                 </select>
+                {
+                    cantonError && (
+                        <span className="invalid-feedback d-block" role="alert">{ cantonError }</span>
+                    )
+                }
             </div>
 
             <div className="form-group">
                 <label htmlFor="id_parroquia">Parroquia</label>
                 <select className="form-control"
                     id="id_parroquia"
-                    className="form-control"
+                    className={`form-control ${parroquiaError && 'is-invalid'}`}
+                    name="parroquia"
                     value={idParroquia}
                     onChange={e => setIdParroquia(e.target.value)}
                 >
@@ -108,6 +151,11 @@ function ProvinciasCantonesParroquiasSelects(props) {
                         })
                     }
                 </select>
+                {
+                    parroquiaError && (
+                        <span className="invalid-feedback d-block" role="alert">{ parroquiaError }</span>
+                    )
+                }
             </div>
 
         </Fragment>
@@ -118,5 +166,8 @@ export default ProvinciasCantonesParroquiasSelects;
 
 if (document.getElementById('provincias-cantones-parroquias-selects')) {
     const props = Object.assign({}, document.getElementById('provincias-cantones-parroquias-selects').dataset);
-    ReactDOM.render(<ProvinciasCantonesParroquiasSelects { ...props } />, document.getElementById('provincias-cantones-parroquias-selects'));
+    ReactDOM.render(
+        <ProvinciasCantonesParroquiasSelects { ...props } />,
+        document.getElementById('provincias-cantones-parroquias-selects')
+    );
 }
