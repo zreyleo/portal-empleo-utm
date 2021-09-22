@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Http\Controllers\ResponsableController;
+use App\NewEmpresa;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -85,8 +87,49 @@ class NewEmpresaControllerTest extends TestCase
 
     public function test_send_new_empresas_to_responsable()
     {
+        $this->session([
+            'id_empresa' => 2684,
+            'role' => ResponsableController::get_role()
+        ]);
+
         $this->get(route('new_empresas.index'))
             ->assertStatus(200);
+    }
+
+    public function test_show_new_empresa_info()
+    {
+        $nueva_empresa = [
+            'cedula' => '1311742041',
+            'apellido_p' => 'zambrano',
+            'apellido_m' => 'perero',
+            'nombres' => 'regynald Leonardo',
+            'titulo' => 'ingeniero',
+            'genero' => 'M',
+            'ruc' => '1311742041001',
+            'nombre_empresa' => 'tamarindo software',
+            'provincia' => '13',
+            'canton' => '1',
+            'parroquia' => '1',
+            'direccion' => 'Pedro gual y morales',
+            'email' => 'rrhh@tamarindo.xyz',
+            'telefono' => '555555555',
+            'descripcion' => 'empresa desarrolladora de software',
+            'area' => '2',
+            'tipo' => '0',
+        ];
+
+        $this->post(route('new_empresas.store'), $nueva_empresa);
+
+        $this->session([
+            'id_empresa' => 2684,
+            'role' => ResponsableController::get_role()
+        ]);
+
+        $empresa = NewEmpresa::first();
+
+        $this->get(route('new_empresas.show', ['empresa' => $empresa->id_empresa]))
+            ->assertStatus(200)
+            ->assertSee($empresa->nombre_empresa);
     }
 
     // public function test_()

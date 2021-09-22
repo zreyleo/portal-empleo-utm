@@ -19,7 +19,10 @@ class NewEmpresaController extends Controller
     {
         $docente = get_session_docente();
 
-        $nuevas_empresas = NewEmpresa::where('area', $docente['id_facultad'])->latest()->get();
+        $nuevas_empresas = NewEmpresa::where([
+            ['area', '=', $docente['id_facultad']],
+            ['estado', '=', '1'],
+        ])->latest()->get();
 
         return view('new_empresas.index')
             ->with('docente', $docente)
@@ -90,9 +93,31 @@ class NewEmpresaController extends Controller
      * @param  \App\NewEmpresa  $newEmpresa
      * @return \Illuminate\Http\Response
      */
-    public function show(NewEmpresa $newEmpresa)
+    public function show(NewEmpresa $empresa)
     {
-        //
+        $docente = get_session_docente();
+
+        $sql_location = '
+            select provincia.nombre as "provincia", canton.nombre as "canton", parroquia.nombre as "parroquia"
+            from view_provincia provincia inner join view_canton canton on canton.idprovincia = provincia.idprovincia
+                inner join view_parroquia parroquia on parroquia.idcanton = canton.idcanton
+            where provincia.idprovincia = :idprovincia
+                and canton.idcanton = :idcanton
+                and parroquia.idparroquia = :idparroquia
+        ';
+
+        // dd($empresa->id_provincia);
+
+        $location = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_location, [
+            'idprovincia' => $empresa->id_provincia,
+            'idcanton' => $empresa->id_canton,
+            'idparroquia' => $empresa->id_parroquia,
+        ])[0];
+
+        return view('new_empresas.show')
+            ->with('empresa', $empresa)
+            ->with('location', $location)
+            ->with('docente', $docente);
     }
 
     /**

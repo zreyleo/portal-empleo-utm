@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'check.empresa.role.for.session' => \App\Http\Middleware\CheckEmpresaRoleForSession::class,
         'check.estudiante.role.for.session' => \App\Http\Middleware\ChecEstudianteRoleForSession::class,
+        'check.responsable.role.for.session' => \App\Http\Middleware\CheckResponsableRoleForSession::class,
     ];
 }

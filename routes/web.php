@@ -132,9 +132,15 @@ Route::prefix('dashboard/estudiantes')->group(function () {
 });
 
 Route::prefix('dashboard/responsables')->group(function () {
-    Route::get('', 'ResponsableController@dashboard')->name('responsables.dashboard');
+    Route::get('', 'ResponsableController@dashboard')
+        ->middleware('check.responsable.role.for.session')
+        ->name('responsables.dashboard');
 
     Route::get('new_empresas', 'NewEmpresaController@index')
-
+        ->middleware('check.responsable.role.for.session')
         ->name('new_empresas.index');
+
+    Route::get('new_empresas/{empresa}', 'NewEmpresaController@show')
+        ->middleware('check.responsable.role.for.session')
+        ->name('new_empresas.show');
 });

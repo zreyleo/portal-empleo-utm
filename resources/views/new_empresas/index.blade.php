@@ -24,7 +24,10 @@
                 <tr>
                     <td>{{ $empresa->nombre_empresa }}</td>
                     <td>{{ $empresa->representante->nombres_completos }}</td>
-                    <td></td>
+                    <td>
+                        <a href="{{ route('new_empresas.show', ['empresa' => $empresa->id_empresa]) }}"
+                            class="btn btn-info">Informaci&oacute;n</a>
+                    </td>
                 </tr>
             @empty
 

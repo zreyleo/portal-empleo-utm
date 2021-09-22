@@ -25,4 +25,9 @@ class NewEmpresa extends Model
     {
         return $this->belongsTo(NewPersonalExterno::class, 'id_representante', 'id');
     }
+
+    public function facultad()
+    {
+        return $this->belongsTo(Facultad::class, 'area', 'idfacultad');
+    }
 }
