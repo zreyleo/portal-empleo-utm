@@ -83,6 +83,12 @@ class NewEmpresaControllerTest extends TestCase
         ]);
     }
 
+    public function test_send_new_empresas_to_responsable()
+    {
+        $this->get(route('new_empresas.index'))
+            ->assertStatus(200);
+    }
+
     // public function test_()
     // {
 

@@ -20,4 +20,9 @@ class NewEmpresa extends Model
     protected $attributes = [
         'estado' => 1
     ];
+
+    public function representante()
+    {
+        return $this->belongsTo(NewPersonalExterno::class, 'id_representante', 'id');
+    }
 }

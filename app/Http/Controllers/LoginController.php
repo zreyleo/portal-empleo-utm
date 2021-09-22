@@ -232,7 +232,8 @@ class LoginController extends Controller
             Session::put('id_personal', $result->r_idpersonal);
             Session::put('nombres', $result->r_nombres);
             Session::put('id_escuela', $escuela->idescuela);
-            Session::put('id_faculta', $escuela->idfacultad);
+            Session::put('id_facultad', $escuela->idfacultad);
+            Session::put('role', ResponsableController::get_role());
 
             // dd($escuela->facultad);
 

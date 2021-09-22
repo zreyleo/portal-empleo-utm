@@ -17,4 +17,14 @@ class NewPersonalExterno extends Model
     protected $attributes = [
         'estado' => 1
     ];
+
+    public function getNombresCompletosAttribute()
+    {
+        return $this->apellido_p . " " . $this->apellido_m . " " . $this->nombres;
+    }
+
+    public function empresa()
+    {
+        return $this->hasOne(NewEmpresa::class, 'id_representante', 'id');
+    }
 }

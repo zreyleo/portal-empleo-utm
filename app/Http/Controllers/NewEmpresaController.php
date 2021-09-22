@@ -17,7 +17,13 @@ class NewEmpresaController extends Controller
      */
     public function index()
     {
-        //
+        $docente = get_session_docente();
+
+        $nuevas_empresas = NewEmpresa::where('area', $docente['id_facultad'])->latest()->get();
+
+        return view('new_empresas.index')
+            ->with('docente', $docente)
+            ->with('nuevas_empresas', $nuevas_empresas);
     }
 
     /**

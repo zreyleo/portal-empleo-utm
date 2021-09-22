@@ -132,7 +132,9 @@ Route::prefix('dashboard/estudiantes')->group(function () {
 });
 
 Route::prefix('dashboard/responsables')->group(function () {
-    Route::get('', function () {
-        return 'hola';
-    })->name('responsables.dashboard');
+    Route::get('', 'ResponsableController@dashboard')->name('responsables.dashboard');
+
+    Route::get('new_empresas', 'NewEmpresaController@index')
+
+        ->name('new_empresas.index');
 });

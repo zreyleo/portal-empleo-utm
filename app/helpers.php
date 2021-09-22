@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\ResponsableController;
 use App\Perfil;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\MessageBag;
@@ -36,6 +37,13 @@ if (!function_exists('get_session_empresa')) {
     function get_session_empresa()
     {
         return EmpresaController::get_empresa_data();
+    }
+}
+
+if (!function_exists('get_session_docente')) {
+    function get_session_docente()
+    {
+        return ResponsableController::get_docente_data();
     }
 }
 
