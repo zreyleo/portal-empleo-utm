@@ -26,6 +26,9 @@ Route::prefix('login')->group(function () {
         Route::post('carrera', 'LoginController@choose_carrera_post')->name('login.choose_carrera_post')
             ->middleware('check.estudiante.role.for.session');
     });
+
+    Route::get('reponsables', 'LoginController@responsables_get')->name('login.responsables_get');
+    Route::post('reponsable', 'LoginController@responsables_post')->name('login.responsables_post');
 });
 
 // registro de nuevas empresas
@@ -126,4 +129,10 @@ Route::prefix('dashboard/estudiantes')->group(function () {
     Route::put('perfil', 'PerfilController@update')
         ->middleware('check.estudiante.role.for.session')
         ->name('perfil.update');
+});
+
+Route::prefix('dashboard/responsables')->group(function () {
+    Route::get('', function () {
+        return 'hola';
+    })->name('responsables.dashboard');
 });

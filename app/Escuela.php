@@ -12,6 +12,11 @@ class Escuela extends Model
 
     protected $primaryKey = 'idescuela';
 
+    public function facultad()
+    {
+        return $this->belongsTo(Facultad::class, 'idfacultad', 'idfacultad');
+    }
+
     public function empleos()
     {
         return $this->hasMany(Empleo::class, 'carrera_id', 'idescuela');

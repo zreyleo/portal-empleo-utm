@@ -45,7 +45,7 @@ class NewEmpresaControllerTest extends TestCase
 
     public function test_register_a_new_empresa_success()
     {
-        // $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
         $response = $this->get('/registro');
 
         $response->assertStatus(200);
@@ -78,7 +78,7 @@ class NewEmpresaControllerTest extends TestCase
 
         $this->assertDatabaseHas('nuevas_empresas', [
             'ruc' => '1311742041001',
-            'nombre_empresa' => 'tamarindo software',
+            'nombre_empresa' => 'TAMARINDO SOFTWARE',
         ]);
     }
 

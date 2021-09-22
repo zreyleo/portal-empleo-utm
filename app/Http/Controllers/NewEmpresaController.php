@@ -52,21 +52,21 @@ class NewEmpresaController extends Controller
 
         NewEmpresa::create([
             'ruc' => $request->ruc,
-            'nombre_empresa' => $request->nombre_empresa,
+            'nombre_empresa' => strtoupper($request->nombre_empresa),
             'id_provincia' => $request->provincia,
             'id_canton' => $request->canton,
             'id_parroquia' => $request->parroquia,
-            'direccion' => $request->direccion,
-            'email' => $request->email,
+            'direccion' => strtoupper($request->direccion),
+            'email' => strtolower($request->email),
             'telefono' => $request->telefono,
             'descripcion' => $request->descripcion,
             'tipo' => $request->tipo,
             'id_representante' => NewPersonalExterno::create([
                 'cedula' => $request->cedula,
-                'apellido_p' => $request->apellido_p,
-                'apellido_m' => $request->apellido_m,
-                'nombres' => $request->nombres,
-                'titulo' => $request->titulo,
+                'apellido_p' => strtoupper($request->apellido_p),
+                'apellido_m' => strtoupper($request->apellido_m),
+                'nombres' => strtoupper($request->nombres),
+                'titulo' => strtoupper($request->titulo),
                 'genero' => $request->genero
             ])->id
         ]);

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
+use App\Escuela;
 use App\Perfil;
+use App\PersonalRol;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -11,14 +13,67 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
+    private const SQL_FOR_LOGIN_SGA_24 =
+        "
+            select
+                'LOGIN OK' r_tipo,
+                r_error,
+                r_idpersonal,
+                r_cedula,r_nombres,
+                r_idfichero_hoja_vida_foto as r_idfoto
+            from
+                esq_roles.fnc_login_2_desarrollo(
+                    :user,
+                    esq_roles.fnc_encripta_clave(:pass),
+                    :term,
+                    :so,
+                    :port,
+                    :ip,
+                    :browser,
+                    :sistem,
+                    :pass_moodle
+                )
+        "
+    ;
+
     private const SQL_FOR_GETTING_THE_ESTUDIANTE_CARRERAS = '
-        select fa.idfacultad,fa.nombre facultad,es.idescuela,es.nombre escuela,ma.idmalla,ma.nombre malla,may.habilitada
-        from esq_inscripciones.facultad fa
-        inner join esq_inscripciones.escuela es on es.idfacultad=fa.idfacultad
-        inner join esq_mallas.malla_estudiante_escuela may on may.idescuela=es.idescuela
-        inner join esq_mallas.malla_escuela ma on ma.idmalla=may.idmalla and ma.idescuela=may.idescuela
+        select
+            fa.idfacultad,
+            fa.nombre facultad,
+            es.idescuela,
+            es.nombre escuela,
+            ma.idmalla,
+            ma.nombre malla,
+            may.habilitada
+        from
+            esq_inscripciones.facultad fa
+            inner join esq_inscripciones.escuela es on es.idfacultad=fa.idfacultad
+            inner join esq_mallas.malla_estudiante_escuela may on may.idescuela=es.idescuela
+            inner join esq_mallas.malla_escuela ma on ma.idmalla=may.idmalla and ma.idescuela=may.idescuela
         where may.idpersonal=:idestudiante
     ';
+
+    private const ID_ROL_RESPONSABLE_PRACTICA = 38; // este numero sive para verificar si el usuario tiene el rol de responsable de practicas que se encuentra en la tabla tbl_rol
+
+    private static function login_sga_docentes($email)
+    {
+        // acordar cambiar para acceder con password
+        $result = DB::connection('DB_db_sga_24')->select(self::SQL_FOR_LOGIN_SGA_24, [
+            'user'          => $email,
+            'pass'          => '123456',
+            'term'          => 'term',
+            'so'            => 'so',
+            'port'          => 'port',
+            'ip'            => 'ip',
+            'browser'       => 'browser',
+            'sistem'        => 10,
+            'pass_moodle'   => '',
+        ])[0];
+
+        // dd($result);
+
+        return $result;
+    }
 
     public function empresas_get()
     {
@@ -28,7 +83,8 @@ class LoginController extends Controller
     public function empresas_post(Request $request)
     {
         $data = $request->validate([
-            'email' => 'required'
+            'email' => 'required',
+            // 'password' => 'requerid'
         ]);
 
         if (Empresa::where('email', $data['email'])->get()->count() == 0) {
@@ -55,21 +111,17 @@ class LoginController extends Controller
     public function estudiantes_post(Request $request)
     {
         $data = $request->validate([
-            'email' => 'required'
+            'email' => 'required',
+            // 'password' => 'requerid'
         ]);
 
-        $sql = 'select
-            r_error,
-            r_idpersonal,
-            r_cedula,
-            r_nombres,
-            r_idfichero_hoja_vida_foto as r_idfoto
-            from esq_roles.fnc_login_2_desarrollo(:user,esq_roles.fnc_encripta_clave(:pass),:term,:so,:port,:ip,:browser,:sistem,:pass_moodle)';
+        // DB_db_sga_spca
+        // DB_db_sga_24
 
         // acordar cambiar para acceder con password
-        $result = DB::connection('DB_db_sga_spca')->select($sql, [
+        $result = DB::connection('DB_db_sga_24')->select(self::SQL_FOR_LOGIN_SGA_24, [
             'user'          => $request->get('email'),
-            'pass'          => '123456',
+            'pass'          => 'Master13.',
             'term'          => 'term',
             'so'            => 'so',
             'port'          => 'port',
@@ -78,16 +130,13 @@ class LoginController extends Controller
             'sistem'        => 10,
             'pass_moodle'   => '',
         ])[0];
+        // dd($result);
 
         if ($result->r_error != 'Ok.') {
             // dd('hola');
             add_error("El usuario '{$data['email']}' no está registrado en el sistema");
             return redirect()->back();
         }
-
-        // dd($result);
-
-        // todo: si no hay registro recuperado
 
         $request->session()->put('id_personal', $result->r_idpersonal);
         $request->session()->put('nombres', $result->r_nombres);
@@ -139,5 +188,55 @@ class LoginController extends Controller
         }
 
         return redirect()->action('EstudianteController@dashboard');
+    }
+
+    public function responsables_get()
+    {
+        return view('login.responsables');
+    }
+
+    public function responsables_post(Request $request)
+    {
+        $data = $request->validate([
+            'email' => ['required', 'email'],
+            // 'password' => 'required'
+        ]);
+
+        $result = self::login_sga_docentes($data['email']);
+
+        // dd($result);
+
+        if ($result->r_error != 'Ok.') {
+            // dd('hola');
+            add_error("El usuario '{$data['email']}' no está registrado en el sistema");
+            return redirect()->back();
+        }
+
+        $personal_rol_array = PersonalRol::where([
+            ['id_personal', '=', $result->r_idpersonal],
+            ['id_rol', '=', self::ID_ROL_RESPONSABLE_PRACTICA]
+        ])->get();
+
+        if ($personal_rol_array->count() <= 0) {
+            add_error("El usuario '{$data['email']}' no tiene acceso");
+            return redirect()->back();
+        } else {
+            $personal_rol = $personal_rol_array[0];
+
+            // dd($personal_rol);
+
+            $idescuela = explode('|', $personal_rol->idescuela)[0];
+
+            $escuela = Escuela::find($idescuela);
+
+            Session::put('id_personal', $result->r_idpersonal);
+            Session::put('nombres', $result->r_nombres);
+            Session::put('id_escuela', $escuela->idescuela);
+            Session::put('id_faculta', $escuela->idfacultad);
+
+            // dd($escuela->facultad);
+
+            return redirect()->route('responsables.dashboard');
+        }
     }
 }

@@ -26,6 +26,7 @@
             <a class="text-white" href="{{ route('new_empresas.create') }}">Registro Nuevas Empresas</a>
             <a class="text-white" href="{{ route('login.empresas_get') }}">Login Empresas</a>
             <a class="text-white" href="{{ route('login.estudiantes_get') }}">Login Estudiantes</a>
+            <a class="text-white" href="{{ route('login.responsables_get') }}">Login Docentes</a>
         </div>
     </nav>
 

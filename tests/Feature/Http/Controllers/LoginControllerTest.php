@@ -45,4 +45,24 @@ class LoginControllerTest extends TestCase
         ])->assertStatus(302)
         ->assertSessionHasErrors();
     }
+
+    public function test_login_responsable_pasantia_with_username_that_is_not_docente_responsable()
+    {
+        $this->post(route('login.responsables_post'), [
+            'email' => 'rzambrano2041@utm.edu.ec',
+            // 'password' => '12345678'
+        ])->assertSessionHasErrors();
+
+
+
+        // dd($personal_rol);
+    }
+
+    public function test_login_responsable_pasantia_success()
+    {
+        $this->post(route('login.responsables_post'), [
+            'email' => 'carlos.pinargote@utm.edu.ec',
+            // 'password' => '12345678'
+        ])->assertRedirect();
+    }
 }
