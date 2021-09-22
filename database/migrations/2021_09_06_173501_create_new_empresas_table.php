@@ -24,6 +24,7 @@ class CreateNewEmpresasTable extends Migration
             $table->string('email')->unique();
             $table->string('telefono')->unique();
             $table->text('descripcion');
+            $table->string('area');
             $table->enum('tipo', [0, 1]); // 1 = publica; 0 = privada
             $table->enum('estado', [0, 1])->default(1); // 1 = disponible; 0 = no disponible
             $table->foreignId('id_representante')->references('id')->on('nuevo_personal_externo');

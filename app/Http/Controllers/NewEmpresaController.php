@@ -27,7 +27,10 @@ class NewEmpresaController extends Controller
      */
     public function create()
     {
-        return view('new_empresas.create');
+        $areas = PracticaController::get_facultades();
+
+        return view('new_empresas.create')
+            ->with('areas', $areas);
     }
 
     /**
@@ -60,6 +63,7 @@ class NewEmpresaController extends Controller
             'email' => strtolower($request->email),
             'telefono' => $request->telefono,
             'descripcion' => $request->descripcion,
+            'area' => $request->area,
             'tipo' => $request->tipo,
             'id_representante' => NewPersonalExterno::create([
                 'cedula' => $request->cedula,

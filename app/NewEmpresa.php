@@ -14,7 +14,7 @@ class NewEmpresa extends Model
 
     protected $fillable = [
         'ruc', 'nombre_empresa', 'id_provincia', 'id_canton', 'id_parroquia',
-        'direccion', 'email', 'telefono', 'descripcion', 'tipo', 'id_representante'
+        'direccion', 'email', 'telefono', 'descripcion', 'area', 'tipo', 'id_representante'
     ];
 
     protected $attributes = [

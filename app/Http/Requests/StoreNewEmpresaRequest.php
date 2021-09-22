@@ -39,6 +39,7 @@ class StoreNewEmpresaRequest extends FormRequest
             'email' => ['required', 'unique:nuevas_empresas,email', 'email'],
             'telefono' => 'required',
             'descripcion' => 'required',
+            'area' => 'required',
             'tipo' => 'required',
         ];
     }

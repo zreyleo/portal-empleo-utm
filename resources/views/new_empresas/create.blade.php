@@ -109,7 +109,7 @@
 
             <div class="form-group">
                 <label for="direccion">Direcci&oacute;n</label>
-                <input type="text" class="form-control @error('apellido_p') is-invalid @enderror" id="direccion"
+                <input type="text" class="form-control @error('direccion') is-invalid @enderror" id="direccion"
                     name="direccion" value="{{ old('direccion') }}">
                 @error('direccion')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
@@ -118,7 +118,7 @@
 
             <div class="form-group">
                 <label for="email">Email de contacto</label>
-                <input type="email" class="form-control @error('apellido_p') is-invalid @enderror" id="email" name="email"
+                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
                     value="{{ old('email') }}">
                 @error('email')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
@@ -127,7 +127,7 @@
 
             <div class="form-group">
                 <label for="telefono">Tel&eacute;fono de contacto</label>
-                <input type="text" class="form-control @error('apellido_p') is-invalid @enderror" id="telefono"
+                <input type="text" class="form-control @error('telefono') is-invalid @enderror" id="telefono"
                     name="telefono" value="{{ old('telefono') }}">
                 @error('telefono')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
@@ -136,7 +136,7 @@
 
             <div class="form-group">
                 <label for="descripcion">Descripci&oacute;n</label>
-                <textarea type="text" class="form-control @error('apellido_p') is-invalid @enderror" id="descripcion"
+                <textarea type="text" class="form-control @error('descripcion') is-invalid @enderror" id="descripcion"
                     name="descripcion" cols="4" style="resize: none"></textarea>
                 @error('descripcion')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
@@ -144,8 +144,21 @@
             </div>
 
             <div class="form-group">
+                <label for="area">Área</label>
+                <select name="area" id="area" class="form-control @error('area') is-invalid @enderror">
+                    <option value="" selected disabled>-- seleccione --</option>
+                    @foreach ($areas as $area)
+                        <option value="{{ $area->idfacultad }}">{{ $area->nombre }}</option>
+                    @endforeach
+                </select>
+                @error('tipo')
+                    <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="form-group">
                 <label for="tipo">Tipo</label>
-                <select name="tipo" id="tipo" class="form-control @error('apellido_p') is-invalid @enderror">
+                <select name="tipo" id="tipo" class="form-control @error('tipo') is-invalid @enderror">
                     <option value="inaceptable" selected disabled>-- seleccione --</option>
                     <option value=1 @if (old('tipo') == 1) selected @endif>P&Uacute;BLICA</option>
                     <option value=0 @if (old('tipo') === 0) selected @endif>PRIVADA</option>

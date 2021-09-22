@@ -66,6 +66,7 @@ class NewEmpresaControllerTest extends TestCase
             'email' => 'rrhh@tamarindo.xyz',
             'telefono' => '555555555',
             'descripcion' => 'empresa desarrolladora de software',
+            'area' => '2',
             'tipo' => '0',
         ];
 
