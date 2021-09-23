@@ -12,9 +12,20 @@ class Empresa extends Model
 
     protected $primaryKey = 'id_empresa';
 
+    protected $fillable = [
+        'nombre_empresa', 'id_provincia', 'id_canton', 'id_parroquia', 'direccion', 'id_representante',
+        'tipo', 'telefono', 'email', 'password', 'ruc', 'descripcion', 'area', 'registrado_por'
+    ];
+
+    protected $attributes = [
+        'estado' => 1
+    ];
+
     protected $hidden = [
         'password'
     ];
+
+    public $timestamps = false;
 
     public function getSlugAttribute()
     {

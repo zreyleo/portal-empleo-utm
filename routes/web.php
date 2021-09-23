@@ -143,4 +143,8 @@ Route::prefix('dashboard/responsables')->group(function () {
     Route::get('new_empresas/{empresa}', 'NewEmpresaController@show')
         ->middleware('check.responsable.role.for.session')
         ->name('new_empresas.show');
+
+    Route::post('new_empresas/{nueva_empresa}', 'NewEmpresaController@register')
+        ->middleware('check.responsable.role.for.session')
+        ->name('new_empresas.register');
 });

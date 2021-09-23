@@ -24,9 +24,21 @@
                 <tr>
                     <td>{{ $empresa->nombre_empresa }}</td>
                     <td>{{ $empresa->representante->nombres_completos }}</td>
-                    <td>
+                    <td class="d-flex">
                         <a href="{{ route('new_empresas.show', ['empresa' => $empresa->id_empresa]) }}"
                             class="btn btn-info">Informaci&oacute;n</a>
+
+                        <form action="{{ route('new_empresas.register', ['nueva_empresa' => $empresa->id_empresa]) }}"
+                                method="POST"
+                                onsubmit="
+                                if (!confirm('Desea Registrar Esta empresa?')) {
+                                    event.preventDefault();
+                                    return;
+                                }
+                            ">
+                                @csrf
+                                <input type="submit" value="Registrar" class="btn btn-success">
+                            </form>
                     </td>
                 </tr>
             @empty
