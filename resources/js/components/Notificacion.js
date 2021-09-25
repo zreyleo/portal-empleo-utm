@@ -13,7 +13,7 @@ const Notificacion = ({ mensaje, clase }) => {
 
             setTimeout(() => {
                 setVisible(false);
-            }, 500);
+            }, 501);
         }, 2500);
     }, []);
 

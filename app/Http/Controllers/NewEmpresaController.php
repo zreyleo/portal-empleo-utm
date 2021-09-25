@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Empresa;
 use App\Http\Requests\StoreNewEmpresaRequest;
+use App\Http\Requests\UpdateNewEmpresaRequest;
 use App\NewEmpresa;
 use App\NewPersonalExterno;
 use App\PersonalExterno;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class NewEmpresaController extends Controller
 {
@@ -27,6 +29,7 @@ class NewEmpresaController extends Controller
         ])->latest()->get();
 
         return view('new_empresas.index')
+
             ->with('docente', $docente)
             ->with('nuevas_empresas', $nuevas_empresas);
     }
@@ -128,9 +131,27 @@ class NewEmpresaController extends Controller
      * @param  \App\NewEmpresa  $newEmpresa
      * @return \Illuminate\Http\Response
      */
-    public function edit(NewEmpresa $newEmpresa)
+    public function edit(NewEmpresa $empresa)
     {
-        //
+        $docente = get_session_docente();
+
+        // dd($nueva_empresa);
+
+        // prevenir que un docente edite una empresa que no le compete a su facultad
+        if ($empresa->area != $docente['id_facultad']) {
+            Session::flush();
+            return redirect()->route('login.responsables_get');
+        }
+
+        $representante = $empresa->representante;
+
+        $areas = PracticaController::get_facultades();
+
+        return view('new_empresas.edit')
+            ->with('docente', $docente)
+            ->with('representante', $representante)
+            ->with('areas', $areas)
+            ->with('empresa', $empresa);
     }
 
     /**
@@ -140,9 +161,9 @@ class NewEmpresaController extends Controller
      * @param  \App\NewEmpresa  $newEmpresa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NewEmpresa $newEmpresa)
+    public function update(UpdateNewEmpresaRequest $request, NewEmpresa $newEmpresa)
     {
-        //
+        return "hola";
     }
 
     /**
@@ -161,6 +182,12 @@ class NewEmpresaController extends Controller
         $docente = get_session_docente();
 
         // dd($nueva_empresa);
+
+        // prevenir que un docente registre una empresa que no le compete a su facultad
+        if ($nueva_empresa->area != $docente['id_facultad']) {
+            Session::flush();
+            return redirect()->route('login.responsables_get');
+        }
 
         $nuevo_personal_externo = $nueva_empresa->representante;
 

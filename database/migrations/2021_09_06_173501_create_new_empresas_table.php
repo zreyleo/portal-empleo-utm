@@ -28,6 +28,7 @@ class CreateNewEmpresasTable extends Migration
             $table->enum('tipo', [0, 1]); // 1 = publica; 0 = privada
             $table->enum('estado', [0, 1])->default(1); // 1 = disponible; 0 = no disponible
             $table->foreignId('id_representante')->references('id')->on('nuevo_personal_externo');
+            $table->unsignedBigInteger('actulizacion_por')->default(null)->nullable(); // id del docente responsable que actualiza la informacion
             $table->timestamps();
         });
     }

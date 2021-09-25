@@ -88,8 +88,11 @@ class NewEmpresaControllerTest extends TestCase
     public function test_send_new_empresas_to_responsable()
     {
         $this->session([
-            'id_empresa' => 2684,
-            'role' => ResponsableController::get_role()
+            'id_personal' => 2684,
+            'nombres' => 'CARLOS PINARGOTE',
+            'id_facultad' => 2, // id de la facultad de ciencia informaticas
+            'id_escuela' => 1, // id = ingenieria en sistemas
+            'role' => ResponsableController::get_role(),
         ]);
 
         $this->get(route('new_empresas.index'))
@@ -121,8 +124,11 @@ class NewEmpresaControllerTest extends TestCase
         $this->post(route('new_empresas.store'), $nueva_empresa);
 
         $this->session([
-            'id_empresa' => 2684,
-            'role' => ResponsableController::get_role()
+            'id_personal' => 2684,
+            'nombres' => 'CARLOS PINARGOTE',
+            'id_facultad' => 2, // id de la facultad de ciencia informaticas
+            'id_escuela' => 1, // id = ingenieria en sistemas
+            'role' => ResponsableController::get_role(),
         ]);
 
         $empresa = NewEmpresa::first();
@@ -130,6 +136,47 @@ class NewEmpresaControllerTest extends TestCase
         $this->get(route('new_empresas.show', ['empresa' => $empresa->id_empresa]))
             ->assertStatus(200)
             ->assertSee($empresa->nombre_empresa);
+    }
+
+    public function test_edit_form_new_empresa()
+    {
+        $nueva_empresa = [
+            'cedula' => '1311742041',
+            'apellido_p' => 'zambrano',
+            'apellido_m' => 'perero',
+            'nombres' => 'regynald Leonardo',
+            'titulo' => 'ingeniero',
+            'genero' => 'M',
+            'ruc' => '1311742041001',
+            'nombre_empresa' => 'tamarindo software',
+            'provincia' => '13',
+            'canton' => '1',
+            'parroquia' => '1',
+            'direccion' => 'Pedro gual y morales',
+            'email' => 'rrhh@tamarindo.xyz',
+            'telefono' => '555555555',
+            'descripcion' => 'empresa desarrolladora de software',
+            'area' => 2,
+            'tipo' => '0',
+        ];
+
+        $this->post(route('new_empresas.store'), $nueva_empresa);
+
+        $this->session([
+            'id_personal' => 2684,
+            'nombres' => 'CARLOS PINARGOTE',
+            'id_facultad' => 2, // id de la facultad de ciencia informaticas
+            'id_escuela' => 1, // id = ingenieria en sistemas
+            'role' => ResponsableController::get_role(),
+        ]);
+
+        $empresa = NewEmpresa::first();
+
+        // dd($empresa);
+
+        $this->get(route('new_empresas.edit', ['empresa' => $empresa->id_empresa]))
+            ->assertStatus(200)
+            ->assertSee($empresa->ruc);
     }
 
     // public function test_()

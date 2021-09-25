@@ -28,6 +28,9 @@
                         <a href="{{ route('new_empresas.show', ['empresa' => $empresa->id_empresa]) }}"
                             class="btn btn-info">Informaci&oacute;n</a>
 
+                        <a href="{{ route('new_empresas.edit', ['empresa' => $empresa->id_empresa]) }}"
+                            class="btn btn-warning">Editar</a>
+
                         <form action="{{ route('new_empresas.register', ['nueva_empresa' => $empresa->id_empresa]) }}"
                                 method="POST"
                                 onsubmit="
