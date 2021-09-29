@@ -24,7 +24,7 @@ function ProvinciasCantonesParroquiasSelects(props) {
     const baseUrl = window.location.origin + '/api/provincias';
 
     // url para prubeas en el servidor de la universidad
-    // const baseUrl = window.location.origin + '/portal-empleo-utm/public' + '/api/';
+    // const baseUrl = '/portal-empleo-utm/public/api/provincias';
 
     useEffect(() => {
         fetch(baseUrl)
