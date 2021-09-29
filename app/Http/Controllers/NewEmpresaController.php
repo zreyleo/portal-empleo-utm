@@ -161,9 +161,48 @@ class NewEmpresaController extends Controller
      * @param  \App\NewEmpresa  $newEmpresa
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateNewEmpresaRequest $request, NewEmpresa $newEmpresa)
+    public function update(UpdateNewEmpresaRequest $request, NewEmpresa $empresa)
     {
-        return "hola";
+        $docente = get_session_docente();
+
+        // dd($nueva_empresa);
+
+        // prevenir que un docente edite una empresa que no le compete a su facultad
+        if ($empresa->area != $docente['id_facultad']) {
+            Session::flush();
+            return redirect()->route('login.responsables_get');
+        }
+
+        // actualizar informacion del representante
+        $representante = $empresa->representante;
+
+        $representante->cedula = $request['cedula'];
+        $representante->apellido_p = $request['apellido_p'];
+        $representante->apellido_m = $request['apellido_m'];
+        $representante->nombres = $request['nombres'];
+        $representante->titulo = $request['titulo'];
+        $representante->genero = $request['genero'];
+
+        // dd($representante);
+        $representante->save();
+
+        $empresa->ruc = $request['ruc'];
+        $empresa->nombre_empresa = $request['nombre_empresa'];
+        $empresa->id_provincia = $request['provincia'];
+        $empresa->id_canton = $request['canton'];
+        $empresa->id_parroquia = $request['parroquia'];
+        $empresa->direccion = $request['direccion'];
+        $empresa->email = $request['email'];
+        $empresa->telefono = $request['telefono'];
+        $empresa->descripcion = $request['descripcion'];
+        $empresa->area = $request['area'];
+        $empresa->tipo = $request['tipo'];
+
+        // dd($empresa);
+
+        $empresa->save();
+
+        return redirect()->route('new_empresas.edit', ['empresa' => $empresa->id_empresa]);
     }
 
     /**

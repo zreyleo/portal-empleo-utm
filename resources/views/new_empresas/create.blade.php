@@ -20,7 +20,7 @@
 
             <div class="form-group">
                 <label for="apellido-p">Apellido Paterno</label>
-                <input type="text" class="form-control @error('apellido_p') is-invalid @enderror" id="apellido-p"
+                <input type="text" class="form-control @error('apellido_p') is-invalid @enderror text-uppercase" id="apellido-p"
                     name="apellido_p" value="{{ old('apellido_p') }}">
                 @error('apellido_p')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
@@ -29,7 +29,7 @@
 
             <div class="form-group">
                 <label for="apellido-m">Apellido Materno</label>
-                <input type="text" class="form-control @error('apellido_m') is-invalid @enderror" id="apellido-m"
+                <input type="text" class="form-control @error('apellido_m') is-invalid @enderror text-uppercase" id="apellido-m"
                     name="apellido_m" value="{{ old('apellido_m') }}">
                 @error('apellido_m')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
@@ -38,7 +38,7 @@
 
             <div class="form-group">
                 <label for="nombres">Nombres</label>
-                <input type="text" class="form-control @error('nombres') is-invalid @enderror" id="nombres"
+                <input type="text" class="form-control @error('nombres') is-invalid @enderror text-uppercase" id="nombres"
                     name="nombres" value="{{ old('nombres') }}">
                 @error('nombres')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
@@ -47,7 +47,7 @@
 
             <div class="form-group">
                 <label for="titulo">Cargo en la Empresa</label>
-                <input type="text" class="form-control @error('titulo') is-invalid @enderror" id="titulo" name="titulo"
+                <input type="text" class="form-control @error('titulo') is-invalid @enderror text-uppercase" id="titulo" name="titulo"
                     value="{{ old('titulo') }}">
                 @error('titulo')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
@@ -72,7 +72,7 @@
 
             <div class="form-group">
                 <label for="ruc">RUC</label>
-                <input type="text" class="form-control @error('ruc') is-invalid @enderror" id="ruc" name="ruc"
+                <input type="text" class="form-control @error('ruc') is-invalid @enderror text-uppercase" id="ruc" name="ruc"
                     value="{{ old('ruc') }}">
                 @error('ruc')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
@@ -109,7 +109,7 @@
 
             <div class="form-group">
                 <label for="direccion">Direcci&oacute;n</label>
-                <input type="text" class="form-control @error('direccion') is-invalid @enderror" id="direccion"
+                <input type="text" class="form-control @error('direccion') is-invalid @enderror text-uppercase" id="direccion"
                     name="direccion" value="{{ old('direccion') }}">
                 @error('direccion')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
@@ -118,7 +118,7 @@
 
             <div class="form-group">
                 <label for="email">Email de contacto</label>
-                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
+                <input type="email" class="form-control @error('email') is-invalid @enderror text-lowercase" id="email" name="email"
                     value="{{ old('email') }}">
                 @error('email')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
@@ -127,7 +127,7 @@
 
             <div class="form-group">
                 <label for="telefono">Tel&eacute;fono de contacto</label>
-                <input type="text" class="form-control @error('telefono') is-invalid @enderror" id="telefono"
+                <input type="text" class="form-control @error('telefono') is-invalid @enderror text-uppercase" id="telefono"
                     name="telefono" value="{{ old('telefono') }}">
                 @error('telefono')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>

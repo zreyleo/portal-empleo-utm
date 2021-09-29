@@ -18,6 +18,26 @@ class NewPersonalExterno extends Model
         'estado' => 1
     ];
 
+    public function setApellidoPAttribute($value)
+    {
+        $this->attributes['apellido_p'] = strtoupper($value);
+    }
+
+    public function setApellidoMAttribute($value)
+    {
+        $this->attributes['apellido_m'] = strtoupper($value);
+    }
+
+    public function setNombresAttribute($value)
+    {
+        $this->attributes['nombres'] = strtoupper($value);
+    }
+
+    public function setTituloAttribute($value)
+    {
+        $this->attributes['titulo'] = strtoupper($value);
+    }
+
     public function getNombresCompletosAttribute()
     {
         return $this->apellido_p . " " . $this->apellido_m . " " . $this->nombres;

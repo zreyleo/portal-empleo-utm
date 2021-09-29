@@ -28,13 +28,16 @@ class UpdateNewEmpresaRequest extends FormRequest
      */
     public function rules()
     {
+        // dd($this->route('empresa'));
 
-        $empresa = NewEmpresa::where('ruc', $this->ruc)->get()[0];
+        $empresa = $this->route('empresa');
+
+        // dd($empresa);
 
         return [
             // 'cedula' => ['required', 'unique:nuevo_personal_externo,cedula', 'digits:10'], // regex para cedula
             'cedula' => ['required', Rule::unique('nuevo_personal_externo', 'cedula')->ignore(
-                NewPersonalExterno::where('cedula', $this->cedula)->get()[0]->id
+                $empresa->id_representante
             ), 'digits:10'], // regex para cedula
 
             'apellido_p' => 'required',

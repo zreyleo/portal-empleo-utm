@@ -14,7 +14,7 @@
 
 @section('page-content')
 
-<a href="{{ route('empleos.index') }}" class="btn btn-outline-danger my-3">volver</a>
+<a href="{{ route('empleos.index') }}" class="btn btn-outline-danger my-3">Volver</a>
 
 <h2 class="my-3 text-center">Formulario para editar una oferta de empleo</h2>
 

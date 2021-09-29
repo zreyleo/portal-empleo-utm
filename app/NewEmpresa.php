@@ -21,6 +21,21 @@ class NewEmpresa extends Model
         'estado' => 1
     ];
 
+    public function setNombreEmpresaAttribute($nombre_empresa)
+    {
+        $this->attributes['nombre_empresa'] = strtoupper($nombre_empresa);
+    }
+
+    public function setDireccionAttribute($value)
+    {
+        $this->attributes['direccion'] = strtoupper($value);
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtoupper($value);
+    }
+
     public function representante()
     {
         return $this->belongsTo(NewPersonalExterno::class, 'id_representante', 'id');
