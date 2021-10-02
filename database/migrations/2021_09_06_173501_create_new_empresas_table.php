@@ -16,13 +16,13 @@ class CreateNewEmpresasTable extends Migration
         Schema::create('nuevas_empresas', function (Blueprint $table) {
             $table->id('id_empresa');
             $table->string('ruc')->unique();
-            $table->string('nombre_empresa')->unique();
+            $table->string('nombre_empresa')->unique()->nullable();
             $table->unsignedBigInteger('id_provincia');
             $table->unsignedBigInteger('id_canton');
             $table->unsignedBigInteger('id_parroquia');
             $table->string('direccion');
-            $table->string('email')->unique();
-            $table->string('telefono')->unique();
+            $table->string('email')->unique()->nullable();
+            $table->string('telefono')->unique()->nullable();
             $table->text('descripcion');
             $table->string('area');
             $table->enum('tipo', [0, 1]); // 1 = publica; 0 = privada

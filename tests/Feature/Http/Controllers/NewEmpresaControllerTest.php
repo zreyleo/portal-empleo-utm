@@ -181,7 +181,7 @@ class NewEmpresaControllerTest extends TestCase
 
     public function test_update_new_empresa_information()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $nueva_empresa = [
             'cedula' => '1311742041',
             'apellido_p' => 'zambrano',
@@ -254,18 +254,48 @@ class NewEmpresaControllerTest extends TestCase
         ]);
     }
 
-    // public function test_responsable_can_delete_new_empresa()
-    // {
-    //     $this->session([
-    //         'id_personal' => 2684,
-    //         'nombres' => 'CARLOS PINARGOTE',
-    //         'id_facultad' => 2, // id de la facultad de ciencia informaticas
-    //         'id_escuela' => 1, // id = ingenieria en sistemas
-    //         'role' => ResponsableController::get_role(),
-    //     ]);
+    public function test_responsable_can_delete_new_empresa()
+    {
+        $nueva_empresa = [
+            'cedula' => '1311742041',
+            'apellido_p' => 'zambrano',
+            'apellido_m' => 'perero',
+            'nombres' => 'regynald Leonardo',
+            'titulo' => 'ingeniero',
+            'genero' => 'M',
+            'ruc' => '1311742041001',
+            'nombre_empresa' => 'tamarindo SOLUTIONS',
+            'provincia' => '13',
+            'canton' => '1',
+            'parroquia' => '1',
+            'direccion' => 'Pedro gual y morales',
+            'email' => 'rrhh@tamarindo.xyz',
+            'telefono' => '555555555',
+            'descripcion' => 'empresa desarrolladora de software',
+            'area' => 2,
+            'tipo' => '0',
+        ];
 
-    //     $this->delete(route('new_empresas.destroy'));
-    // }
+        $this->post(route('new_empresas.store'), $nueva_empresa);
+
+        $this->session([
+            'id_personal' => 2684,
+            'nombres' => 'CARLOS PINARGOTE',
+            'id_facultad' => 2, // id de la facultad de ciencia informaticas
+            'id_escuela' => 1, // id = ingenieria en sistemas
+            'role' => ResponsableController::get_role(),
+        ]);
+
+        $empresa = NewEmpresa::first();
+
+        $this->delete(route('new_empresas.destroy', ['empresa' => $empresa->id_empresa]), ['comentario' => 'no existe'])
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('nuevas_empresas', [
+            'ruc' => '1311742041001',
+            'estado' => 0
+        ]);
+    }
 
     // public function test_()
     // {

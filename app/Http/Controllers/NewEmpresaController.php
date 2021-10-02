@@ -102,6 +102,16 @@ class NewEmpresaController extends Controller
     {
         $docente = get_session_docente();
 
+        // prevenir que un docente edite una empresa que no le compete a su facultad
+        if ($empresa->area != $docente['id_facultad']) {
+            Session::flush();
+            return redirect()->route('login.responsables_get');
+        }
+
+        if ($empresa->estado != 1) {
+            return redirect()->route('new_empresas.index');
+        }
+
         $sql_location = '
             select provincia.nombre as "provincia", canton.nombre as "canton", parroquia.nombre as "parroquia"
             from view_provincia provincia inner join view_canton canton on canton.idprovincia = provincia.idprovincia
@@ -228,9 +238,33 @@ class NewEmpresaController extends Controller
      * @param  \App\NewEmpresa  $newEmpresa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NewEmpresa $empresa)
+    public function destroy(Request $request, NewEmpresa $empresa)
     {
-        //
+        $request->validate([
+            'comentario' => 'required'
+        ]);
+
+        $docente = get_session_docente();
+
+
+        // prevenir que un docente edite una empresa que no le compete a su facultad
+        if ($empresa->area != $docente['id_facultad']) {
+            Session::flush();
+            return redirect()->route('login.responsables_get');
+        }
+
+        $empresa->comentario = "La empresa registrada $empresa->nombre_empresa es rechazada por: $request->comentario";
+        $empresa->actulizacion_por = $docente['id_personal'];
+        $empresa->email = null;
+        $empresa->telefono = null;
+        $empresa->nombre_empresa = null;
+        $empresa->estado = 0;
+
+        // dd($empresa);
+
+        $empresa->save();
+
+        return redirect()->route('new_empresas.index');
     }
 
     public function register(NewEmpresa $nueva_empresa)

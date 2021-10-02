@@ -20,13 +20,29 @@
     <div class="col-md-5">
         <form action="{{ route('new_empresas.destroy', ['empresa' => $empresa->id_empresa]) }}"
             method="POST"
+            onsubmit="
+                if (!confirm('Desea Rechazar Esta empresa?, Esto no se puede deshacer.')) {
+                    event.preventDefault();
+                    return;
+                }
+            "
         >
         @csrf
         @method('DELETE')
 
         <div class="form-group">
             <label for="cometario">Raz&oacute;n de rechazo</label>
-            <textarea name="comentario" id="comentario" rows="5" class="form-control" style="resize: none;"></textarea>
+            <textarea
+                name="comentario"
+                id="comentario"
+                rows="5"
+                class="form-control @error ('comentario') is-invalid @enderror"
+                style="resize: none;"
+            ></textarea>
+
+            @error('comentario')
+                <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
+            @enderror
         </div>
 
         <input type="submit" value="Rechazar" class="btn btn-danger">
