@@ -1,5 +1,16 @@
 @extends('responsables.dashboard')
 
+@section('external-css')
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css"
+    integrity="sha512-5m1IeUDKtuFGvfgz32VVD0Jd/ySGX7xdLxhqemTmThxHdgqlgPdupWoSN8ThtUSLpAGBvA8DY2oO7jJCrGdxoA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+/>
+
+@endsection
 
 @section('page-content')
 
@@ -25,7 +36,8 @@
                     @else
                         value="{{ $representante->cedula }}"
                     @endif
-                    />
+                />
+
                 @error('cedula')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
@@ -131,8 +143,15 @@
 
             <div class="form-group">
                 <label for="ruc">RUC</label>
+
                 <input type="text" class="form-control @error('ruc') is-invalid @enderror text-uppercase" id="ruc" name="ruc"
-                    value="{{ $empresa->ruc }}">
+                    @if (old('ruc'))
+                        value="{{ old('ruc') }}"
+                    @else
+                        value="{{ $empresa->ruc }}"
+                    @endif
+                />
+
                 @error('ruc')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
@@ -140,9 +159,16 @@
 
             <div class="form-group">
                 <label for="nombre_empresa">Nombre de la Empresa</label>
+
                 <input type="text" class="form-control @error('nombre_empresa') is-invalid @enderror text-uppercase"
                     id="nombre_empresa" name="nombre_empresa"
-                    value="{{ $empresa->nombre_empresa }}">
+                    @if (old('nombre_empresa'))
+                        value="{{ old('nombre_empresa') }}"
+                    @else
+                        value="{{ $empresa->nombre_empresa }}"
+                    @endif
+                />
+
                 @error('nombre_empresa')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
@@ -182,7 +208,13 @@
             <div class="form-group">
                 <label for="direccion">Direcci&oacute;n</label>
                 <input type="text" class="form-control @error('direccion') is-invalid @enderror text-uppercase" id="direccion"
-                    name="direccion" value="{{ $empresa->direccion }}">
+                    name="direccion"
+                    @if (old('direccion'))
+                        value="{{ old('direccion') }}"
+                    @else
+                        value="{{ $empresa->direccion }}"
+                    @endif
+                />
                 @error('direccion')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
@@ -191,7 +223,13 @@
             <div class="form-group">
                 <label for="email">Email de contacto</label>
                 <input type="email" class="form-control @error('email') is-invalid @enderror text-lowercase" id="email" name="email"
-                    value="{{ $empresa->email }}">
+                    @if (old('email'))
+                        value="{{ old('email') }}"
+                    @else
+                        value="{{ $empresa->email }}"
+                    @endif
+                />
+
                 @error('email')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
@@ -200,7 +238,14 @@
             <div class="form-group">
                 <label for="telefono">Tel&eacute;fono de contacto</label>
                 <input type="text" class="form-control @error('telefono') is-invalid @enderror text-uppercase" id="telefono"
-                    name="telefono" value="{{ $empresa->telefono }}">
+                    name="telefono"
+                    @if (old('telefono'))
+                        value="{{ old('telefono') }}"
+                    @else
+                        value="{{ $empresa->telefono }}"
+                    @endif
+                />
+
                 @error('telefono')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
@@ -208,8 +253,26 @@
 
             <div class="form-group">
                 <label for="descripcion">Descripci&oacute;n</label>
-                <textarea type="text" class="form-control @error('descripcion') is-invalid @enderror" id="descripcion"
-                    name="descripcion" cols="4" style="resize: none">{{ $empresa->descripcion }}</textarea>
+
+                {{-- <textarea type="text" class="form-control @error('descripcion') is-invalid @enderror" id="descripcion"
+                    name="descripcion" cols="4" style="resize: none">{{old('descripcion')}}</textarea> --}}
+
+                <input
+                    type="hidden"
+                    id="descripcion"
+                    name="descripcion"
+                    @if (old('descripcion'))
+                        value="{{ old('descripcion') }}"
+                    @else
+                        value="{{ $empresa->descripcion }}"
+                    @endif
+                />
+
+                <trix-editor input="descripcion"
+                    class="form-control  @error ('descripcion') is-invalid @enderror"
+                    style="min-height: 300px; overflow-y: scroll"
+                ></trix-editor>
+
                 @error('descripcion')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
@@ -251,3 +314,16 @@
     </form>
 
 @endsection
+
+@section('external-js')
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"
+    integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+></script>
+
+@endsection
+
+

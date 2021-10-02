@@ -31,6 +31,12 @@
                         <a href="{{ route('new_empresas.edit', ['empresa' => $empresa->id_empresa]) }}"
                             class="btn btn-warning">Editar</a>
 
+                        <a href="{{ route('new_empresas.reject', ['empresa' => $empresa->id_empresa]) }}"
+                            class="btn btn-danger"
+                        >
+                            Rechazar
+                        </a>
+
                         <form action="{{ route('new_empresas.register', ['nueva_empresa' => $empresa->id_empresa]) }}"
                                 method="POST"
                                 onsubmit="

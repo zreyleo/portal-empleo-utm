@@ -254,6 +254,19 @@ class NewEmpresaControllerTest extends TestCase
         ]);
     }
 
+    // public function test_responsable_can_delete_new_empresa()
+    // {
+    //     $this->session([
+    //         'id_personal' => 2684,
+    //         'nombres' => 'CARLOS PINARGOTE',
+    //         'id_facultad' => 2, // id de la facultad de ciencia informaticas
+    //         'id_escuela' => 1, // id = ingenieria en sistemas
+    //         'role' => ResponsableController::get_role(),
+    //     ]);
+
+    //     $this->delete(route('new_empresas.destroy'));
+    // }
+
     // public function test_()
     // {
 

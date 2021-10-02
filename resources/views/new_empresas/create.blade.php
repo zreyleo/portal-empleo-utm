@@ -1,5 +1,17 @@
 @extends('layouts.guest')
 
+@section('external-css')
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css"
+    integrity="sha512-5m1IeUDKtuFGvfgz32VVD0Jd/ySGX7xdLxhqemTmThxHdgqlgPdupWoSN8ThtUSLpAGBvA8DY2oO7jJCrGdxoA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+/>
+
+@endsection
+
 @section('guest-content')
 
     <h2 class="my-5 text-center">¿Su empresa es nueva? Reg&iacute;strese con Nostros</h2>
@@ -136,8 +148,22 @@
 
             <div class="form-group">
                 <label for="descripcion">Descripci&oacute;n</label>
-                <textarea type="text" class="form-control @error('descripcion') is-invalid @enderror" id="descripcion"
-                    name="descripcion" cols="4" style="resize: none">{{old('descripcion')}}</textarea>
+
+                {{-- <textarea type="text" class="form-control @error('descripcion') is-invalid @enderror" id="descripcion"
+                    name="descripcion" cols="4" style="resize: none">{{old('descripcion')}}</textarea> --}}
+
+                <input
+                    type="hidden"
+                    id="descripcion"
+                    name="descripcion"
+                    value="{{ old('descripcion') }}"
+                />
+
+                <trix-editor input="descripcion"
+                    class="form-control  @error ('descripcion') is-invalid @enderror"
+                    style="min-height: 300px; overflow-y: scroll"
+                ></trix-editor>
+
                 @error('descripcion')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
@@ -177,3 +203,15 @@
     </form>
 
 @endsection
+
+@section('external-js')
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"
+    integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+></script>
+
+@endsection
+

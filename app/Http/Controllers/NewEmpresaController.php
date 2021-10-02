@@ -205,13 +205,30 @@ class NewEmpresaController extends Controller
         return redirect()->route('new_empresas.edit', ['empresa' => $empresa->id_empresa]);
     }
 
+    public function reject(NewEmpresa $empresa)
+    {
+        $docente = get_session_docente();
+
+        // dd($nueva_empresa);
+
+        // prevenir que un docente edite una empresa que no le compete a su facultad
+        if ($empresa->area != $docente['id_facultad']) {
+            Session::flush();
+            return redirect()->route('login.responsables_get');
+        }
+
+        return view('new_empresas.reject')
+            ->with('docente', $docente)
+            ->with('empresa', $empresa);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\NewEmpresa  $newEmpresa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NewEmpresa $newEmpresa)
+    public function destroy(NewEmpresa $empresa)
     {
         //
     }

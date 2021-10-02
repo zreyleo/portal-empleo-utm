@@ -155,4 +155,12 @@ Route::prefix('dashboard/responsables')->group(function () {
     Route::post('new_empresas/{nueva_empresa}', 'NewEmpresaController@register')
         ->middleware('check.responsable.role.for.session')
         ->name('new_empresas.register');
+
+    Route::get('new_empresas/{empresa}/reject', 'NewEmpresaController@reject')
+        ->middleware('check.responsable.role.for.session')
+        ->name('new_empresas.reject');
+
+    Route::delete('new_empresas/{empresa}', 'NewEmpresaController@destroy')
+        ->middleware('check.responsable.role.for.session')
+        ->name('new_empresas.destroy');
 });
