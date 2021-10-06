@@ -6,9 +6,12 @@ use App\Empleo;
 use App\EstudianteEmpleo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class EstudianteEmpleoController extends Controller
 {
+    private const RECHAZADO = 'RECHAZADO';
+
     /**
      * Display a listing of the resource.
      *
@@ -128,5 +131,34 @@ class EstudianteEmpleoController extends Controller
             ->with('empleo', $empleo)
             ->with('estudiante_empleo', $estudiante_empleo)
             ->with('datos_aspirante', $datos_aspirante);
+    }
+
+    public function reject(EstudianteEmpleo $estudiante_empleo)
+    {
+        $this->authorize('check_empresa_owner', $estudiante_empleo);
+
+        $empleo = $estudiante_empleo->empleo;
+
+        $cedula_aspirante = $estudiante_empleo->personal->cedula;
+
+        $sql_datos_aspirante = "
+            select *
+            from f_obtiene_persona_str('$cedula_aspirante');
+        ";
+
+        $result = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_datos_aspirante)[0];
+
+        $datos_aspirante = $result;
+
+
+        $body = "Se aprecia tu interes en la vacante $empleo->titulo pero se ha decidido no seguir adelante con tu aplicacion.";
+
+        enviar_correo("$datos_aspirante->email_utm", 'Aplicacion no seguira adelante', $body);
+
+        $estudiante_empleo->estado = self::RECHAZADO;
+
+        $estudiante_empleo->save();
+
+        return redirect()->route('empleos.show_estudiantes_empleos', ['empleo' => $estudiante_empleo->empleo_id]);
     }
 }

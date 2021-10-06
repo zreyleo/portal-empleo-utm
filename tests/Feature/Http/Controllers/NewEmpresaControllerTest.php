@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+
 class NewEmpresaControllerTest extends TestCase
 {
     use RefreshDatabase;
@@ -254,7 +255,7 @@ class NewEmpresaControllerTest extends TestCase
         ]);
     }
 
-    public function test_responsable_can_delete_new_empresa()
+    public function test_responsable_can_reject_new_empresa()
     {
         $nueva_empresa = [
             'cedula' => '1311742041',

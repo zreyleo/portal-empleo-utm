@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 
+use PHPMailer\PHPMailer\PHPMailer;
+
 if (!function_exists('add_error')) {
     /*
  * Add an error to Laravel session $errors
@@ -60,5 +62,28 @@ if (!function_exists('current_session_estudiante_has_perfil')) {
         $estudiante = get_session_estudiante();
 
         return Perfil::where('personal_id', $estudiante['id_personal'])->first() ?: false;
+    }
+}
+
+if (!function_exists('enviar_correo')) {
+    function enviar_correo($correo, $asunto, $mensaje)
+    {
+        $mail = new PHPMailer(true);
+
+        $mail->SMTPDebug    = 0; //SMTP::DEBUG_SERVER; //ver errores
+        $mail->isSMTP();
+        $mail->Host         = 'smtp.gmail.com';
+        $mail->SMTPAuth     = true;
+        $mail->Username     = env('MAIL_USERNAME');
+        $mail->Password     = env('MAIL_PASSWORD');
+        $mail->SMTPSecure   = 'tls';
+        $mail->Port         = 587;
+        $mail->addAddress($correo);
+        $mail->setFrom('sga@utm.edu.ec', 'Sistema');
+
+        $mail->isHTML(true);
+        $mail->Subject = $asunto;
+        $mail->Body    = $mensaje;
+        $mail->send();
     }
 }
