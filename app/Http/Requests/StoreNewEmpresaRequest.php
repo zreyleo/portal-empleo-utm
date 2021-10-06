@@ -37,7 +37,7 @@ class StoreNewEmpresaRequest extends FormRequest
             'parroquia' => 'required',
             'direccion' => 'required',
             'email' => ['required', 'unique:nuevas_empresas,email', 'email'],
-            'telefono' => 'required',
+            'telefono' => ['required', 'unique:nuevas_empresas,telefono'],
             'descripcion' => 'required',
             'area' => 'required',
             'tipo' => 'required',

@@ -3,17 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
+use App\Escuela;
+use App\Facultad;
 use App\Http\Requests\StoreNewEmpresaRequest;
 use App\Http\Requests\UpdateNewEmpresaRequest;
 use App\NewEmpresa;
 use App\NewPersonalExterno;
+use App\Personal;
 use App\PersonalExterno;
+use App\PersonalRol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class NewEmpresaController extends Controller
 {
+    private const ID_ROL_RESPONSABLE_PRACTICA = 38;
+
     /**
      * Display a listing of the resource.
      *
@@ -55,18 +61,6 @@ class NewEmpresaController extends Controller
      */
     public function store(StoreNewEmpresaRequest $request)
     {
-
-        // $nuevo_personal_externo = new NewPersonalExterno([
-        //     'cedula' => $request->cedula,
-        //     'apellido_p' => $request->apellido_p,
-        //     'apellido_m' => $request->apellido_m,
-        //     'nombres' => $request->nombres,
-        //     'titulo' => $request->titulo,
-        //     'genero' => $request->genero
-        // ]);
-
-        // $nuevo_personal_externo->save();
-
         NewEmpresa::create([
             'ruc' => $request->ruc,
             'nombre_empresa' => strtoupper($request->nombre_empresa),
@@ -88,6 +82,33 @@ class NewEmpresaController extends Controller
                 'genero' => $request->genero
             ])->id
         ]);
+
+        $docentes_con_rol = PersonalRol::where([
+            ['id_rol', '=', self::ID_ROL_RESPONSABLE_PRACTICA]
+        ])->get();
+
+
+        foreach ($docentes_con_rol as $docente) {
+            $idescuela = explode('|', $docente->idescuela)[0];
+            $escuela = Escuela::find($idescuela);
+            if ($escuela->idfacultad == $request->area) {
+                $personal = Personal::find($docente->id_personal);
+                if ($personal) {
+                    $sql_datos_docentes = "
+                        select *
+                        from f_obtiene_persona_str('$personal->cedula');
+                    ";
+
+                    $responsable = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_datos_docentes)[0];
+
+                    // dd($responsable);
+
+                    $nombre_empresa = strtoupper($request->nombre_empresa);
+
+                    enviar_correo("$responsable->email_utm", "Una nueva quiere registrarse", "$nombre_empresa Quiere registrarse como nueva empresa");
+                }
+            }
+        }
 
         return redirect()->route('landing');
     }

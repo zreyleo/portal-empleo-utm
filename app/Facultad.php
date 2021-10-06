@@ -11,4 +11,9 @@ class Facultad extends Model
     protected $table = 'facultad';
 
     protected $primaryKey = 'idfacultad';
+
+    public function escuelas()
+    {
+        return $this->hasMany(Escuela::class, 'idfacultad', 'idfacultad');
+    }
 }
