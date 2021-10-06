@@ -17,6 +17,12 @@ class EstudianteEmpleoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public static function get_rechazado()
+    {
+        return self::RECHAZADO;
+    }
+
     public function index()
     {
         $estudiante = get_session_estudiante();
@@ -139,6 +145,10 @@ class EstudianteEmpleoController extends Controller
 
         $empleo = $estudiante_empleo->empleo;
 
+        $empresa = get_session_empresa();
+
+        $nombre_empresa = $empresa['nombre_empresa'];
+
         $cedula_aspirante = $estudiante_empleo->personal->cedula;
 
         $sql_datos_aspirante = "
@@ -151,7 +161,7 @@ class EstudianteEmpleoController extends Controller
         $datos_aspirante = $result;
 
 
-        $body = "Se aprecia tu interes en la vacante $empleo->titulo pero se ha decidido no seguir adelante con tu aplicacion.";
+        $body = "Se aprecia tu interes en la vacante $empleo->titulo de la empresa $nombre_empresa pero se ha decidido no seguir adelante con tu aplicacion.";
 
         enviar_correo("$datos_aspirante->email_utm", 'Aplicacion no seguira adelante', $body);
 

@@ -13,5 +13,9 @@ class EmpleoSeeder extends Seeder
     public function run()
     {
         factory(Empleo::class, 10)->create();
+        factory(Empleo::class)->create([
+            'empresa_id' => 44,
+            'carrera_id' => 2
+        ]);
     }
 }

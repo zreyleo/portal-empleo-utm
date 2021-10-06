@@ -8,7 +8,16 @@
         <a href="{{ route('empleos.show_estudiantes_empleos', ['empleo' => $empleo->id]) }}"
             class="btn btn-outline-info my-3">volver</a>
 
-        <form class="d-flex" action="{{ route('estudiantes_empleos.reject', ['estudiante_empleo' => $estudiante_empleo]) }}" method="POST">
+        <form class="d-flex"
+            action="{{ route('estudiantes_empleos.reject', ['estudiante_empleo' => $estudiante_empleo]) }}" method="POST"
+            onsubmit=
+                "
+                    if (!confirm('Desea Rechazar?')) {
+                        event.preventDefault();
+                        return;
+                    }
+                "
+        >
             @csrf
             <input type="submit" value="Rechazar" class="my-auto btn btn-outline-danger">
         </form>

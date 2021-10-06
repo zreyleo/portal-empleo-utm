@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Empleo;
 use App\Empresa;
 use App\Escuela;
-
+use App\EstudianteEmpleo;
 use App\Http\Requests\EmpleoStoreRequest;
 use App\Http\Requests\EmpleoUpdateRequest;
 
@@ -205,7 +205,11 @@ class EmpleoController extends Controller
 
         $empresa = get_session_empresa();
 
-        $estudiantes_empleos = $empleo->estudiantes_empleos;
+        // dd($empleo->estudiantes_empleos->all());
+
+        $estudiantes_empleos = array_filter($empleo->estudiantes_empleos->all(), function ($estudiante_empleo) {
+            return $estudiante_empleo->estado != EstudianteEmpleoController::get_rechazado();
+        });
 
         return view('empleos.show_estudiantes_empleos')
             ->with('empleo', $empleo)
