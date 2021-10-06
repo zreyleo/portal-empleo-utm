@@ -105,7 +105,11 @@ class NewEmpresaController extends Controller
 
                     $nombre_empresa = strtoupper($request->nombre_empresa);
 
-                    enviar_correo("$responsable->email_utm", "Una nueva quiere registrarse", "$nombre_empresa Quiere registrarse como nueva empresa");
+                    enviar_correo(
+                        "$responsable->email_utm",
+                        "Una nueva EMPRESA quiere registrarse",
+                        "$nombre_empresa Quiere registrarse como nueva empresa para publicar ofertas de empleo y PPP"
+                    );
                 }
             }
         }
@@ -333,6 +337,15 @@ class NewEmpresaController extends Controller
         $nueva_empresa->estado = 0;
 
         $nueva_empresa->save();
+
+        enviar_correo(
+            "$nueva_empresa->email",
+            "Registro exitoso en la UTM",
+            "
+                $nueva_empresa->nombre_empresa ha sido registrado exitosamente en la UTM y puede comenzar a publicar empleos
+                usuario es el ruc que registro y el password es el ruc tambien, recuerde cambiar el password.
+            "
+        );
 
         return redirect()->route('new_empresas.index');
     }
