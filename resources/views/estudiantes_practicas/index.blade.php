@@ -6,6 +6,10 @@
 
 <h2 class="text-center my-5">Mis Reservaciones de Pr&aacute;cticas</h2>
 
+@if (session('status'))
+    <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
+@endif
+
 {{-- {{ $estudiantes_practicas }} --}}
 
 @if (session('status'))

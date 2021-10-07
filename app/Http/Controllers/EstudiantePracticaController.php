@@ -66,7 +66,8 @@ class EstudiantePracticaController extends Controller
         }
 
 
-        return redirect()->route('estudiantes_practicas.index');
+        return redirect()->route('estudiantes_practicas.index')
+            ->with('status', 'Has reservado un cupo para esta oferta de PPP');
     }
 
     /**
@@ -92,7 +93,8 @@ class EstudiantePracticaController extends Controller
 
         $estudiante_practica->delete();
 
-        return redirect()->route('estudiantes_practicas.index');
+        return redirect()->route('estudiantes_practicas.index')
+            ->with('status', 'Has eliminado tu cupo para esta oferta de PPP');
     }
 
 
