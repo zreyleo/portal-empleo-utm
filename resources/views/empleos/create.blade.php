@@ -57,6 +57,7 @@
 
                 <trix-editor input="requerimientos"
                     class="form-control  @error ('requerimientos') is-invalid @enderror"
+                    style="overflow-y: scroll"
                 ></trix-editor>
 
                 @error('requerimientos')

@@ -18,6 +18,10 @@
 
 <h2 class="my-3 text-center">Formulario para editar una oferta de empleo</h2>
 
+@if (session('status'))
+    <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
+@endif
+
 <div class="row mb-3">
     <div class="col-md-8 mx-auto">
         <form action="{{ route('empleos.update', ['empleo' => $empleo->id]) }}" method="POST" novalidate>
@@ -57,6 +61,7 @@
 
                 <trix-editor input="requerimientos"
                     class="form-control @error ('requerimientos') is-invalid @enderror"
+                    style="overflow-y: scroll"
                 ></trix-editor>
 
                 @error('requerimientos')

@@ -84,7 +84,8 @@ class EmpleoController extends Controller
             'empresa_id' => $empresa['id_empresa']
         ]);
 
-        return redirect()->route('empleos.index');
+        return redirect()->route('empleos.index')
+            ->with('status', 'Se ha creado una oferta de trabajo');
     }
 
     /**
@@ -156,7 +157,8 @@ class EmpleoController extends Controller
 
         $empleo->save();
 
-        return redirect()->route('empleos.edit', $empleo->id);
+        return redirect()->route('empleos.edit', $empleo->id)
+            ->with('status', 'Se ha editado esta oferta de trabajo');
     }
 
     /**
@@ -171,7 +173,8 @@ class EmpleoController extends Controller
 
         $empleo->delete();
 
-        return redirect()->route('empleos.index');
+        return redirect()->route('empleos.index')
+            ->with('status', 'Se ha eliminado esta oferta de trabajo');
     }
 
     public function show_empleos_offers()
