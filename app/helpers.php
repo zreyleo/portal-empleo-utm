@@ -12,11 +12,11 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 if (!function_exists('add_error')) {
     /*
- * Add an error to Laravel session $errors
- * @author Pavel Lint
- * @param string $key
- * @param string $error_msg
- */
+    * Add an error to Laravel session $errors
+    * @author Pavel Lint
+    * @param string $key
+    * @param string $error_msg
+    */
     function add_error($error_msg, $key = 'default')
     {
         $errors = Session::get('errors', new ViewErrorBag);

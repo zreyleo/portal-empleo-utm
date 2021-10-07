@@ -66154,8 +66154,8 @@ var Notificacion = function Notificacion(_ref) {
       setClases('');
       setTimeout(function () {
         setVisible(false);
-      }, 500);
-    }, 2500);
+      }, 501);
+    }, 3000);
   }, []);
 
   if (visible) {
@@ -66267,7 +66267,7 @@ function ProvinciasCantonesParroquiasSelects(props) {
       setIdParroquia = _useState18[1];
 
   var baseUrl = window.location.origin + '/api/provincias'; // url para prubeas en el servidor de la universidad
-  // const baseUrl = window.location.origin + '/portal-empleo-utm/public' + '/api/';
+  // const baseUrl = '/portal-empleo-utm/public/api/provincias';
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     fetch(baseUrl).then(function (response) {
@@ -66408,8 +66408,8 @@ if (document.getElementById('provincias-cantones-parroquias-selects')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/regynald/Sitios/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/regynald/Sitios/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

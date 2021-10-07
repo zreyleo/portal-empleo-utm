@@ -14,7 +14,7 @@ const Notificacion = ({ mensaje, clase }) => {
             setTimeout(() => {
                 setVisible(false);
             }, 501);
-        }, 2500);
+        }, 3000);
     }, []);
 
     if (visible) {

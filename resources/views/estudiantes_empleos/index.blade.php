@@ -1,15 +1,10 @@
 @extends('estudiantes.dashboard')
 
 @section('page-content')
-
-    {{-- {{$practicas}} --}}
-
     <h2 class="text-center my-5">Mis Postulaciones de Empleo</h2>
 
-    {{-- {{ $estudiantes_practicas }} --}}
-
     @if (session('status'))
-        <div id="notificacion" data-mensaje="{{ json_encode(session('status')) }}"></div>
+        <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
     @endif
 
     <table class="table">

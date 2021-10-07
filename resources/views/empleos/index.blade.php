@@ -4,8 +4,6 @@
 
     <h2 class="my-5 text-center">Tus Ofertas de Empleo</h2>
 
-    {{-- {{ $empleos }} --}}
-
     <div class="row">
         <table class="table">
             <thead>

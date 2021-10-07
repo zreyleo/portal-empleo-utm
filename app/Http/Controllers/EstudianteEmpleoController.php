@@ -66,7 +66,10 @@ class EstudianteEmpleoController extends Controller
             return redirect()->route('empleos.show_empleos_offers');
         }
 
-        return redirect()->route('estudiantes_empleos.index');
+        // $notificacionExito = crear_notificacion('Registro con Exito', 'bg-success');
+
+        return redirect()->route('estudiantes_empleos.index')
+            ->with('status', 'Has concedido tus datos para esta oferta de trabajo');
     }
 
     /**
@@ -92,7 +95,8 @@ class EstudianteEmpleoController extends Controller
 
         $estudiante_empleo->delete();
 
-        return redirect()->route('estudiantes_empleos.index');
+        return redirect()->route('estudiantes_empleos.index')
+            ->with('status', 'Has restringido tus datos para esta oferta de trabajo');
     }
 
     public function show_empleo_details(EstudianteEmpleo $estudiante_empleo)
@@ -169,6 +173,7 @@ class EstudianteEmpleoController extends Controller
 
         $estudiante_empleo->save();
 
-        return redirect()->route('empleos.show_estudiantes_empleos', ['empleo' => $estudiante_empleo->empleo_id]);
+        return redirect()->route('empleos.show_estudiantes_empleos', ['empleo' => $estudiante_empleo->empleo_id])
+            ->with('status', 'Se ha decidido no seguir con esta aplicacion para esta oferta de trabajo');
     }
 }

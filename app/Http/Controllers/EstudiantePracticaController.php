@@ -51,6 +51,8 @@ class EstudiantePracticaController extends Controller
 
             if ($date_last_estudiante_practica->addMonth()->greaterThan(now())) {
                 add_error('No es posible reservar otro cupo de una practica hasta despues de un mes');
+
+                return redirect()->route('estudiantes_practicas.index');
             }
         }
 

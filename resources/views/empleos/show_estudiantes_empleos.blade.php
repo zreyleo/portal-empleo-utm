@@ -8,7 +8,9 @@
 
     <p>Oferta: {{ $empleo->titulo }}</p>
 
-    {{-- {{ $empleos }} --}}
+    @if (session('status'))
+        <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
+    @endif
 
     <div class="row">
         <table class="table">
