@@ -13,6 +13,8 @@ class NewEmpresaRegistrationEmail extends Mailable
 
     private string $nombreEmpresa;
 
+    public $subject = 'Una nueva empresa quiere registrarse';
+
     /**
      * Create a new message instance.
      *

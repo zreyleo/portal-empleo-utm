@@ -4,8 +4,9 @@ namespace App\Jobs;
 
 use App\Escuela;
 use App\Personal;
-use App\Mail\NewEmpresaRegistrationEmail;
+use App\PersonalRol;
 
+use App\Mail\NewEmpresaRegistrationEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -18,7 +19,6 @@ class SendNewEmpresaRegistrationEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private array $docentes;
     private string $nombreEmpresa;
     private int $area;
 
@@ -27,9 +27,8 @@ class SendNewEmpresaRegistrationEmail implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(array $docentes, string $nombreEmpresa, int $area)
+    public function __construct(string $nombreEmpresa, int $area)
     {
-        $this->docentes = $docentes;
         $this->nombreEmpresa = $nombreEmpresa;
         $this->area = $area;
     }
@@ -41,7 +40,11 @@ class SendNewEmpresaRegistrationEmail implements ShouldQueue
      */
     public function handle()
     {
-        foreach ($this->docentes as $docente) {
+        $docentes_con_rol = PersonalRol::where([
+            ['id_rol', '=', 38] // 38 es el id del rol responsable pasantias
+        ])->get();
+
+        foreach ($docentes_con_rol as $docente) {
             $idescuela = explode('|', $docente->idescuela)[0];
             $escuela = Escuela::find($idescuela);
             if ($escuela->idfacultad == $this->area) {

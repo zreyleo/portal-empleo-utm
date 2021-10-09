@@ -90,15 +90,11 @@ class NewEmpresaController extends Controller
             ])->id
         ]);
 
-        $docentes_con_rol = PersonalRol::where([
-            ['id_rol', '=', self::ID_ROL_RESPONSABLE_PRACTICA]
-        ])->get();
-
         // dd($docentes_con_rol);
 
         $nombre_empresa = strtoupper($request->nombre_empresa);
 
-        dispatch(new SendNewEmpresaRegistrationEmail($docentes_con_rol->all(), $nombre_empresa, (int) $request->area));
+        dispatch(new SendNewEmpresaRegistrationEmail($nombre_empresa, (int) $request->area));
 
         return redirect()->route('landing')->with('status', 'Se han enviado sus datos, sera notificado pronto');
     }
