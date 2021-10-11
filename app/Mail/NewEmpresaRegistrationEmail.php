@@ -33,7 +33,6 @@ class NewEmpresaRegistrationEmail extends Mailable
     public function build()
     {
         return $this
-            // ->from('rzambrano2041@utm.edu.ec')
             ->view('new_empresas.registration', [
                 'nombreEmpresa' => $this->nombreEmpresa
             ]);

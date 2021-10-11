@@ -94,7 +94,8 @@ class NewEmpresaController extends Controller
 
         $nombre_empresa = strtoupper($request->nombre_empresa);
 
-        dispatch(new SendNewEmpresaRegistrationEmail($nombre_empresa, (int) $request->area));
+        dispatch(new SendNewEmpresaRegistrationEmail($nombre_empresa, (int) $request->area))
+            ->afterResponse();
 
         return redirect()->route('landing')->with('status', 'Se han enviado sus datos, sera notificado pronto');
     }
