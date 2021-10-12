@@ -167,4 +167,8 @@ Route::prefix('dashboard/responsables')->group(function () {
     Route::delete('new_empresas/{empresa}', 'NewEmpresaController@destroy')
         ->middleware('check.responsable.role.for.session')
         ->name('new_empresas.destroy');
+
+    Route::get('estadisticas/empleos', 'EstadisticaController@empleos')
+        ->middleware('check.responsable.role.for.session')
+        ->name('estadisticas.empleos');
 });
