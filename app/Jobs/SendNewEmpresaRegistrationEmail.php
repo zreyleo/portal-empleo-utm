@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Escuela;
+use App\Facultad;
 use App\Personal;
 use App\PersonalRol;
 
@@ -21,6 +22,7 @@ class SendNewEmpresaRegistrationEmail implements ShouldQueue
 
     private string $nombreEmpresa;
     private int $area;
+    private $facultad;
 
     /**
      * Create a new job instance.
@@ -31,6 +33,8 @@ class SendNewEmpresaRegistrationEmail implements ShouldQueue
     {
         $this->nombreEmpresa = $nombreEmpresa;
         $this->area = $area;
+        $this->facultad = Facultad::find($area);
+        // dd(Facultad::find($area));
     }
 
     /**
@@ -57,15 +61,7 @@ class SendNewEmpresaRegistrationEmail implements ShouldQueue
 
                     $responsable = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_datos_docentes)[0];
 
-                    // dd($responsable);
-
-                    // enviar_correo(
-                    //     "$responsable->email_utm",
-                    //     "Una nueva EMPRESA quiere registrarse",
-                    //     "$nombre_empresa Quiere registrarse como nueva empresa para publicar ofertas de empleo y PPP"
-                    // );
-
-                    $mail = new NewEmpresaRegistrationEmail($this->nombreEmpresa);
+                    $mail = new NewEmpresaRegistrationEmail($this->nombreEmpresa, $this->facultad->nombre);
 
                     Mail::to($responsable->email_utm)->send($mail);
                 }

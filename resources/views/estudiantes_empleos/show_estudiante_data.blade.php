@@ -4,23 +4,35 @@
 
     {{-- {{ var_dump($datos_aspirante) }} --}}
 
-    <div class="row justify-content-between">
-        <a href="{{ route('empleos.show_estudiantes_empleos', ['empleo' => $empleo->id]) }}"
-            class="btn btn-outline-info my-3">volver</a>
+    <div class="row justify-content-between mt-3 mt-md-0">
+        <div class="col-1">
+            <a href="{{ route('empleos.show_estudiantes_empleos', ['empleo' => $empleo->id]) }}"
+                class="btn btn-outline-info my-3">volver</a>
+        </div>
 
-        <form class="d-flex"
-            action="{{ route('estudiantes_empleos.reject', ['estudiante_empleo' => $estudiante_empleo]) }}" method="POST"
-            onsubmit=
-                "
-                    if (!confirm('Desea Rechazar?')) {
-                        event.preventDefault();
-                        return;
-                    }
-                "
-        >
-            @csrf
-            <input type="submit" value="Rechazar" class="my-auto btn btn-outline-danger">
-        </form>
+        <div class="col-4 d-md-flex juestify-content-between">
+            <form class="d-flex mb-3 mb-md-0"
+                action="{{ route('estudiantes_empleos.accept', ['estudiante_empleo' => $estudiante_empleo]) }}" method="POST"
+            >
+                @csrf
+                <input type="submit" value="Rechazar" class="my-auto btn btn-outline-primary">
+            </form>
+
+            <form class="d-flex ml-auto"
+                action="{{ route('estudiantes_empleos.reject', ['estudiante_empleo' => $estudiante_empleo]) }}" method="POST"
+                onsubmit=
+                    "
+                        if (!confirm('Desea Rechazar?')) {
+                            event.preventDefault();
+                            return;
+                        }
+                    "
+            >
+                @csrf
+                @method('DELETE')
+                <input type="submit" value="Rechazar" class="my-auto btn btn-outline-danger">
+            </form>
+        </div>
     </div>
 
     <h2 class="text-center my-2">Datos del aspirante</h2>

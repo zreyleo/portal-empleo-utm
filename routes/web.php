@@ -49,7 +49,11 @@ Route::prefix('dashboard/empresas')->group(function () {
         ->middleware('check.empresa.role.for.session')
         ->name('estudiantes_empleos.show_estudiante_data');
 
-    Route::post('estudiantes_empleos/{estudiante_empleo}', 'EstudianteEmpleoController@reject')
+    Route::post('estudiantes_empleos/{estudiante_empleo}', 'EstudianteEmpleoController@accept')
+        ->middleware('check.empresa.role.for.session')
+        ->name('estudiantes_empleos.accept');
+
+    Route::delete('estudiantes_empleos/{estudiante_empleo}', 'EstudianteEmpleoController@reject')
         ->middleware('check.empresa.role.for.session')
         ->name('estudiantes_empleos.reject');
 

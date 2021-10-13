@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Empleo;
 use App\EstudianteEmpleo;
+use App\Jobs\SendRejectedEmailJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -11,6 +12,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 class EstudianteEmpleoController extends Controller
 {
     private const RECHAZADO = 'RECHAZADO';
+    private const ACEPTADO = 'ACEPTADO';
 
     /**
      * Display a listing of the resource.
@@ -143,7 +145,7 @@ class EstudianteEmpleoController extends Controller
             ->with('datos_aspirante', $datos_aspirante);
     }
 
-    public function reject(EstudianteEmpleo $estudiante_empleo)
+    public function acept(EstudianteEmpleo $estudiante_empleo)
     {
         $this->authorize('check_empresa_owner', $estudiante_empleo);
 
@@ -168,6 +170,41 @@ class EstudianteEmpleoController extends Controller
         $body = "Se aprecia tu interes en la vacante $empleo->titulo de la empresa $nombre_empresa pero se ha decidido no seguir adelante con tu aplicacion.";
 
         enviar_correo("$datos_aspirante->email_utm", 'Aplicacion no seguira adelante', $body);
+
+        $estudiante_empleo->estado = self::RECHAZADO;
+
+        $estudiante_empleo->save();
+
+        return redirect()->route('empleos.show_estudiantes_empleos', ['empleo' => $estudiante_empleo->empleo_id])
+            ->with('status', 'Se ha decidido no seguir con esta aplicacion para esta oferta de trabajo');
+    }
+
+    public function reject(EstudianteEmpleo $estudiante_empleo)
+    {
+        $this->authorize('check_empresa_owner', $estudiante_empleo);
+
+        $empleo = $estudiante_empleo->empleo;
+
+        $empresa = get_session_empresa();
+
+        $nombre_empresa = $empresa['nombre_empresa'];
+
+        $cedula_aspirante = $estudiante_empleo->personal->cedula;
+
+        $sql_datos_aspirante = "
+            select *
+            from f_obtiene_persona_str('$cedula_aspirante');
+        ";
+
+        $result = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_datos_aspirante)[0];
+
+        $datos_aspirante = $result;
+
+
+        // enviar_correo("$datos_aspirante->email_utm", 'Aplicacion no seguira adelante', $body);
+
+        dispatch(new SendRejectedEmailJob($datos_aspirante->email_utm, $nombre_empresa, $empleo->titulo))
+            ->afterResponse();
 
         $estudiante_empleo->estado = self::RECHAZADO;
 

@@ -13,6 +13,7 @@
 </style>
 
 <div class="container">
-    <h1 class="text-center">Una nueva empresa se quiere registrar</h1>
+    <h1 class="text-center">Tu aplicacion para {{ $vacante }}</h1>
     <p>{{ $nombreEmpresa }} quiere publicar ofertas de empleo y PPP para los estudiantes de la Universidad T&eacute;nica de Manab&iacute;.</p>
+    <p>Esta empresa tiene labores que involucran a la FACULTAD DE {{ $nombreFacultad }}</p>
 </div>

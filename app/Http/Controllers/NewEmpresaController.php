@@ -19,8 +19,6 @@ use Illuminate\Support\Facades\Session;
 
 class NewEmpresaController extends Controller
 {
-    private const ID_ROL_RESPONSABLE_PRACTICA = 38;
-
     /**
      * Display a listing of the resource.
      *
@@ -93,6 +91,8 @@ class NewEmpresaController extends Controller
         // dd($docentes_con_rol);
 
         $nombre_empresa = strtoupper($request->nombre_empresa);
+
+        // dd(Facultad::find($request->area));
 
         dispatch(new SendNewEmpresaRegistrationEmail($nombre_empresa, (int) $request->area))
             ->afterResponse();

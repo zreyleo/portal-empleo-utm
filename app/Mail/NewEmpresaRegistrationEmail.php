@@ -12,6 +12,7 @@ class NewEmpresaRegistrationEmail extends Mailable
     use Queueable, SerializesModels;
 
     private string $nombreEmpresa;
+    private string $nombreFacultad;
 
     public $subject = 'Una nueva empresa quiere registrarse';
 
@@ -20,9 +21,10 @@ class NewEmpresaRegistrationEmail extends Mailable
      *
      * @return void
      */
-    public function __construct(string $nombreEmpresa)
+    public function __construct(string $nombreEmpresa, string $nombreFacultad)
     {
         $this->nombreEmpresa = $nombreEmpresa;
+        $this->nombreFacultad = $nombreFacultad;
     }
 
     /**
@@ -33,8 +35,9 @@ class NewEmpresaRegistrationEmail extends Mailable
     public function build()
     {
         return $this
-            ->view('new_empresas.registration', [
-                'nombreEmpresa' => $this->nombreEmpresa
+            ->view('mails.registration', [
+                'nombreEmpresa' => $this->nombreEmpresa,
+                'nombreFacultad' => $this->nombreFacultad,
             ]);
     }
 }
