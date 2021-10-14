@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Empleo;
 use App\EstudianteEmpleo;
+use App\Jobs\SendAcceptedEmailJob;
 use App\Jobs\SendRejectedEmailJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -145,7 +146,7 @@ class EstudianteEmpleoController extends Controller
             ->with('datos_aspirante', $datos_aspirante);
     }
 
-    public function acept(EstudianteEmpleo $estudiante_empleo)
+    public function accept(EstudianteEmpleo $estudiante_empleo)
     {
         $this->authorize('check_empresa_owner', $estudiante_empleo);
 
@@ -166,17 +167,17 @@ class EstudianteEmpleoController extends Controller
 
         $datos_aspirante = $result;
 
+        // enviar_correo("$datos_aspirante->email_utm", 'Aplicacion no seguira adelante', $body);
 
-        $body = "Se aprecia tu interes en la vacante $empleo->titulo de la empresa $nombre_empresa pero se ha decidido no seguir adelante con tu aplicacion.";
+        dispatch(new SendAcceptedEmailJob($datos_aspirante->email_utm, $nombre_empresa, $empleo->titulo))
+            ->afterResponse();
 
-        enviar_correo("$datos_aspirante->email_utm", 'Aplicacion no seguira adelante', $body);
-
-        $estudiante_empleo->estado = self::RECHAZADO;
+        $estudiante_empleo->estado = self::ACEPTADO;
 
         $estudiante_empleo->save();
 
         return redirect()->route('empleos.show_estudiantes_empleos', ['empleo' => $estudiante_empleo->empleo_id])
-            ->with('status', 'Se ha decidido no seguir con esta aplicacion para esta oferta de trabajo');
+            ->with('status', 'Se ha considerado este aspirante para esta oferta de trabajo');
     }
 
     public function reject(EstudianteEmpleo $estudiante_empleo)
