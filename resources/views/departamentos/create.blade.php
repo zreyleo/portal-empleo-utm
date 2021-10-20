@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('responsables.dashboard')
 
 @section('external-css')
 
@@ -12,15 +12,15 @@
 
 @endsection
 
-@section('guest-content')
+@section('page-content')
 
-    <h2 class="my-5 text-center">¿Su empresa es nueva? Reg&iacute;strese con Nosotros</h2>
+<h2 class="my-5 text-center">Registrar un Departamento Interno de La Universidad</h2>
 
     <form class="row" action="{{ route('new_empresas.store') }}" method="POST">
         @csrf
 
         <fieldset class="col-md-4">
-            <legend>Informaci&oacute;n de la Persona que registra la Empresa</legend>
+            <legend>Informaci&oacute;n del Persona supervisora del Departamento</legend>
             <div class="form-group">
                 <label for="cedula">C&eacute;dula</label>
                 <input type="text" class="form-control @error('cedula') is-invalid @enderror" id="cedula" name="cedula"
@@ -58,7 +58,7 @@
             </div>
 
             <div class="form-group">
-                <label for="titulo">Cargo en la Empresa</label>
+                <label for="titulo">Cargo en el Departamento</label>
                 <input type="text" class="form-control @error('titulo') is-invalid @enderror text-uppercase" id="titulo" name="titulo"
                     value="{{ old('titulo') }}">
                 @error('titulo')
@@ -80,22 +80,22 @@
         </fieldset>
 
         <fieldset class="col-md-6 offset-md-2">
-            <legend>Información de la Empresa</legend>
+            <legend>Información del Departamento Interno UTM</legend>
 
             <div class="form-group">
-                <label for="ruc">RUC</label>
-                <input type="text" class="form-control @error('ruc') is-invalid @enderror text-uppercase" id="ruc" name="ruc"
-                    value="{{ old('ruc') }}">
-                @error('ruc')
+                <label for="nombre_empresa">Nombre</label>
+                <input type="text" class="form-control @error('nombre_empresa') is-invalid @enderror text-uppercase"
+                    id="nombre_empresa" name="nombre_empresa" value="{{ old('nombre_empresa') }}">
+                @error('nombre_empresa')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="form-group">
-                <label for="nombre_empresa">Nombre de la Empresa</label>
-                <input type="text" class="form-control @error('nombre_empresa') is-invalid @enderror text-uppercase"
-                    id="nombre_empresa" name="nombre_empresa" value="{{ old('nombre_empresa') }}">
-                @error('nombre_empresa')
+                <label for="nomclatura">Nomenclatura</label>
+                <input type="text" class="form-control @error('nomclatura') is-invalid @enderror text-uppercase"
+                    id="nomclatura" name="nomclatura" value="{{ old('nomclatura') }}">
+                @error('nomclatura')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
             </div>
@@ -169,32 +169,7 @@
                 @enderror
             </div>
 
-            <div class="form-group">
-                <label for="area">Área</label>
-                <select name="area" id="area" class="form-control @error('area') is-invalid @enderror">
-                    <option value="" selected disabled>-- seleccione --</option>
-                    @foreach ($areas as $area)
-                        <option value="{{ $area->idfacultad }}"
-                            @if (old('area') == $area->idfacultad) selected @endif
-                        >{{ $area->nombre }}</option>
-                    @endforeach
-                </select>
-                @error('area')
-                    <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
-                @enderror
-            </div>
 
-            <div class="form-group">
-                <label for="tipo">Tipo</label>
-                <select name="tipo" id="tipo" class="form-control @error('tipo') is-invalid @enderror">
-                    <option value="inaceptable" selected disabled>-- seleccione --</option>
-                    <option value=1 @if (old('tipo') == 1) selected @endif>P&Uacute;BLICA</option>
-                    <option value=0 @if (old('tipo') === 0) selected @endif>PRIVADA</option>
-                </select>
-                @error('tipo')
-                    <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
-                @enderror
-            </div>
 
             <div class="form-group d-flex justify-content-end mt-5">
                 <input type="submit" value="Enviar" class="btn btn-block btn-primary">
@@ -214,4 +189,5 @@
 ></script>
 
 @endsection
+
 

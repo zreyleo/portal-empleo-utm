@@ -11,6 +11,10 @@ Route::get('logout', function () {
     return redirect()->route('landing');
 })->name('logout');
 
+/*********************************************
+ * ****************** Login ******************
+ ********************************************/
+
 // Login
 Route::prefix('login')->group(function () {
     Route::get('empresas', 'LoginController@empresas_get')->name('login.empresas_get');
@@ -31,11 +35,19 @@ Route::prefix('login')->group(function () {
     Route::post('reponsable', 'LoginController@responsables_post')->name('login.responsables_post');
 });
 
-// registro de nuevas empresas
+/*********************************************
+ * **************** Registro ****************
+ ********************************************/
+
 Route::get('/registro', 'NewEmpresaController@create')->name('new_empresas.create');
 Route::post('/registro', 'NewEmpresaController@store')->name('new_empresas.store');
 
-// routes for empresas
+
+
+/*********************************************
+ * **************** Empresa ****************
+ ********************************************/
+
 Route::prefix('dashboard/empresas')->group(function () {
     // empleos
     Route::resource('empleos', 'EmpleoController')
@@ -62,7 +74,10 @@ Route::prefix('dashboard/empresas')->group(function () {
         ->middleware('check.empresa.role.for.session');
 });
 
-// routes form estudiantes
+/*********************************************
+ * *************** Estudiantes ***************
+ ********************************************/
+
 Route::prefix('dashboard/estudiantes')->group(function () {
     Route::get('', 'EstudianteController@dashboard')
         ->middleware('check.estudiante.role.for.session')
@@ -139,6 +154,10 @@ Route::prefix('dashboard/estudiantes')->group(function () {
         ->name('perfil.update');
 });
 
+/*********************************************
+ * *************** Responsable ***************
+ ********************************************/
+
 Route::prefix('dashboard/responsables')->group(function () {
     Route::get('', 'ResponsableController@dashboard')
         ->middleware('check.responsable.role.for.session')
@@ -175,4 +194,8 @@ Route::prefix('dashboard/responsables')->group(function () {
     Route::get('estadisticas/empleos', 'EstadisticaController@empleos')
         ->middleware('check.responsable.role.for.session')
         ->name('estadisticas.empleos');
+
+    Route::get('departamentos/create', 'DepartamentoController@create')
+        ->middleware('check.responsable.role.for.session')
+        ->name('departamentos.create');
 });

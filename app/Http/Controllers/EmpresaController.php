@@ -18,6 +18,7 @@ class EmpresaController extends Controller
 
         return $empresa;
     }
+
     public static function get_role()
     {
         return self::ROLE;

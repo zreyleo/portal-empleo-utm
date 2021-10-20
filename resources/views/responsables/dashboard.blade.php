@@ -25,6 +25,16 @@
             <a href="{{ route('estadisticas.empleos') }}">Empleos</a>
         </li>
     </ul>
+    <a href="#departamentos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fas fa-university"></i>
+        Departamentos UTM
+    </a>
+    <ul class="collapse list-unstyled" id="departamentos">
+        <li>
+            <a href="{{ route('departamentos.create') }}">Registrar</a>
+        </li>
+    </ul>
+
 </li>
 
 {{-- <li>

@@ -17,10 +17,12 @@ class AddIdResponsableDescriptionAreaRucToEmpresasTable extends Migration
     public function up()
     {
         Schema::connection('DB_ppp_sistema_SCHEMA_public')->table('tbl_empresa', function (Blueprint $table) {
-            $table->dropColumn(['ruc', 'descripcion', 'area', 'registrado_por']);
+            $table->dropColumn(['ruc', 'nomenclatura', 'descripcion', 'area', 'registrado_por']);
         });
+
         Schema::connection('DB_ppp_sistema_SCHEMA_public')->table('tbl_empresa', function (Blueprint $table) {
             $table->string('ruc')->unique()->nullable();
+            $table->string('nomenclatura')->unique()->nullable();
             $table->text('descripcion')->nullable();
             $table->unsignedBigInteger('area')->nullable();
             $table->unsignedBigInteger('registrado_por')->nullable();
@@ -36,7 +38,7 @@ class AddIdResponsableDescriptionAreaRucToEmpresasTable extends Migration
     {
         // Schema::dropIfExists('tbl_empresa');
         Schema::connection('DB_ppp_sistema_SCHEMA_public')->table('tbl_empresa', function (Blueprint $table) {
-            $table->dropColumn(['ruc', 'descripcion', 'area', 'registrado_por']);
+            $table->dropColumn(['ruc', 'nomenclatura', 'descripcion', 'area', 'registrado_por']);
         });
     }
 }
