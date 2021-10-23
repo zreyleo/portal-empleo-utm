@@ -16,7 +16,7 @@
 
 <h2 class="my-5 text-center">Registrar un Departamento Interno de La Universidad</h2>
 
-    <form class="row" action="{{ route('new_empresas.store') }}" method="POST">
+    <form class="row" action="{{ route('departamentos.store') }}" method="POST">
         @csrf
 
         <fieldset class="col-md-4">
@@ -103,17 +103,32 @@
             <div
                 id="provincias-cantones-parroquias-selects"
 
-                @if (old('provincia')) data-provincia-value="{{ old('provincia') }}" @endif
+                @if (old('provincia'))
+                    data-provincia-value="{{ old('provincia') }}"
+                @else
+                    data-provincia-value="13"
+                @endif
+
                 @error('provincia')
                     data-provincia-error="{{ $message }}"
                 @enderror
 
-                @if (old('canton')) data-canton-value="{{ old('canton') }}" @endif
+                @if (old('canton'))
+                    data-canton-value="{{ old('canton') }}"
+                @else
+                    data-canton-value="1"
+                @endif
+
                 @error('canton')
                     data-canton-error="{{ $message }}"
                 @enderror
 
-                @if (old('parroquia')) data-parroquia-value="{{ old('parroquia') }}" @endif
+                @if (old('parroquia'))
+                    data-parroquia-value="{{ old('parroquia') }}"
+                @else
+                    data-parroquia-value="2"
+                @endif
+
                 @error('parroquia')
                     data-parroquia-error="{{ $message }}"
                 @enderror

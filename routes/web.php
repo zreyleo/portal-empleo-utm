@@ -198,4 +198,8 @@ Route::prefix('dashboard/responsables')->group(function () {
     Route::get('departamentos/create', 'DepartamentoController@create')
         ->middleware('check.responsable.role.for.session')
         ->name('departamentos.create');
+
+    Route::post('departamentos', 'DepartamentoController@store')
+        ->middleware('check.responsable.role.for.session')
+        ->name('departamentos.store');
 });
