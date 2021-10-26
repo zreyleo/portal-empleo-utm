@@ -11260,3 +11260,26 @@ table.table tbody tr td span.badge {
   color: #a30021;
 }
 
+.body-form-sga {
+  background-image: url("/img/fondoLoginSPCA.jpg");
+  background-position: bottom right;
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  padding: 4px 30px;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.body-form-sga form {
+  border: 1px solid #1c7f0e;
+  padding: 4px 30px;
+  border-radius: 5px;
+}
+
+.body-form-sga form input[type=submit] {
+  background-color: #288d1c;
+  color: #fff;
+}
+

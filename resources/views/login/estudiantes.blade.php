@@ -5,9 +5,13 @@
     <h2 class="text-center my-5">Login de Estudiantes</h2>
 
     <div class="row">
-        <div class="col-md-4 mx-auto">
+        <div class="col-md-5 mx-auto">
             <form action="{{ route('login.estudiantes_post') }}" method="POST">
                 @csrf
+
+                <div class="form-header text-center">
+                    <img src="/img/sga-64.png" alt="sga logo">
+                </div>
 
                 <div class="form-group">
                     <label for="email">E-mail Institucional</label>
@@ -22,7 +26,7 @@
                     </div> --}}
 
                 <div class="form-group mt-4">
-                    <input type="submit" value="Ingresar" class="btn btn-block btn-primary" />
+                    <input type="submit" value="Ingresar" class="text-uppercase btn btn-block btn-primary" />
                 </div>
             </form>
 

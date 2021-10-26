@@ -40,12 +40,15 @@ class EstadisticaController extends Controller
             ->groupBy('carrera_id')
             ->orderByRaw('COUNT(*) DESC')
             ->limit(1)
-            ->get()->count() > 0) {
+            ->get()->count() > 0)
+        {
+
             $universidad_escuela_max_empleos = Empleo::select('carrera_id')
             ->groupBy('carrera_id')
             ->orderByRaw('COUNT(*) DESC')
             ->limit(1)
             ->get()[0]->escuela;
+
         }
 
         // dd($universidad_escuela_max_empleos);
