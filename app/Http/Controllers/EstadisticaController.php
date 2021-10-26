@@ -34,11 +34,19 @@ class EstadisticaController extends Controller
 
         $num_empleos_total = Empleo::all()->count();
 
-        $universidad_escuela_max_empleos = Empleo::select('carrera_id')
+        $universidad_escuela_max_empleos = null;
+
+        if (Empleo::select('carrera_id')
+            ->groupBy('carrera_id')
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit(1)
+            ->get()->count() > 0) {
+            $universidad_escuela_max_empleos = Empleo::select('carrera_id')
             ->groupBy('carrera_id')
             ->orderByRaw('COUNT(*) DESC')
             ->limit(1)
             ->get()[0]->escuela;
+        }
 
         // dd($universidad_escuela_max_empleos);
 
