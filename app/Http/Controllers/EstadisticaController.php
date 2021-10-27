@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empleo;
+use App\EstudianteEmpleo;
 use App\Facultad;
 use Illuminate\Http\Request;
 
@@ -51,7 +52,20 @@ class EstadisticaController extends Controller
 
         }
 
-        // dd($universidad_escuela_max_empleos);
+        // obtener todos los estudiantes que son considerados candidatos
+        $all_estudiantes_empleos = EstudianteEmpleo::where('estado', 'ACEPTADO')->get();
+
+        $all_candidatos =  EstudianteEmpleo::where('estado', 'ACEPTADO')->get()->count();
+
+
+        // obtener todos los estudiantes que son considerados candidatos
+        $all_empleos = Empleo::all();
+
+        $all_candidatos = 0;
+
+        foreach ($all_empleos as $empleo) {
+            // $all_candidatos += $empleo->
+        }
 
         return view(
             'estadisticas.empleos', compact(
@@ -59,7 +73,8 @@ class EstadisticaController extends Controller
                 'num_empleos_facultad',
                 'facultad_escuela_max_empleos',
                 'universidad_escuela_max_empleos',
-                'facultad'
+                'facultad',
+                'all_candidatos'
             )
         )->with('docente', $docente);
     }

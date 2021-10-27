@@ -10,7 +10,7 @@
 <h2 class="text-center my-3">Estad&iacute;sticas de Empleos</h2>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <p>Total de ofertas de empleo para la UNIVERSIDAD: <strong>{{ $num_empleos_total }}</strong></p>
         <p>Total de ofertas de empleo para la FACULTAD DE {{ $facultad->nombre }}: <strong>{{ $num_empleos_facultad }}</strong></p>
 
@@ -31,10 +31,9 @@
         @endif
     </div>
 
-    <div class="col-md-4">
-        <p>Total de estudiantes considerados candidatos: <strong>200</strong></p>
+    <div class="col-md-6">
+        <p>Total de estudiantes considerados candidatos: <strong>{{ $all_candidatos }}</strong></p>
     </div>
-    <div class="col-md-4"></div>
 </div>
 
 @endsection
