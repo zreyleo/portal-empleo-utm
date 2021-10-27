@@ -32,8 +32,17 @@
     </div>
 
     <div class="col-md-6">
-        <p>Total de estudiantes considerados candidatos: <strong>{{ $all_candidatos }}</strong></p>
+        <p>Total de postulaciones de la UNIVERSIDAD: <strong>{{ $all_estudiantes_empleos }}</strong></p>
+        <p>Total de postulaciones consideradas como candidatos para un puesto de trabajo a nivel de UNIVERSIDAD: <strong>{{ $all_estudiantes_empleos_aceptado->count() }}</strong></p>
+        <p>Total de postulaciones consideradas como NO candidatos para un puesto de trabajo a nivel de UNIVERSIDAD: <strong>{{ $all_estudiantes_empleos_rechazado->count() }}</strong></p>
+        <p>Total de postulaciones de la FACULTAD DE {{ $facultad->nombre }}: <strong>{{ $total_facultad_estudiantes_empleos }}</strong></p>
+        <p>Total de postulaciones consideradas como candidatos para un puesto de trabajo a nivel de la FACULTAD DE {{ $facultad->nombre }}: <strong>{{ $total_facultad_estudiantes_empleos_aceptado }}</strong></p>
+        <p>Total de postulaciones consideradas como NO candidatos para un puesto de trabajo a nivel de la FACULTAD DE {{ $facultad->nombre }}: <strong>{{ $total_facultad_estudiantes_empleos_rechazado }}</strong></p>
     </div>
 </div>
+
+{{-- <pre>
+    {{ var_dump($total_candidatos_facultad) }}
+</pre> --}}
 
 @endsection

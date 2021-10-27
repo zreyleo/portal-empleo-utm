@@ -6,9 +6,46 @@ use App\Empleo;
 use App\EstudianteEmpleo;
 use App\Facultad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EstadisticaController extends Controller
 {
+    private static function get_carrera_estudiantes_empleos_aceptados_count($idescuela)
+    {
+        $sql =
+            "
+                select estudiantes_empleos.*, empleos.carrera_id
+                from estudiantes_empleos inner join empleos on empleos.id = estudiantes_empleos.empleo_id
+                where empleos.carrera_id = $idescuela and estudiantes_empleos.estado = 'ACEPTADO'
+            ";
+
+        return count(DB::select($sql));
+    }
+
+    private static function get_carrera_estudiantes_empleos_rechazados_count($idescuela)
+    {
+        $sql =
+            "
+                select estudiantes_empleos.*, empleos.carrera_id
+                from estudiantes_empleos inner join empleos on empleos.id = estudiantes_empleos.empleo_id
+                where empleos.carrera_id = $idescuela and estudiantes_empleos.estado = 'RECHAZADO'
+            ";
+
+        return count(DB::select($sql));
+    }
+
+    private static function get_carrera_estudiantes_empleos_count($idescuela)
+    {
+        $sql =
+            "
+                select estudiantes_empleos.*, empleos.carrera_id
+                from estudiantes_empleos inner join empleos on empleos.id = estudiantes_empleos.empleo_id
+                where empleos.carrera_id = $idescuela
+            ";
+
+        return count(DB::select($sql));
+    }
+
     public function empleos()
     {
         $docente = get_session_docente();
@@ -22,14 +59,6 @@ class EstadisticaController extends Controller
         $facultad_escuela_max_num_empleos = 0;
 
         $facultad_escuela_max_empleos = null;
-
-        foreach($facultad->escuelas as $escuela) {
-            $num_empleos_facultad += $escuela->empleos->count();
-            if ($facultad_escuela_max_num_empleos < $escuela->empleos->count()) {
-                $facultad_escuela_max_num_empleos = $escuela->empleos->count();
-                $facultad_escuela_max_empleos = $escuela;
-            }
-        }
 
         // dd($num_empleos_facultad);
 
@@ -52,20 +81,37 @@ class EstadisticaController extends Controller
 
         }
 
+        // tener todas las postulaciones
+        $all_estudiantes_empleos = EstudianteEmpleo::all()->count();
+
         // obtener todos los estudiantes que son considerados candidatos
-        $all_estudiantes_empleos = EstudianteEmpleo::where('estado', 'ACEPTADO')->get();
-
-        $all_candidatos =  EstudianteEmpleo::where('estado', 'ACEPTADO')->get()->count();
-
+        $all_estudiantes_empleos_aceptado = EstudianteEmpleo::where('estado', 'ACEPTADO')->get();
+        $all_estudiantes_empleos_rechazado = EstudianteEmpleo::where('estado', 'RECHAZADO')->get();
 
         // obtener todos los estudiantes que son considerados candidatos
         $all_empleos = Empleo::all();
 
-        $all_candidatos = 0;
+        $total_facultad_estudiantes_empleos = 0;
+        $total_facultad_estudiantes_empleos_aceptado = 0;
+        $total_facultad_estudiantes_empleos_rechazado = 0;
 
-        foreach ($all_empleos as $empleo) {
-            // $all_candidatos += $empleo->
+        foreach($facultad->escuelas as $escuela) {
+            $total_facultad_estudiantes_empleos += self::get_carrera_estudiantes_empleos_count($escuela->idescuela);
+
+            $total_facultad_estudiantes_empleos_aceptado += self::get_carrera_estudiantes_empleos_aceptados_count($escuela->idescuela);
+            $total_facultad_estudiantes_empleos_rechazado += self::get_carrera_estudiantes_empleos_rechazados_count($escuela->idescuela);
+
+            $num_empleos_facultad += $escuela->empleos->count();
+
+            if ($facultad_escuela_max_num_empleos < $escuela->empleos->count()) {
+                $facultad_escuela_max_num_empleos = $escuela->empleos->count();
+                $facultad_escuela_max_empleos = $escuela;
+            }
+
+            // dd($escuela->idescuela);
         }
+
+        // dd($total_facultad_estudiantes_empleos);
 
         return view(
             'estadisticas.empleos', compact(
@@ -74,7 +120,12 @@ class EstadisticaController extends Controller
                 'facultad_escuela_max_empleos',
                 'universidad_escuela_max_empleos',
                 'facultad',
-                'all_candidatos'
+                'total_facultad_estudiantes_empleos',
+                'total_facultad_estudiantes_empleos_aceptado',
+                'total_facultad_estudiantes_empleos_rechazado',
+                'all_estudiantes_empleos_aceptado',
+                'all_estudiantes_empleos_rechazado',
+                'all_estudiantes_empleos'
             )
         )->with('docente', $docente);
     }
