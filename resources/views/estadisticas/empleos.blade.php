@@ -10,7 +10,7 @@
 <h2 class="text-center my-3">Estad&iacute;sticas de Empleos</h2>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5 pt-3 border border-success">
         <p>Total de ofertas de empleo para la UNIVERSIDAD: <strong>{{ $num_empleos_total }}</strong></p>
         <p>Total de ofertas de empleo para la FACULTAD DE {{ $facultad->nombre }}: <strong>{{ $num_empleos_facultad }}</strong></p>
 
@@ -31,7 +31,7 @@
         @endif
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-5 pt-3 ml-auto border border-primary">
         <p>Total de postulaciones de la UNIVERSIDAD: <strong>{{ $all_estudiantes_empleos }}</strong></p>
         <p>Total de postulaciones consideradas como candidatos para un puesto de trabajo a nivel de UNIVERSIDAD: <strong>{{ $all_estudiantes_empleos_aceptado->count() }}</strong></p>
         <p>Total de postulaciones consideradas como NO candidatos para un puesto de trabajo a nivel de UNIVERSIDAD: <strong>{{ $all_estudiantes_empleos_rechazado->count() }}</strong></p>
