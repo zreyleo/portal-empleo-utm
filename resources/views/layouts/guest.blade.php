@@ -20,13 +20,12 @@
 <body>
 
     <nav class="navbar navbar-light bg-primary text-white">
-        <a class="navbar-brand" href="{{ route('landing') }}">Portal Empleo</a>
+        <a class="navbar-brand text-white" href="{{ route('landing') }}">Portal Empleo</a>
 
         <div>
-            <a class="text-white" href="{{ route('new_empresas.create') }}">Registro Nuevas Empresas</a>
-            <a class="text-white" href="{{ route('login.empresas_get') }}">Login Empresas</a>
-            <a class="text-white" href="{{ route('login.estudiantes_get') }}">Login Estudiantes</a>
-            <a class="text-white" href="{{ route('login.responsables_get') }}">Login Docentes</a>
+            <a class="text-white" href="{{ route('login.empresas_get') }}">Empresas</a>
+            <a class="text-white mx-5" href="{{ route('login.estudiantes_get') }}">Estudiantes</a>
+            <a class="text-white" href="{{ route('login.responsables_get') }}">Docentes</a>
         </div>
     </nav>
 

@@ -29,7 +29,8 @@ class LoginControllerTest extends TestCase
     public function test_login_estudiante_process()
     {
         $this->post(route('login.estudiantes_post'), [
-            'email' => 'rzambrano2041@utm.edu.ec'
+            'email' => 'rzambrano2041@utm.edu.ec',
+            'password' => '12345678'
         ])->assertStatus(302)
         ->assertRedirect(route('login.choose_carrera_get'));
 
@@ -50,7 +51,7 @@ class LoginControllerTest extends TestCase
     {
         $this->post(route('login.responsables_post'), [
             'email' => 'rzambrano2041@utm.edu.ec',
-            // 'password' => '12345678'
+            'password' => '12345678'
         ])->assertSessionHasErrors();
 
 
@@ -62,7 +63,7 @@ class LoginControllerTest extends TestCase
     {
         $this->post(route('login.responsables_post'), [
             'email' => 'carlos.pinargote@utm.edu.ec',
-            // 'password' => '12345678'
+            'password' => '12345678'
         ])->assertRedirect();
     }
 }

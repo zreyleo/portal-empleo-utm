@@ -18,12 +18,12 @@
                     <input type="email" name="email" id="email" class="form-control" />
                 </div>
 
-                {{-- <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password"
-                            class="form-control"
-                        />
-                    </div> --}}
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password"
+                        class="form-control"
+                    />
+                </div>
 
                 <div class="form-group mt-4">
                     <input type="submit" value="Ingresar" class="text-uppercase btn btn-block btn-primary" />
@@ -31,7 +31,7 @@
             </form>
 
             @if ($errors->any())
-                <div class="alert alert-danger">
+                <div class="mt-5 alert alert-danger">
                     Hay errores al ingresar.
                     <ul>
                         @foreach ($errors->all() as $error)

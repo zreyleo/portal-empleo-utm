@@ -6,9 +6,12 @@ use App\Departamento;
 use App\Http\Requests\StoreDepartamentoRequest;
 use App\PersonalExterno;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DepartamentoController extends Controller
 {
+    private const DEFAULT_PASSWORD = 'PortalEmpleo2021';
+
     /**
      * Display a listing of the resource.
      *
@@ -62,6 +65,8 @@ class DepartamentoController extends Controller
         if ($request->telefono) {
             $departamento->telefono = $request->telefono;
         }
+
+        $departamento->password = Hash::make(self::DEFAULT_PASSWORD);
 
         $departamento->save();
 

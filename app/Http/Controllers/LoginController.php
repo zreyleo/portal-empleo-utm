@@ -55,12 +55,12 @@ class LoginController extends Controller
 
     private const ID_ROL_RESPONSABLE_PRACTICA = 38; // este numero sive para verificar si el usuario tiene el rol de responsable de practicas que se encuentra en la tabla tbl_rol
 
-    private static function login_sga_docentes($email)
+    private static function login_sga_docentes($email, $password)
     {
         // acordar cambiar para acceder con password
         $result = DB::connection('DB_db_sga_24')->select(self::SQL_FOR_LOGIN_SGA_24, [
             'user'          => $email,
-            'pass'          => '123456',
+            'pass'          => $password,
             'term'          => 'term',
             'so'            => 'so',
             'port'          => 'port',
@@ -112,7 +112,7 @@ class LoginController extends Controller
     {
         $data = $request->validate([
             'email' => 'required',
-            // 'password' => 'requerid'
+            'password' => 'required'
         ]);
 
         // DB_db_sga_spca
@@ -121,7 +121,7 @@ class LoginController extends Controller
         // acordar cambiar para acceder con password
         $result = DB::connection('DB_db_sga_24')->select(self::SQL_FOR_LOGIN_SGA_24, [
             'user'          => $request->get('email'),
-            'pass'          => 'Master13.',
+            'pass'          => $request->get('password'),
             'term'          => 'term',
             'so'            => 'so',
             'port'          => 'port',
@@ -199,10 +199,10 @@ class LoginController extends Controller
     {
         $data = $request->validate([
             'email' => ['required', 'email'],
-            // 'password' => 'required'
+            'password' => 'required'
         ]);
 
-        $result = self::login_sga_docentes($data['email']);
+        $result = self::login_sga_docentes($data['email'], $data['password']);
 
         // dd($result);
 
