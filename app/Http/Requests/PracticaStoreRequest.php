@@ -30,6 +30,7 @@ class PracticaStoreRequest extends FormRequest
             'titulo' => 'required|min:8',
             'requerimientos' => 'required',
             'area' => 'required',
+            'cupo' => 'required',
         ];
     }
 }

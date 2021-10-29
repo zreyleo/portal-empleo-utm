@@ -66,11 +66,14 @@ class EstudiantePracticaControllerTest extends TestCase
     {
         $practica = factory(Practica::class)->create([
             'facultad_id' => 2,
+            'cupo' => 2,
             'created_at' => now()->subMonth()->subMonth()
         ]);
 
-        $this->post(route('estudiantes_practicas.store', ['practica' => $practica->id]))
-            ->assertRedirect(route('estudiantes_practicas.index'));
+        factory(EstudiantePractica::class)->create([
+            'practica_id' => $practica->id,
+            'created_at' => now()->subMonth()->subMonth()
+        ]);
 
         $this->post(route('estudiantes_practicas.store', ['practica' => $practica->id]))
             ->assertRedirect(route('estudiantes_practicas.index'))

@@ -61,6 +61,7 @@ class PracticaControllerTest extends TestCase
         $this->post(route('practicas.store'), [
             'titulo' => 'Se buscan pasantes',
             'requerimientos' => 'Para hacer un CRUD',
+            'cupo' => 1,
             'area' => 1,
         ])->assertRedirect(route('practicas.index'));
 

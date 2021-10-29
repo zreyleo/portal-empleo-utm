@@ -12,10 +12,6 @@
 
 {{-- {{ $estudiantes_practicas }} --}}
 
-@if (session('status'))
-    <div id="notificacion-dashboard" data-notificacion="{{ json_encode(session('status')) }}"></div>
-@endif
-
 <table class="table">
     <thead>
         <tr>

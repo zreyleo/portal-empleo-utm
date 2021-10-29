@@ -2,21 +2,10 @@
 
 @section('page-content')
 
-    {{-- {{$practicas}} --}}
-
     <h2 class="text-center my-5">Ofertas para hacer Pr&aacute;cticas Pre Profesionales</h2>
 
-    {{-- {{ $practica_ofertas }} --}}
-
-    {{-- @if (session('status'))
-    <div id="notificacion" data-notificacion="{{ json_encode(session('status')) }}"></div>
-@endif --}}
-
     @if ($errors->any())
-        {{-- {{ $errors->all()[0] }} --}}
-        <div id="notificacion" data-mensaje="{{ $errors->all()[0] }}" data-clase="bg-danger">
-
-        </div>
+        <div id="notificacion" data-mensaje="{{ $errors->all()[0] }}" data-clase="bg-danger"></div>
     @endif
 
     <table class="table">

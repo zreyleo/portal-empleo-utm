@@ -68,6 +68,7 @@ class PracticaController extends Controller
         Practica::create([
             'titulo' => $request['titulo'],
             'facultad_id' => $request['area'],
+            'cupo' => $request['cupo'],
             'requerimientos' => $request['requerimientos'],
             'empresa_id' => $empresa['id_empresa']
         ]);
@@ -145,14 +146,20 @@ class PracticaController extends Controller
 
         $practica->delete();
 
-        return redirect()->route('practicas.index');
+        return redirect()->route('practicas.index')
+            ->with('status', 'Se ha eliminado esta oferta de PPP');
     }
 
     public function show_practicas_offers()
     {
         $estudiante = get_session_estudiante();
 
-        $practicas = Practica::where('facultad_id', $estudiante['idfacultad'])->latest()->get();
+        $practicas = Practica::where([
+            ['facultad_id', '=', $estudiante['idfacultad']],
+            ['visible', '=', true]
+        ])->latest()->get();
+
+        // dd($practicas);
 
         return view('practicas.show_practicas_offers')
             ->with('practicas', $practicas)

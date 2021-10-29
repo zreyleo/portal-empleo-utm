@@ -43,6 +43,13 @@ class EstudiantePracticaController extends Controller
 
         // dd($practica);
 
+        $estudiantes_practicas_count = $practica->estudiantes_practicas->count();
+        if ($estudiantes_practicas_count == $practica->cupo) {
+            add_error('Lo sentimos pero esta PPP tiene cupo lleno');
+
+            return redirect()->route('practicas.show_practicas_offers');
+        }
+
         if (EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])->get()->count() > 0) {
             $last_estudiante_practica = EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])
                 ->latest()->get()[0];
@@ -61,8 +68,17 @@ class EstudiantePracticaController extends Controller
                 'estudiante_id' => $estudiante['id_personal'],
                 'practica_id' => $practica->id,
             ]);
+
+
+
+            if ($practica->cupo == ($practica->estudiantes_practicas->count() + 1)) {
+                $practica->visible = false;
+                $practica->save();
+            }
         } catch (\Throwable $th) {
             add_error('No es posible reservar una misma oferta de practica mas de una vez');
+
+            return redirect()->route('estudiantes_practicas.index');
         }
 
 
