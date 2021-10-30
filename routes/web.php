@@ -195,6 +195,10 @@ Route::prefix('dashboard/responsables')->group(function () {
         ->middleware('check.responsable.role.for.session')
         ->name('estadisticas.empleos');
 
+    Route::get('estadisticas/practicas', 'EstadisticaController@practicas')
+        ->middleware('check.responsable.role.for.session')
+        ->name('estadisticas.practicas');
+
     Route::get('departamentos/create', 'DepartamentoController@create')
         ->middleware('check.responsable.role.for.session')
         ->name('departamentos.create');

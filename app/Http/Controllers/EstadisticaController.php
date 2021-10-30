@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Empleo;
 use App\EstudianteEmpleo;
+use App\EstudiantePractica;
 use App\Facultad;
+use App\Practica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -126,6 +128,50 @@ class EstadisticaController extends Controller
                 'all_estudiantes_empleos_aceptado',
                 'all_estudiantes_empleos_rechazado',
                 'all_estudiantes_empleos'
+            )
+        )->with('docente', $docente);
+    }
+
+    public function practicas()
+    {
+        $docente = get_session_docente();
+
+        $facultad = Facultad::find($docente['id_facultad']);
+
+        $all_practicas_universidad = Practica::all();
+
+        $all_practicas_facultad = $facultad->practicas;
+
+        $estudiantes_practicas_count = EstudiantePractica::all()->count();
+
+        if
+        (
+            Practica::select('facultad_id')
+                ->groupBy('facultad_id')
+                ->orderByRaw('COUNT(*) DESC')
+                ->limit(1)
+                ->get()->count() > 0
+        )
+        {
+
+            $facultad_max_ppp = Practica::select('facultad_id')
+                ->groupBy('facultad_id')
+                ->orderByRaw('COUNT(*) DESC')
+                ->limit(1)
+                ->get()[0]->facultad;
+
+        }
+
+        // dd($practicas);
+
+        return view(
+            'estadisticas.practicas',
+            compact(
+                'facultad',
+                'facultad_max_ppp',
+                'all_practicas_universidad',
+                'all_practicas_facultad',
+                'estudiantes_practicas_count',
             )
         )->with('docente', $docente);
     }

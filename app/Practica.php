@@ -26,4 +26,9 @@ class Practica extends Model
     {
         return $this->hasMany(EstudiantePractica::class, 'practica_id', 'id');
     }
+
+    public function facultad()
+    {
+        return $this->belongsTo(Facultad::class, 'facultad_id', 'idfacultad');
+    }
 }

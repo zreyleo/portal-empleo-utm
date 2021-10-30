@@ -24,6 +24,9 @@
         <li>
             <a href="{{ route('estadisticas.empleos') }}">Empleos</a>
         </li>
+        <li>
+            <a href="{{ route('estadisticas.practicas') }}">Pr&aacute;cticas</a>
+        </li>
     </ul>
     <a href="#departamentos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fas fa-university"></i>
