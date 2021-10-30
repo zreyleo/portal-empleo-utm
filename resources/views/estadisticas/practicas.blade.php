@@ -15,7 +15,7 @@
         <p>Total de ofertas de PPP para la FACULTAD DE {{ $facultad->nombre }}: <strong>{{ $all_practicas_facultad->count() }}</strong></p>
 
         @if ($all_practicas_universidad->count())
-            <p>Porcentaje de empleos para la FACULTAD: <strong>&#37;{{ round((($all_practicas_facultad->count() * 100) / $all_practicas_universidad->count()), 2) }}</strong></p>
+            <p>Porcentaje de PPP para la FACULTAD: <strong>&#37;{{ round((($all_practicas_facultad->count() * 100) / $all_practicas_universidad->count()), 2) }}</strong></p>
         @endif
 
         @if ($facultad_max_ppp)
@@ -27,11 +27,7 @@
 
     <div class="col-md-5 pt-3 ml-auto border border-primary">
         <p>Total de reservaciones de PPP de la UNIVERSIDAD: <strong>{{ $estudiantes_practicas_count }}</strong></p>
-        {{-- <p>Total de postulaciones consideradas como candidatos para un puesto de trabajo a nivel de UNIVERSIDAD: <strong>{{ $all_estudiantes_empleos_aceptado->count() }}</strong></p>
-        <p>Total de postulaciones consideradas como NO candidatos para un puesto de trabajo a nivel de UNIVERSIDAD: <strong>{{ $all_estudiantes_empleos_rechazado->count() }}</strong></p>
-        <p>Total de postulaciones de la FACULTAD DE {{ $facultad->nombre }}: <strong>{{ $total_facultad_estudiantes_empleos }}</strong></p>
-        <p>Total de postulaciones consideradas como candidatos para un puesto de trabajo a nivel de la FACULTAD DE {{ $facultad->nombre }}: <strong>{{ $total_facultad_estudiantes_empleos_aceptado }}</strong></p>
-        <p>Total de postulaciones consideradas como NO candidatos para un puesto de trabajo a nivel de la FACULTAD DE {{ $facultad->nombre }}: <strong>{{ $total_facultad_estudiantes_empleos_rechazado }}</strong></p> --}}
+        <p>Total de reservaciones de PPP a nivel de FACULTAD: <strong>{{ $facultad_estudiantes_practicas_count }}</strong></p>
     </div>
 </div>
 

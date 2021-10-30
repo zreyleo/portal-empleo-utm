@@ -48,6 +48,18 @@ class EstadisticaController extends Controller
         return count(DB::select($sql));
     }
 
+    private static function get_facultad_estudiantes_practicas_count($idfacultad)
+    {
+        $sql =
+            "
+                select estudiantes_practicas.*, practicas.facultad_id
+                from estudiantes_practicas inner join practicas on practicas.id = estudiantes_practicas.practica_id
+                where practicas.facultad_id = $idfacultad
+            ";
+
+        return count(DB::select($sql));
+    }
+
     public function empleos()
     {
         $docente = get_session_docente();
@@ -162,6 +174,10 @@ class EstadisticaController extends Controller
 
         }
 
+        $facultad_estudiantes_practicas_count = self::get_facultad_estudiantes_practicas_count($facultad->idfacultad);
+
+
+
         // dd($practicas);
 
         return view(
@@ -172,6 +188,7 @@ class EstadisticaController extends Controller
                 'all_practicas_universidad',
                 'all_practicas_facultad',
                 'estudiantes_practicas_count',
+                'facultad_estudiantes_practicas_count',
             )
         )->with('docente', $docente);
     }

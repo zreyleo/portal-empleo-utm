@@ -51,7 +51,9 @@
                     </td>
                 </tr>
             @empty
-
+                <tr>
+                    <td class="3">No Hay Empresas nuevas para registrar.</td>
+                </tr>
             @endforelse
         </tbody>
     </table>
