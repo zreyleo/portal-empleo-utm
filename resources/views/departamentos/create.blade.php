@@ -92,10 +92,10 @@
             </div>
 
             <div class="form-group">
-                <label for="nomclatura">Nomenclatura</label>
-                <input type="text" class="form-control @error('nomclatura') is-invalid @enderror text-uppercase"
-                    id="nomclatura" name="nomclatura" value="{{ old('nomclatura') }}">
-                @error('nomclatura')
+                <label for="nomenclatura">Nomenclatura</label>
+                <input type="text" class="form-control @error('nomenclatura') is-invalid @enderror text-uppercase"
+                    id="nomenclatura" name="nomenclatura" value="{{ old('nomenclatura') }}">
+                @error('nomenclatura')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
             </div>

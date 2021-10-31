@@ -44,14 +44,16 @@ class DepartamentoController extends Controller
      */
     public function store(StoreDepartamentoRequest $request)
     {
+
+        // dd($request->all());
         $PersonalExternoId = PersonalExterno::create([
             'cedula' => $request->cedula,
-            'apellido_p' => strtoupper($request->apellido_p),
-            'apellido_m' => strtoupper($request->apellido_m),
+            'apellido1' => strtoupper($request->apellido_p),
+            'apellido2' => strtoupper($request->apellido_m),
             'nombres' => strtoupper($request->nombres),
             'titulo' => strtoupper($request->titulo),
             'genero' => $request->genero
-        ])->id;
+        ])->id_personal_externo;
 
         $departamento = new Departamento();
 
@@ -60,10 +62,15 @@ class DepartamentoController extends Controller
         $departamento->id_provincia = $request->provincia;
         $departamento->id_canton = $request->canton;
         $departamento->id_parroquia = $request->parroquia;
+        $departamento->direccion = $request->direccion;
         $departamento->id_representante = $PersonalExternoId;
 
         if ($request->telefono) {
             $departamento->telefono = $request->telefono;
+        }
+
+        if ($request->nomenclatura) {
+            $departamento->nomenclatura = strtoupper($request->nomenclatura);
         }
 
         $departamento->password = Hash::make(self::DEFAULT_PASSWORD);

@@ -33,6 +33,7 @@ class StoreDepartamentoRequest extends FormRequest
             'nombre_empresa' => 'required|unique:DB_ppp_sistema_SCHEMA_public.tbl_empresa,nombre_empresa',
             'nomenclatura' => 'unique:DB_ppp_sistema_SCHEMA_public.tbl_empresa,nomenclatura',
             'email' => ['required', 'unique:DB_ppp_sistema_SCHEMA_public.tbl_empresa,email', 'email'],
+            'direccion' => 'required',
             'telefono' => ['unique:DB_ppp_sistema_SCHEMA_public.tbl_empresa,telefono'],
             'descripcion' => 'required',
         ];
