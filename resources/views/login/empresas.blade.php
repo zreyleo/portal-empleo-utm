@@ -11,15 +11,15 @@
 
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type="email" name="email" id="email" class="form-control" />
+                    <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" />
                 </div>
 
-                {{-- <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password"
-                            class="form-control"
-                        />
-                    </div> --}}
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password"
+                        class="form-control"
+                    />
+                </div>
 
                 <div class="form-group mt-4">
                     <input type="submit" value="Ingresar" class="text-uppercase btn btn-block btn-primary" />

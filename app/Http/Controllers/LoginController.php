@@ -9,6 +9,7 @@ use App\PersonalRol;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
@@ -84,7 +85,7 @@ class LoginController extends Controller
     {
         $data = $request->validate([
             'email' => 'required',
-            // 'password' => 'requerid'
+            'password' => 'required'
         ]);
 
         if (Empresa::where('email', $data['email'])->get()->count() == 0) {
@@ -94,6 +95,11 @@ class LoginController extends Controller
         }
 
         $empresa = Empresa::where('email', $data['email'])->get()[0];
+
+        if (!Hash::check($request->password, $empresa->password)) {
+            add_error("Password Incorrecto");
+            return redirect()->back();
+        }
 
 
         Session::put('id_empresa', $empresa->id_empresa);

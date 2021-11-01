@@ -309,7 +309,7 @@ class NewEmpresaController extends Controller
             'id_representante' => $personal_externo->id_personal_externo,
             'tipo' => $nueva_empresa->tipo,
             'telefono' => $nueva_empresa->telefono,
-            'email' => $nueva_empresa->email,
+            'email' => strtolower($nueva_empresa->email),
             'password' => $password,
             'ruc' => $nueva_empresa->ruc,
             'descripcion' => $nueva_empresa->descripcion,
@@ -326,7 +326,7 @@ class NewEmpresaController extends Controller
             "Registro exitoso en la UTM",
             "
                 $nueva_empresa->nombre_empresa ha sido registrado exitosamente en la UTM y puede comenzar a publicar empleos
-                usuario es el ruc que registro y el password es el ruc tambien, recuerde cambiar el password.
+                usuario es el email que registro el PASSWORD es el RUC que registro, recuerde cambiar el password.
             "
         );
 

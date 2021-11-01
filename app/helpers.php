@@ -79,7 +79,7 @@ if (!function_exists('enviar_correo')) {
         $mail->SMTPSecure   = 'tls';
         $mail->Port         = 587;
         $mail->addAddress($correo);
-        $mail->setFrom('sga@utm.edu.ec', 'Sistema');
+        $mail->setFrom('sga@utm.edu.ec', 'PORTAL EMPLEO UTM');
 
         $mail->isHTML(true);
         $mail->Subject = $asunto;

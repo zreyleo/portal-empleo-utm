@@ -58,7 +58,7 @@ class DepartamentoController extends Controller
         $departamento = new Departamento();
 
         $departamento->nombre_empresa = strtoupper($request->nombre_empresa);
-        $departamento->email = strtoupper($request->email);
+        $departamento->email = strtolower($request->email);
         $departamento->id_provincia = $request->provincia;
         $departamento->id_canton = $request->canton;
         $departamento->id_parroquia = $request->parroquia;
