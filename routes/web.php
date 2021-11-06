@@ -45,7 +45,7 @@ Route::post('/registro', 'NewEmpresaController@store')->name('new_empresas.store
 
 
 /*********************************************
- * **************** Empresa ****************
+ * ***************** Empresa *****************
  ********************************************/
 
 Route::prefix('dashboard/empresas')->group(function () {
@@ -72,6 +72,15 @@ Route::prefix('dashboard/empresas')->group(function () {
     // practicas
     Route::resource('practicas', 'PracticaController')
         ->middleware('check.empresa.role.for.session');
+
+    // informacion de la empresa
+    Route::get('password/edit', 'EmpresaController@passwordEdit')
+        ->middleware('check.empresa.role.for.session')
+        ->name('empresas.password_edit');
+
+    Route::put('password', 'EmpresaController@passwordUpdate')
+        ->middleware('check.empresa.role.for.session')
+        ->name('empresas.password_update');
 });
 
 /*********************************************

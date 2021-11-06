@@ -36,4 +36,16 @@
     </ul>
 </li>
 
+<li>
+    <a href="#empresa" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fas fa-building"></i>
+        Empresa
+    </a>
+    <ul class="collapse list-unstyled" id="empresa">
+        <li>
+            <a href="{{ route('empresas.password_edit') }}">Cambiar Password</a>
+        </li>
+    </ul>
+</li>
+
 @endsection

@@ -11277,13 +11277,13 @@ table.table tbody tr td span.badge {
 }
 
 .body-form-sga form {
-  border: 1px solid #1c7f0e;
+  border: 1px solid #004600;
   padding: 4px 30px;
   border-radius: 5px;
 }
 
 .body-form-sga form input[type=submit] {
-  background-color: #288d1c;
+  background-color: #004600;
   color: #fff;
 }
 
