@@ -11260,6 +11260,10 @@ table.table tbody tr td span.badge {
   color: #a30021;
 }
 
+.navbar-utm {
+  background-color: #004600 !important;
+}
+
 .body-form-sga {
   background-image: url("/img/fondoLoginSPCA.jpg");
   background-position: bottom right;

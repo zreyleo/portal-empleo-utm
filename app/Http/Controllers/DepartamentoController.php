@@ -78,20 +78,6 @@ class DepartamentoController extends Controller
         $departamento->save();
 
         return redirect()->route('responsables.dashboard');
-
-        // NewEmpresa::create([
-        //     'ruc' => $request->ruc,
-        //     'nombre_empresa' => strtoupper($request->nombre_empresa),
-        //     'id_provincia' => $request->provincia,
-        //     'id_canton' => $request->canton,
-        //     'id_parroquia' => $request->parroquia,
-        //     'direccion' => strtoupper($request->direccion),
-        //     'email' => strtolower($request->email),
-        //     'telefono' => $request->telefono,
-        //     'descripcion' => $request->descripcion,
-        //     'area' => $request->area,
-        //     'tipo' => $request->tipo,
-        // ]);
     }
 
     /**

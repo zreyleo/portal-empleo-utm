@@ -19,7 +19,7 @@
 
 <body>
 
-    <nav class="navbar navbar-light bg-primary text-white">
+    <nav class="navbar navbar-light bg-primary text-white navbar-utm">
         <a class="navbar-brand text-white" href="{{ route('landing') }}">Portal Empleo</a>
 
         <div>
