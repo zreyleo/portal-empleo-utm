@@ -73,8 +73,6 @@ class EmpleoController extends Controller
      */
     public function store(EmpleoStoreRequest $request)
     {
-
-        // dd('hola');
         $empresa = EmpresaController::get_empresa_data();
 
         Empleo::create([

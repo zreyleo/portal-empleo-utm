@@ -61,6 +61,10 @@ class EmpleoControllerTest extends TestCase
             'requerimientos' => 'Para hacer un CRUD',
             'carrera' => 1,
         ])->assertRedirect(route('empleos.index'));
+
+        $this->assertDatabaseHas('empleos', [
+            'titulo' => 'Se necesita Ingeniero en Sistemas'
+        ]);
     }
 
     public function test_store_validate()
