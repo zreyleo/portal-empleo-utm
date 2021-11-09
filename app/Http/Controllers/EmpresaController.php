@@ -62,4 +62,15 @@ class EmpresaController extends Controller
         return redirect()->route('empresas.password_edit')
             ->with('status', 'Exito al cambiar Password');
     }
+
+    public function informacion()
+    {
+        $empresa = get_session_empresa();
+
+        $empresa_informacion = Empresa::find($empresa['id_empresa']);
+
+        return view('empresas.informacion')
+            ->with('empresa', $empresa)
+            ->with('empresa_informacion', $empresa_informacion);
+    }
 }

@@ -81,6 +81,10 @@ Route::prefix('dashboard/empresas')->group(function () {
     Route::put('password', 'EmpresaController@passwordUpdate')
         ->middleware('check.empresa.role.for.session')
         ->name('empresas.password_update');
+
+    Route::get('informacion', 'EmpresaController@informacion')
+        ->middleware('check.empresa.role.for.session')
+        ->name('empresas.informacion');
 });
 
 /*********************************************

@@ -45,6 +45,9 @@
         <li>
             <a href="{{ route('empresas.password_edit') }}">Cambiar Password</a>
         </li>
+        <li>
+            <a href="{{ route('empresas.informacion') }}">Informaci&oacute;n</a>
+        </li>
     </ul>
 </li>
 
