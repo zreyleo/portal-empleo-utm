@@ -7,6 +7,10 @@
     {{ var_dump($nuevas_empresas) }}
 </pre> --}}
 
+@if (session('status'))
+    <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
+@endif
+
 <h2 class="text-center my-3">Nuevas Empresas</h2>
 
 <div class="row">
@@ -29,10 +33,10 @@
                             class="btn btn-info">Informaci&oacute;n</a>
 
                         <a href="{{ route('new_empresas.edit', ['empresa' => $empresa->id_empresa]) }}"
-                            class="btn btn-warning">Editar</a>
+                            class="btn btn-warning mx-1">Editar</a>
 
                         <a href="{{ route('new_empresas.reject', ['empresa' => $empresa->id_empresa]) }}"
-                            class="btn btn-danger"
+                            class="btn btn-danger mr-1"
                         >
                             Rechazar
                         </a>

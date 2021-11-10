@@ -32,6 +32,11 @@ class Empresa extends Model
         return str_replace(' ', '-', strtolower($this->nombre_empresa));
     }
 
+    public function representante()
+    {
+        return $this->belongsTo(PersonalExterno::class, 'id_representante', 'id_personal_externo');
+    }
+
     public function empleos()
     {
         return $this->hasMany(Empleo::class, 'empresa_id', 'id_empresa');

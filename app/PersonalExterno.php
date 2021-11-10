@@ -22,6 +22,11 @@ class PersonalExterno extends Model
 
     public $timestamps = false;
 
+    public function getNombresCompletosAttribute()
+    {
+        return $this->apellido1 . " " . $this->apellido2 . " " . $this->nombres;
+    }
+
     public function empresa()
     {
         return $this->hasOne(Empresa::class, 'id_representante', 'id_personal_externo');

@@ -85,6 +85,14 @@ Route::prefix('dashboard/empresas')->group(function () {
     Route::get('informacion', 'EmpresaController@informacion')
         ->middleware('check.empresa.role.for.session')
         ->name('empresas.informacion');
+
+    Route::get('informacion/edit', 'EmpresaController@informacion_edit')
+        ->middleware('check.empresa.role.for.session')
+        ->name('empresas.informacion_edit');
+
+    Route::put('informacion', 'EmpresaController@informacion_update')
+        ->middleware('check.empresa.role.for.session')
+        ->name('empresas.informacion_update');
 });
 
 /*********************************************

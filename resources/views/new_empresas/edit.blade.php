@@ -14,9 +14,9 @@
 
 @section('page-content')
 
-{{-- <pre>
-    {{ $empresa }}
-</pre> --}}
+@if (session('status'))
+    <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
+@endif
 
 <a href="{{ route('new_empresas.index') }}" class="btn btn-outline-danger my-3">Volver</a>
 
@@ -253,9 +253,6 @@
 
             <div class="form-group">
                 <label for="descripcion">Descripci&oacute;n</label>
-
-                {{-- <textarea type="text" class="form-control @error('descripcion') is-invalid @enderror" id="descripcion"
-                    name="descripcion" cols="4" style="resize: none">{{old('descripcion')}}</textarea> --}}
 
                 <input
                     type="hidden"

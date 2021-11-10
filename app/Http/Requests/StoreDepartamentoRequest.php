@@ -39,8 +39,8 @@ class StoreDepartamentoRequest extends FormRequest
         ];
     }
 
-    public function messages(){
-
+    public function messages()
+    {
         return [
             'nombre_empresa.required' => 'El nombre de departamento es necesario',
             'nombre_empresa.unique' => 'El nombre de departamento ya esta en uso',

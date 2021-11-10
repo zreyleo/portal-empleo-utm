@@ -60,12 +60,6 @@ class NewEmpresaController extends Controller
      */
     public function store(StoreNewEmpresaRequest $request)
     {
-        // $docentes_con_rol = PersonalRol::where([
-        //     ['id_rol', '=', self::ID_ROL_RESPONSABLE_PRACTICA]
-        // ])->get();
-
-        // dd($docentes_con_rol->all());
-
         NewEmpresa::create([
             'ruc' => $request->ruc,
             'nombre_empresa' => strtoupper($request->nombre_empresa),
@@ -88,11 +82,7 @@ class NewEmpresaController extends Controller
             ])->id
         ]);
 
-        // dd($docentes_con_rol);
-
         $nombre_empresa = strtoupper($request->nombre_empresa);
-
-        // dd(Facultad::find($request->area));
 
         dispatch(new SendNewEmpresaRegistrationEmail($nombre_empresa, (int) $request->area))
             ->afterResponse();
@@ -129,8 +119,6 @@ class NewEmpresaController extends Controller
                 and parroquia.idparroquia = :idparroquia
         ';
 
-        // dd($empresa->id_provincia);
-
         $location = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_location, [
             'idprovincia' => $empresa->id_provincia,
             'idcanton' => $empresa->id_canton,
@@ -152,8 +140,6 @@ class NewEmpresaController extends Controller
     public function edit(NewEmpresa $empresa)
     {
         $docente = get_session_docente();
-
-        // dd($nueva_empresa);
 
         // prevenir que un docente edite una empresa que no le compete a su facultad
         if ($empresa->area != $docente['id_facultad']) {
@@ -182,8 +168,6 @@ class NewEmpresaController extends Controller
     public function update(UpdateNewEmpresaRequest $request, NewEmpresa $empresa)
     {
         $docente = get_session_docente();
-
-        // dd($nueva_empresa);
 
         // prevenir que un docente edite una empresa que no le compete a su facultad
         if ($empresa->area != $docente['id_facultad']) {
@@ -216,18 +200,15 @@ class NewEmpresaController extends Controller
         $empresa->area = $request['area'];
         $empresa->tipo = $request['tipo'];
 
-        // dd($empresa);
-
         $empresa->save();
 
-        return redirect()->route('new_empresas.edit', ['empresa' => $empresa->id_empresa]);
+        return redirect()->route('new_empresas.edit', ['empresa' => $empresa->id_empresa])
+            ->with('status', 'Se ha editado informacion con exito');
     }
 
     public function reject(NewEmpresa $empresa)
     {
         $docente = get_session_docente();
-
-        // dd($nueva_empresa);
 
         // prevenir que un docente edite una empresa que no le compete a su facultad
         if ($empresa->area != $docente['id_facultad']) {
@@ -268,18 +249,14 @@ class NewEmpresaController extends Controller
         $empresa->nombre_empresa = null;
         $empresa->estado = 0;
 
-        // dd($empresa);
-
         $empresa->save();
 
-        return redirect()->route('new_empresas.index');
+        return redirect()->route('new_empresas.index')->with('status', 'Se ha rechazado una empresa');
     }
 
     public function register(NewEmpresa $nueva_empresa)
     {
         $docente = get_session_docente();
-
-        // dd($nueva_empresa);
 
         // prevenir que un docente registre una empresa que no le compete a su facultad
         if ($nueva_empresa->area != $docente['id_facultad']) {
@@ -326,10 +303,11 @@ class NewEmpresaController extends Controller
             "Registro exitoso en la UTM",
             "
                 $nueva_empresa->nombre_empresa ha sido registrado exitosamente en la UTM y puede comenzar a publicar empleos
-                usuario es el email que registro el PASSWORD es el RUC que registro, recuerde cambiar el password.
+                USUARIO es el EMAIL que registro el PASSWORD es el RUC que registro, recuerde cambiar el password.
             "
         );
 
-        return redirect()->route('new_empresas.index');
+        return redirect()->route('new_empresas.index')
+            ->with('status', 'Se ha registrado una nueva empresa');
     }
 }

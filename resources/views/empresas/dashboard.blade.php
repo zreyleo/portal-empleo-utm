@@ -23,7 +23,7 @@
 
 <li>
     <a href="#practicas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-        <i class="fas fa-user-graduate"></i>
+        <i class="fas fa-university"></i>
         Prácticas
     </a>
     <ul class="collapse list-unstyled" id="practicas">
