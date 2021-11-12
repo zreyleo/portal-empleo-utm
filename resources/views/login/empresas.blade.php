@@ -2,6 +2,10 @@
 
 @section('login_form')
 
+    @if (session('status'))
+        <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
+    @endif
+
     <h2 class="text-center my-5">Login de Empresas</h2>
 
     <div class="row">
