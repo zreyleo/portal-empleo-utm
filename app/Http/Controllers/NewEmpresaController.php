@@ -277,6 +277,18 @@ class NewEmpresaController extends Controller
 
         $password = bcrypt($nueva_empresa->ruc);
 
+        if (Empresa::where([
+            ['email', '=', strtolower($nueva_empresa->email)],
+            ['registrado_por', '=', null]
+        ])->get()->count() > 0) {
+            $empresas = Empresa::where('email', strtolower($nueva_empresa->email))->get();
+
+            foreach ($empresas as $empresa) {
+                $empresa->email = $empresa->email . '@sinuso';
+                $empresa->save();
+            }
+        }
+
         Empresa::create([
             'nombre_empresa' => $nueva_empresa->nombre_empresa,
             'id_provincia' => $nueva_empresa->id_provincia,

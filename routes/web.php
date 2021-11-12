@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('landing');
@@ -10,6 +14,48 @@ Route::get('logout', function () {
     request()->session()->flush();
     return redirect()->route('landing');
 })->name('logout');
+
+/*********************************************
+ * ************* Password Reset *************
+ ********************************************/
+
+Route::get('forgot-password', function () {
+    return view('login.forgot_password');
+})->name('password.forgot_get');
+
+Route::post('reset_password_without_token', function (Request $request) {
+    $empresa = DB::connection('DB_ppp_sistema_SCHEMA_public')->table('tbl_empresa')->where('email', '=', $request->email)
+        ->first();
+
+    //Check if the empresa exists
+    if (count($empresa) < 1) {
+        return redirect()->back()->withErrors(['email' => 'El email no esta asociado a ninguna empresa']);
+    }
+
+    $token = Str::random(60);
+
+    //Create Password Reset Token
+    DB::table('password_resets')->insert([
+        'email' => $request->email,
+        'token' => $token,
+        'created_at' => now()
+    ]);
+
+    $enlace = config('app.url') . '/reset-password/{token}';
+
+    $mensaje = "El enlace para restear su password es " . $enlace . ", si no envio esta peticion haga caso omiso.";
+
+    enviar_correo(
+        $request->email,
+        "Recuperar Password de Portal Empleo UTM",
+        $mensaje
+    );
+
+    return redirect()->back()->with('status', trans('A reset link has been sent to your email address.'));
+})->name('password.forgot_post');
+
+Route::post('reset_password_with_token', 'EmpresaController@resetPassword')
+    ->name('password.reset');
 
 /*********************************************
  * ****************** Login ******************
