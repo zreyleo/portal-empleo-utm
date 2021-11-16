@@ -8,6 +8,18 @@
         <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
     @endif
 
+    <button
+        onclick="
+            const hola = Swal.fire(
+                                    'Good job!',
+                                    'You clicked the button!',
+                                    'success'
+                                    );
+                                    console.log(hola);
+                                    return;
+        "
+    >hola</button>
+
     <div class="row">
         <table class="table">
             <thead>
@@ -39,10 +51,24 @@
 
                             <form action="{{ route('empleos.destroy', ['empleo' => $empleo->id]) }}" method="POST"
                                 onsubmit="
-                                if (!confirm('Desea Eliminar?')) {
-                                    event.preventDefault();
+
+                                    const hola = Swal.fire({
+                                    title: 'Do you want to save the changes?',
+                                    showDenyButton: true,
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Save',
+                                    denyButtonText: `Don't save`,
+                                    }).then((result) => {
+                                    /* Read more about isConfirmed, isDenied below */
+                                    if (result.isConfirmed) {
+                                        Swal.fire('Saved!', '', 'success')
+                                    } else if (result.isDenied) {
+                                        Swal.fire('Changes are not saved', '', 'info')
+                                        event.preventDefault();
+                                    }
+                                    });
+                                    console.log(hola);
                                     return;
-                                }
                             ">
                                 @csrf
                                 @method('DELETE')
