@@ -10,7 +10,7 @@
                 @csrf
 
                 <div class="form-header text-center">
-                    <img src="/img/sga-64.png" alt="sga logo">
+                    <img src="{{ asset('/img/sga-64.png') }}" alt="sga logo">
                 </div>
 
                 <div class="form-group">

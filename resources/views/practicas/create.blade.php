@@ -18,7 +18,9 @@
 
 <div class="row mb-3">
     <div class="col-md-8 mx-auto">
-        <form action="{{ route('practicas.store') }}" method="POST" novalidate>
+        <form action="{{ route('practicas.store') }}" method="POST" novalidate
+            class="bg-white p-3"
+        >
             @csrf
 
             <div class="form-group">

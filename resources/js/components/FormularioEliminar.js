@@ -1,37 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import Swal from 'sweetalert2';
+import Axios from 'axios';
 
-const FormularioEliminar = ({ mensaje, clase }) => {
-    const [clases, setClases] = useState('');
+const FormularioEliminar = ({ ruta, csrf, pregunta = 'Seguro de querer eliminar?', cancelMessage = 'Accion cancelada' }) => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
 
-    const [visible, setVisible] = useState(true);
-
-    useEffect(() => {
-        setClases(`visible text-white ${clase}`);
-        setTimeout(() => {
-            setClases('');
+        Swal.fire({
+            title: pregunta,
+            showDenyButton: true,
+            confirmButtonText: 'Eliminar',
+            denyButtonText: `No Eliminar`,
+        }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire('Eliminado!', '', 'success')
 
             setTimeout(() => {
-                setVisible(false);
-            }, 501);
-        }, 3000);
-    }, []);
+                Axios.post(ruta, {
+                    _method: 'DELETE',
+                    _token: csrf
+                }).then(() => {
+                    location.reload(true);
+                });
+            }, 250)
+        } else if (result.isDenied) {
+            Swal.fire(cancelMessage, '', 'info')
+        }
+        });
 
-    if (visible) {
-        return (
-            <div className={`notificacion ${clases}`}>
-                { mensaje }
-            </div>
-        );
-    } else {
-        return null;
+        return;
     }
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input type="submit" value="Eliminar" className="btn btn-danger" />
+        </form>
+    );
 
 }
 
-export default Notificacion;
+export default FormularioEliminar;
 
-if (document.getElementById('formulario-eliminar')) {
-    const props = Object.assign({}, document.getElementById('formulario-eliminar').dataset);
-    ReactDOM.render(<FormularioEliminar { ...props } />, document.getElementById('formulario-eliminar'));
+// if (document.getElementById('formulario-eliminar')) {
+//     const props = Object.assign({}, document.getElementById('formulario-eliminar').dataset);
+//     ReactDOM.render(<FormularioEliminar { ...props } />, document.getElementById('formulario-eliminar'));
+// }
+
+const formulariosEliminar = document.getElementsByClassName('formulario-eliminar');
+
+if (formulariosEliminar.length) {
+    Array.prototype.forEach.call(formulariosEliminar, (formulario) => {
+        const props = Object.assign({}, formulario.dataset);
+        ReactDOM.render(<FormularioEliminar { ...props } />, formulario);
+    })
 }

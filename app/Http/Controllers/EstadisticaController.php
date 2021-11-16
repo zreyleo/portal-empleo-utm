@@ -188,7 +188,7 @@ class EstadisticaController extends Controller
                 'all_practicas_universidad',
                 'all_practicas_facultad',
                 'estudiantes_practicas_count',
-                'facultad_estudiantes_practicas_count',
+                'facultad_estudiantes_practicas_count'
             )
         )->with('docente', $docente);
     }

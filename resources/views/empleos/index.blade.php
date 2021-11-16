@@ -8,18 +8,6 @@
         <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
     @endif
 
-    <button
-        onclick="
-            const hola = Swal.fire(
-                                    'Good job!',
-                                    'You clicked the button!',
-                                    'success'
-                                    );
-                                    console.log(hola);
-                                    return;
-        "
-    >hola</button>
-
     <div class="row">
         <table class="table">
             <thead>
@@ -49,31 +37,22 @@
                             <a href="{{ route('empleos.show_estudiantes_empleos', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-info text-white mr-2">Ver Aspirantes</a>
 
-                            <form action="{{ route('empleos.destroy', ['empleo' => $empleo->id]) }}" method="POST"
+                            {{-- <form action="{{ route('empleos.destroy', ['empleo' => $empleo->id]) }}" method="POST"
                                 onsubmit="
-
-                                    const hola = Swal.fire({
-                                    title: 'Do you want to save the changes?',
-                                    showDenyButton: true,
-                                    showCancelButton: true,
-                                    confirmButtonText: 'Save',
-                                    denyButtonText: `Don't save`,
-                                    }).then((result) => {
-                                    /* Read more about isConfirmed, isDenied below */
-                                    if (result.isConfirmed) {
-                                        Swal.fire('Saved!', '', 'success')
-                                    } else if (result.isDenied) {
-                                        Swal.fire('Changes are not saved', '', 'info')
-                                        event.preventDefault();
+                                    if (!confirm('Desea Eliminar?')) {
+                                    event.preventDefault();
                                     }
-                                    });
-                                    console.log(hola);
-                                    return;
-                            ">
+                                "
+                            >
                                 @csrf
                                 @method('DELETE')
                                 <input type="submit" value="Eliminar" class="btn btn-danger">
-                            </form>
+                            </form> --}}
+
+                            <div class="formulario-eliminar"
+                                data-ruta="{{ route('empleos.destroy', ['empleo' => $empleo->id]) }}"
+                                data-csrf="{{ csrf_token() }}"
+                            ></div>
                         </td>
                     </tr>
 

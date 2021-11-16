@@ -36,7 +36,8 @@
                                 class="btn btn-warning mx-2">Editar</a>
                             {{-- <a href="{{ route('practicas.ver_aspirantes', ['practica' => $practica->id]) }}"
                                 class="btn btn-info text-white mr-2">Ver Aspirantes</a> --}}
-                            <form action="{{ route('practicas.destroy', ['practica' => $practica->id]) }}" method="POST"
+
+                            {{-- <form action="{{ route('practicas.destroy', ['practica' => $practica->id]) }}" method="POST"
                                 onsubmit="
                                 if (!confirm('Desea Eliminar?')) {
                                     event.preventDefault();
@@ -46,7 +47,12 @@
                                 @csrf
                                 @method('DELETE')
                                 <input type="submit" value="Eliminar" class="btn btn-danger">
-                            </form>
+                            </form> --}}
+
+                            <div class="formulario-eliminar"
+                                data-ruta="{{ route('practicas.destroy', ['practica' => $practica->id]) }}"
+                                data-csrf="{{ csrf_token() }}"
+                            ></div>
                         </td>
                     </tr>
 

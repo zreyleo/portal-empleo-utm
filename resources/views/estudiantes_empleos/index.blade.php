@@ -31,7 +31,7 @@
                         <a href="{{ route('estudiantes_empleos.show_empleo_details', ['estudiante_empleo' => $estudiante_empleo->id]) }}"
                             class="btn btn-success mr-2">Ver Detalles</a>
 
-                        <form
+                        {{-- <form
                             action="{{ route('estudiantes_empleos.destroy', ['estudiante_empleo' => $estudiante_empleo->id]) }}"
                             method="post" onsubmit="
                             if (!confirm('Desea Eliminar?')) {
@@ -43,7 +43,12 @@
                             @method('DELETE')
 
                             <input type="submit" value="Eliminar" class="btn btn-danger">
-                        </form>
+                        </form> --}}
+
+                        <div class="formulario-eliminar"
+                            data-ruta="{{ route('estudiantes_empleos.destroy', ['estudiante_empleo' => $estudiante_empleo->id]) }}"
+                            data-csrf="{{ csrf_token() }}"
+                        ></div>
                     </td>
                 </tr>
 

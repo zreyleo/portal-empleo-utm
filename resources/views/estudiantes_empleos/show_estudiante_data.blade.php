@@ -18,7 +18,7 @@
                 <input type="submit" value="Candidato" class="my-auto btn btn-outline-primary">
             </form>
 
-            <form class="d-flex ml-auto"
+            {{-- <form class="d-flex ml-auto"
                 action="{{ route('estudiantes_empleos.reject', ['estudiante_empleo' => $estudiante_empleo]) }}" method="POST"
                 onsubmit=
                     "
@@ -31,7 +31,12 @@
                 @csrf
                 @method('DELETE')
                 <input type="submit" value="Rechazar" class="my-auto btn btn-outline-danger">
-            </form>
+            </form> --}}
+
+            <div class="formulario-eliminar"
+                data-ruta="{{ route('estudiantes_empleos.reject', ['estudiante_empleo' => $estudiante_empleo]) }}"
+                data-csrf="{{ csrf_token() }}"
+            ></div>
         </div>
     </div>
 
