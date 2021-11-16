@@ -13,8 +13,8 @@ class RejectedEmail extends Mailable
 
     public $subject = 'Tu aplicacion no avanzara';
 
-    private string $vacante;
-    private string $nombreEmpresa;
+    private $vacante;
+    private $nombreEmpresa;
 
     /**
      * Create a new message instance.

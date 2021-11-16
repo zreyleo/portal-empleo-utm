@@ -13,8 +13,8 @@ class AcceptedEmail extends Mailable
 
     public $subject = 'Tu aplicacion esta en observacion';
 
-    private string $vacante;
-    private string $nombreEmpresa;
+    private $vacante;
+    private $nombreEmpresa;
 
     /**
      * Create a new message instance.

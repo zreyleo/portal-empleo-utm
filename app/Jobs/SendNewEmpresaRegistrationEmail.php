@@ -20,8 +20,8 @@ class SendNewEmpresaRegistrationEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private string $nombreEmpresa;
-    private int $area;
+    private $nombreEmpresa;
+    private $area;
     private $facultad;
 
     /**
@@ -29,7 +29,7 @@ class SendNewEmpresaRegistrationEmail implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(string $nombreEmpresa, int $area)
+    public function __construct($nombreEmpresa, $area)
     {
         $this->nombreEmpresa = $nombreEmpresa;
         $this->area = $area;

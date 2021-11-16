@@ -14,16 +14,16 @@ class SendAcceptedEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private string $estudianteEmail;
-    private string $nombreEmpresa;
-    private string $empleoTitulo;
+    private $estudianteEmail;
+    private $nombreEmpresa;
+    private $empleoTitulo;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(string $estudianteEmail, string $nombreEmpresa, string $empleoTitulo)
+    public function __construct($estudianteEmail, $nombreEmpresa, $empleoTitulo)
     {
         $this->estudianteEmail = $estudianteEmail;
         $this->nombreEmpresa = $nombreEmpresa;

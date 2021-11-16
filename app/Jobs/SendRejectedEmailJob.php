@@ -14,9 +14,9 @@ class SendRejectedEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private string $estudianteEmail;
-    private string $nombreEmpresa;
-    private string $empleoTitulo;
+    private $estudianteEmail;
+    private $nombreEmpresa;
+    private $empleoTitulo;
 
     /**
      * Create a new job instance.
