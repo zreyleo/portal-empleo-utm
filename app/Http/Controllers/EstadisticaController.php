@@ -156,6 +156,8 @@ class EstadisticaController extends Controller
 
         $estudiantes_practicas_count = EstudiantePractica::all()->count();
 
+        $facultad_max_ppp = null;
+
         if
         (
             Practica::select('facultad_id')

@@ -83,6 +83,7 @@ class NewEmpresaControllerTest extends TestCase
         $this->assertDatabaseHas('nuevas_empresas', [
             'ruc' => '1311742041001',
             'nombre_empresa' => 'TAMARINDO SOFTWARE',
+            'email' => 'rrhh@tamarindo.xyz'
         ]);
     }
 
