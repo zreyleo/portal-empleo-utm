@@ -33,7 +33,7 @@ class NewEmpresa extends Model
 
     public function setEmailAttribute($value)
     {
-        $this->attributes['email'] = strtoupper($value);
+        $this->attributes['email'] = strtolower($value);
     }
 
     public function representante()
