@@ -21,10 +21,10 @@ function ProvinciasCantonesParroquiasSelects(props) {
     const [parroquias, setParroquias] = useState([]); // array de provincias
     const [idParroquia, setIdParroquia] = useState('');
 
-    const baseUrl = window.location.origin + '/api/provincias';
+    // const baseUrl = window.location.origin + '/api/provincias';
 
     // url para prubeas en el servidor de la universidad
-    // const baseUrl = window.location.origin + '/portal-empleo-utm/public/api/provincias';
+    const baseUrl = window.location.origin + '/portal-empleo-utm/api/provincias';
 
     useEffect(() => {
         fetch(baseUrl)
