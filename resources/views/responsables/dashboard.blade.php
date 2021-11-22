@@ -16,10 +16,15 @@
             <a href="{{ route('new_empresas.index') }}">Nuevas Empresas</a>
         </li>
     </ul>
-    <a href="#estadisticas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+    <a href="{{ route('estadisticas.all') }}" >
         <i class="far fa-chart-bar"></i>
         Estad&iacute;sticas
     </a>
+    {{-- <a href="#estadisticas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="far fa-chart-bar"></i>
+        Estad&iacute;sticas
+    </a>
+
     <ul class="collapse list-unstyled" id="estadisticas">
         <li>
             <a href="{{ route('estadisticas.empleos') }}">Empleos</a>
@@ -27,7 +32,7 @@
         <li>
             <a href="{{ route('estadisticas.practicas') }}">Pr&aacute;cticas</a>
         </li>
-    </ul>
+    </ul> --}}
     <a href="#departamentos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fas fa-university"></i>
         Departamentos UTM
