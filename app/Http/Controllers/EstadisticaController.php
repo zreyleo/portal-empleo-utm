@@ -7,6 +7,7 @@ use App\EstudianteEmpleo;
 use App\EstudiantePractica;
 use App\Facultad;
 use App\Practica;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -178,10 +179,6 @@ class EstadisticaController extends Controller
 
         $facultad_estudiantes_practicas_count = self::get_facultad_estudiantes_practicas_count($facultad->idfacultad);
 
-
-
-        // dd($practicas);
-
         return view(
             'estadisticas.practicas',
             compact(
@@ -193,5 +190,235 @@ class EstadisticaController extends Controller
                 'facultad_estudiantes_practicas_count'
             )
         )->with('docente', $docente);
+    }
+
+    public function all()
+    {
+        $docente = get_session_docente();
+
+        $facultad = Facultad::find($docente['id_facultad']);
+
+        $all_practicas_universidad = Practica::all();
+
+        $all_practicas_facultad = $facultad->practicas;
+
+        $estudiantes_practicas_count = EstudiantePractica::all()->count();
+
+        $facultad_max_ppp = null;
+
+        if
+        (
+            Practica::select('facultad_id')
+                ->groupBy('facultad_id')
+                ->orderByRaw('COUNT(*) DESC')
+                ->limit(1)
+                ->get()->count() > 0
+        )
+        {
+
+            $facultad_max_ppp = Practica::select('facultad_id')
+                ->groupBy('facultad_id')
+                ->orderByRaw('COUNT(*) DESC')
+                ->limit(1)
+                ->get()[0]->facultad;
+
+        }
+
+        $facultad_estudiantes_practicas_count = self::get_facultad_estudiantes_practicas_count($facultad->idfacultad);
+
+        // seccion de empleos
+
+        $num_empleos_facultad = 0;
+
+        $facultad_escuela_max_num_empleos = 0;
+
+        $facultad_escuela_max_empleos = null;
+
+        $num_empleos_total = Empleo::all()->count();
+
+        $universidad_escuela_max_empleos = null;
+
+        if (Empleo::select('carrera_id')
+            ->groupBy('carrera_id')
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit(1)
+            ->get()->count() > 0)
+        {
+
+            $universidad_escuela_max_empleos = Empleo::select('carrera_id')
+            ->groupBy('carrera_id')
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit(1)
+            ->get()[0]->escuela;
+
+        }
+
+        // tener todas las postulaciones
+        $all_estudiantes_empleos = EstudianteEmpleo::all()->count();
+
+        // obtener todos los estudiantes que son considerados candidatos
+        $all_estudiantes_empleos_aceptado = EstudianteEmpleo::where('estado', 'ACEPTADO')->get();
+        $all_estudiantes_empleos_rechazado = EstudianteEmpleo::where('estado', 'RECHAZADO')->get();
+
+        // obtener todos los estudiantes que son considerados candidatos
+        $all_empleos = Empleo::all();
+
+        $total_facultad_estudiantes_empleos = 0;
+        $total_facultad_estudiantes_empleos_aceptado = 0;
+        $total_facultad_estudiantes_empleos_rechazado = 0;
+
+        foreach($facultad->escuelas as $escuela) {
+            $total_facultad_estudiantes_empleos += self::get_carrera_estudiantes_empleos_count($escuela->idescuela);
+
+            $total_facultad_estudiantes_empleos_aceptado += self::get_carrera_estudiantes_empleos_aceptados_count($escuela->idescuela);
+            $total_facultad_estudiantes_empleos_rechazado += self::get_carrera_estudiantes_empleos_rechazados_count($escuela->idescuela);
+
+            $num_empleos_facultad += $escuela->empleos->count();
+
+            if ($facultad_escuela_max_num_empleos < $escuela->empleos->count()) {
+                $facultad_escuela_max_num_empleos = $escuela->empleos->count();
+                $facultad_escuela_max_empleos = $escuela;
+            }
+        }
+
+        return view(
+            'estadisticas.all',
+            compact(
+                // practicas
+                'facultad',
+                'facultad_max_ppp',
+                'all_practicas_universidad',
+                'all_practicas_facultad',
+                'estudiantes_practicas_count',
+                'facultad_estudiantes_practicas_count',
+                // empleos
+                'num_empleos_total',
+                'num_empleos_facultad',
+                'facultad_escuela_max_empleos',
+                'universidad_escuela_max_empleos',
+                'total_facultad_estudiantes_empleos',
+                'total_facultad_estudiantes_empleos_aceptado',
+                'total_facultad_estudiantes_empleos_rechazado',
+                'all_estudiantes_empleos_aceptado',
+                'all_estudiantes_empleos_rechazado',
+                'all_estudiantes_empleos'
+            )
+        )->with('docente', $docente);
+    }
+
+    public function pdf()
+    {
+        $docente = get_session_docente();
+
+        $facultad = Facultad::find($docente['id_facultad']);
+
+        $all_practicas_universidad = Practica::all();
+
+        $all_practicas_facultad = $facultad->practicas;
+
+        $estudiantes_practicas_count = EstudiantePractica::all()->count();
+
+        $facultad_max_ppp = null;
+
+        if
+        (
+            Practica::select('facultad_id')
+                ->groupBy('facultad_id')
+                ->orderByRaw('COUNT(*) DESC')
+                ->limit(1)
+                ->get()->count() > 0
+        )
+        {
+
+            $facultad_max_ppp = Practica::select('facultad_id')
+                ->groupBy('facultad_id')
+                ->orderByRaw('COUNT(*) DESC')
+                ->limit(1)
+                ->get()[0]->facultad;
+
+        }
+
+        $facultad_estudiantes_practicas_count = self::get_facultad_estudiantes_practicas_count($facultad->idfacultad);
+
+        // seccion de empleos
+
+        $num_empleos_facultad = 0;
+
+        $facultad_escuela_max_num_empleos = 0;
+
+        $facultad_escuela_max_empleos = null;
+
+        $num_empleos_total = Empleo::all()->count();
+
+        $universidad_escuela_max_empleos = null;
+
+        if (Empleo::select('carrera_id')
+            ->groupBy('carrera_id')
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit(1)
+            ->get()->count() > 0)
+        {
+
+            $universidad_escuela_max_empleos = Empleo::select('carrera_id')
+            ->groupBy('carrera_id')
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit(1)
+            ->get()[0]->escuela;
+
+        }
+
+        // tener todas las postulaciones
+        $all_estudiantes_empleos = EstudianteEmpleo::all()->count();
+
+        // obtener todos los estudiantes que son considerados candidatos
+        $all_estudiantes_empleos_aceptado = EstudianteEmpleo::where('estado', 'ACEPTADO')->get();
+        $all_estudiantes_empleos_rechazado = EstudianteEmpleo::where('estado', 'RECHAZADO')->get();
+
+        // obtener todos los estudiantes que son considerados candidatos
+        $all_empleos = Empleo::all();
+
+        $total_facultad_estudiantes_empleos = 0;
+        $total_facultad_estudiantes_empleos_aceptado = 0;
+        $total_facultad_estudiantes_empleos_rechazado = 0;
+
+        foreach($facultad->escuelas as $escuela) {
+            $total_facultad_estudiantes_empleos += self::get_carrera_estudiantes_empleos_count($escuela->idescuela);
+
+            $total_facultad_estudiantes_empleos_aceptado += self::get_carrera_estudiantes_empleos_aceptados_count($escuela->idescuela);
+            $total_facultad_estudiantes_empleos_rechazado += self::get_carrera_estudiantes_empleos_rechazados_count($escuela->idescuela);
+
+            $num_empleos_facultad += $escuela->empleos->count();
+
+            if ($facultad_escuela_max_num_empleos < $escuela->empleos->count()) {
+                $facultad_escuela_max_num_empleos = $escuela->empleos->count();
+                $facultad_escuela_max_empleos = $escuela;
+            }
+        }
+
+        /** @var PDF $pdf */
+        $pdf = app('dompdf.wrapper');
+
+        $pdf->loadView('estadisticas.pdf', compact(
+            // practicas
+            'facultad',
+            'facultad_max_ppp',
+            'all_practicas_universidad',
+            'all_practicas_facultad',
+            'estudiantes_practicas_count',
+            'facultad_estudiantes_practicas_count',
+            // empleos
+            'num_empleos_total',
+            'num_empleos_facultad',
+            'facultad_escuela_max_empleos',
+            'universidad_escuela_max_empleos',
+            'total_facultad_estudiantes_empleos',
+            'total_facultad_estudiantes_empleos_aceptado',
+            'total_facultad_estudiantes_empleos_rechazado',
+            'all_estudiantes_empleos_aceptado',
+            'all_estudiantes_empleos_rechazado',
+            'all_estudiantes_empleos'
+        ));
+
+        return $pdf->download('estadisticas.pdf');
     }
 }
