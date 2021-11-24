@@ -77,7 +77,7 @@ class DepartamentoController extends Controller
 
         $departamento->save();
 
-        return redirect()->route('responsables.dashboard');
+        return redirect()->route('responsables.dashboard')->with('status', 'Se ha registrado un nuevo departamento UTM');
     }
 
     /**

@@ -15,8 +15,6 @@ class UbicacionController extends Controller
             where idpais = 1
         ';
 
-        // dd($empresa->id_provincia);
-
         $provincias = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_provincias);
         return $provincias;
     }
@@ -29,8 +27,6 @@ class UbicacionController extends Controller
             where idprovincia = $provincia
         ";
 
-        // dd($empresa->id_provincia);
-
         $cantones = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_cantones);
         return $cantones;
     }
@@ -42,8 +38,6 @@ class UbicacionController extends Controller
             from view_parroquia
             where idcanton = $canton
         ";
-
-        // dd($empresa->id_provincia);
 
         $parrquias = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_parroquias);
         return $parrquias;

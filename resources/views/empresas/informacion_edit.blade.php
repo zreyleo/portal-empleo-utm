@@ -15,10 +15,6 @@
 
 @section('page-content')
 
-@if (session('status'))
-    <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
-@endif
-
 <a href="{{ route('empresas.informacion') }}" class="btn btn-outline-danger my-3">Volver</a>
 
 <h2 class="text-center my-3">Actualizar Informaci&oacute;n</h2>

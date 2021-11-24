@@ -69,6 +69,6 @@ class PerfilController extends Controller
 
         $perfil->save();
 
-        return redirect()->route('perfil.show');
+        return redirect()->route('perfil.show')->with('status', 'Ha actualizado su perfil con exito');
     }
 }

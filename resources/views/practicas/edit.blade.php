@@ -20,7 +20,7 @@
 
 <div class="row mb-3">
     <div class="col-md-8 mx-auto">
-        <form action="{{ route('practicas.update', ['practica' => $practica->id]) }}" method="POST" novalidate>
+        <form action="{{ route('practicas.update', ['practica' => $practica->id]) }}" method="POST" novalidate class="bg-white p-3">
             @csrf
             @method('PUT')
 

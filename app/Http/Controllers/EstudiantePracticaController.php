@@ -69,8 +69,6 @@ class EstudiantePracticaController extends Controller
                 'practica_id' => $practica->id,
             ]);
 
-
-
             if ($practica->cupo == ($practica->estudiantes_practicas->count() + 1)) {
                 $practica->visible = false;
                 $practica->save();

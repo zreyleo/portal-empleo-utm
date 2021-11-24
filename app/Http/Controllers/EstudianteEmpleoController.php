@@ -69,8 +69,6 @@ class EstudianteEmpleoController extends Controller
             return redirect()->route('empleos.show_empleos_offers');
         }
 
-        // $notificacionExito = crear_notificacion('Registro con Exito', 'bg-success');
-
         return redirect()->route('estudiantes_empleos.index')
             ->with('status', 'Has concedido tus datos para esta oferta de trabajo');
     }

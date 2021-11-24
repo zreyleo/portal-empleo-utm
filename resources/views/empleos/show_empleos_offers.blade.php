@@ -3,10 +3,6 @@
 @section('page-content')
     <h2 class="text-center my-5">Ofertas para Empleos para {{ $escuela->nombre }}</h2>
 
-    @if ($errors->any())
-        <div id="notificacion" data-mensaje="{{ $errors->all()[0] }}" data-clase="bg-danger"></div>
-    @endif
-
     <table class="table">
         <thead>
             <tr>

@@ -73,7 +73,8 @@ class PracticaController extends Controller
             'empresa_id' => $empresa['id_empresa']
         ]);
 
-        return redirect()->route('practicas.index');
+        return redirect()->route('practicas.index')
+            ->with('status', 'Se ha creado una oferta de practica pre profesional');
     }
 
     /**
@@ -131,7 +132,8 @@ class PracticaController extends Controller
 
         $practica->save();
 
-        return redirect()->route('practicas.edit', $practica);
+        return redirect()->route('practicas.edit', $practica)
+            ->with('status', 'Se ha editado una oferta de practica pre profesional');
     }
 
     /**

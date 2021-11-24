@@ -4,10 +4,6 @@
 
     <h2 class="my-5 text-center">Tus Ofertas de Empleo</h2>
 
-    @if (session('status'))
-        <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
-    @endif
-
     <div class="row">
         <table class="table">
             <thead>

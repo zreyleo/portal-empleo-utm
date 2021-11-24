@@ -18,6 +18,14 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
+    @if (session('status'))
+        <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
+    @endif
+
+    @if ($errors->any())
+        <div id="notificacion" data-mensaje="{{ $errors->all()[0] }}" data-clase="bg-danger"></div>
+    @endif
+
     <div id="app">
         {{-- Contenido las paginas --}}
         @yield('contenido')

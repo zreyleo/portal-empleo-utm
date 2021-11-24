@@ -4,10 +4,6 @@
 
 <h2 class="my-3 text-center">Cambiar Password</h2>
 
-@if (session('status'))
-    <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
-@endif
-
 <div class="row">
     <div class="col-md-5 mx-auto">
         <form class="mb-5" action="{{ route('empresas.password_update') }}" method="POST">
