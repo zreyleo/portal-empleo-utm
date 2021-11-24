@@ -4,10 +4,6 @@
 
     <h2 class="text-center my-5">Ofertas para hacer Pr&aacute;cticas Pre Profesionales</h2>
 
-    @if ($errors->any())
-        <div id="notificacion" data-mensaje="{{ $errors->all()[0] }}" data-clase="bg-danger"></div>
-    @endif
-
     <table class="table">
         <thead>
             <tr>

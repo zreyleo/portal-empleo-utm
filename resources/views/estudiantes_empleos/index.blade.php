@@ -3,10 +3,6 @@
 @section('page-content')
     <h2 class="text-center my-5">Mis Postulaciones de Empleo</h2>
 
-    @if (session('status'))
-        <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
-    @endif
-
     <table class="table">
         <thead>
             <tr>
