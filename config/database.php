@@ -94,12 +94,12 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'DB_db_sga_24' => [
+        'DB_db_sga_actual' => [
             'driver' => 'pgsql',
             // 'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '5432'),
-            'database' => 'db_sga_24',
+            'database' => 'db_sga_37',
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',

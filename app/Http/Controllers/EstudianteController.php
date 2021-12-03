@@ -16,7 +16,11 @@ class EstudianteController extends Controller
             'id_personal' => Session::get('id_personal'),
             'nombres' => Session::get('nombres'),
             'idescuela' => Session::get('idescuela'),
+            'idmalla' => Session::get('idmalla'),
+            'idperiodo' => Session::get('idperiodo'),
             'idfacultad' => Session::get('idfacultad'),
+            'is_redesign' => Session::get('is_redesign'),
+            'is_matriculado' => Session::get('is_matriculado'),
             'role' => Session::get('role'),
         ];
 
@@ -31,6 +35,7 @@ class EstudianteController extends Controller
     public function dashboard()
     {
         $estudiante = self::get_estudiante_data();
+
         return view('estudiantes.dashboard')
             ->with('estudiante', $estudiante);
     }
