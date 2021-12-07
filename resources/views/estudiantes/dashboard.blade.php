@@ -58,7 +58,7 @@
         {{ var_dump($estudiante) }}
     </div>
     <div class="col-md-4">
-        @if ($estudiante['is_redesign'] && !$estudiante['is_matriculado'])
+        @if (!$estudiante['can_register_ppp'])
             <div class="alert alert-danger">
                 hola si es de rediseño y no estas matriculado
             </div>

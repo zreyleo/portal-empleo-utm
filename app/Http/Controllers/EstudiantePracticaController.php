@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\EstudiantePractica;
+use App\Pasantia;
 use App\Practica;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -10,6 +11,87 @@ use Illuminate\Support\Facades\DB;
 
 class EstudiantePracticaController extends Controller
 {
+    private const SQL_OBTENER_MATERIA_UNICA = '
+        SELECT idmateria_unica, creditos, idnivel
+        from
+            esq_mallas.malla_materia_nivel mmn
+            inner join esq_inscripciones.inscripcion_detalle det on det.idmalla=mmn.idmalla and det.idmateria=mmn.idmateria
+        where
+            mmn.materia_practica in (\'P\')
+            and det.idpersonal=:idpersonal
+            and det.idperiodo=:idperiodo
+            and det.idmalla=:idmalla
+            and det.anulado = \'N\'
+            and det.aprobado <> \'A\'
+            and mmn.idnivel = (
+                SELECT MIN(mmn.idnivel) idnivel
+                from
+                    esq_mallas.malla_materia_nivel mmn
+                    inner join esq_inscripciones.inscripcion_detalle det on det.idmalla=mmn.idmalla
+                    and det.idmateria=mmn.idmateria
+                where
+                    mmn.materia_practica in (\'P\')
+                    and det.idpersonal=:idpersonal
+                    and det.idperiodo=:idperiodo
+                    and det.idmalla=:idmalla
+                    and det.anulado = \'N\'
+                    and det.aprobado <> \'A\'
+            )
+    ';
+
+    private const NUMERO_HORAS_X_CREDITO_MATERIA = 48;
+
+    private static function set_fase($nivel)
+    {
+        $fase = '';
+        switch ($nivel) {
+            case 1:
+                $fase = 'PRACTICAS DE PRIMER NIVEL';
+                break;
+
+            case 2:
+                $fase = 'PRACTICAS DE SEGUNDO NIVEL';
+                break;
+
+            case 3:
+                $fase = 'PRACTICAS DE TERCER NIVEL';
+                break;
+
+            case 4:
+                $fase = 'PRACTICAS DE CUARTO NIVEL';
+                break;
+
+            case 5:
+                $fase = 'PRACTICAS DE QUINTO NIVEL';
+                break;
+
+            case 6:
+                $fase = 'PRACTICAS DE SEXTO NIVEL';
+                break;
+
+            case 7:
+                $fase = 'PRACTICAS DE SEPTIMO NIVEL';
+                break;
+
+            case 8:
+                $fase = 'PRACTICAS DE OCTAVO NIVEL';
+                break;
+
+            case 9:
+                $fase = 'PRACTICAS DE NOVENO NIVEL';
+                break;
+
+            case 10:
+                $fase = 'PRACTICAS DE DECIMO NIVEL';
+                break;
+
+            default:
+                $fase = 'FASE POR DEFINIR';
+                break;
+        }
+        return $fase;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,43 +119,85 @@ class EstudiantePracticaController extends Controller
      */
     public function store(Request $request, Practica $practica)
     {
-        // dd($practica);
-
         $estudiante = get_session_estudiante();
 
-        // dd($practica);
-
         $estudiantes_practicas_count = $practica->estudiantes_practicas->count();
-        if ($estudiantes_practicas_count == $practica->cupo) {
+
+        if (!$estudiante['can_register_ppp']) { // si el estudiante no puede registrar practicas hay error
+            add_error('Lo sentimos pero no puedes registrar horas de PPP');
+
+            return redirect()->route('practicas.show_practicas_offers');
+        }
+
+        if ($estudiantes_practicas_count >= $practica->cupo) {
             add_error('Lo sentimos pero esta PPP tiene cupo lleno');
 
             return redirect()->route('practicas.show_practicas_offers');
         }
 
-        if (EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])->get()->count() > 0) {
-            $last_estudiante_practica = EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])
-                ->latest()->get()[0];
+        // if (EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])->get()->count() > 0) {
+        //     $last_estudiante_practica = EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])
+        //         ->latest()->get()[0];
 
-            $date_last_estudiante_practica = Carbon::create($last_estudiante_practica->created_at->format('d.m.Y'));
+        //     $date_last_estudiante_practica = Carbon::create($last_estudiante_practica->created_at->format('d.m.Y'));
 
-            if ($date_last_estudiante_practica->addMonth()->greaterThan(now())) {
-                add_error('No es posible reservar otro cupo de una practica hasta despues de un mes');
+        //     if ($date_last_estudiante_practica->addMonth()->greaterThan(now())) {
+        //         add_error('No es posible reservar otro cupo de una practica hasta despues de un mes');
 
-                return redirect()->route('estudiantes_practicas.index');
-            }
-        }
+        //         return redirect()->route('estudiantes_practicas.index');
+        //     }
+        // }
 
         try {
-            EstudiantePractica::create([
+            $estudiante_practica = EstudiantePractica::create([
                 'estudiante_id' => $estudiante['id_personal'],
                 'practica_id' => $practica->id,
             ]);
 
-            if ($practica->cupo == ($practica->estudiantes_practicas->count() + 1)) {
+            if ($practica->cupo >= ($practica->estudiantes_practicas->count() + 1)) {
                 $practica->visible = false;
                 $practica->save();
             }
+
+            $pasantia = null;
+
+            if ($estudiante['is_redesign']) {
+                $datos_sql = DB::connection('DB_db_sga_actual')->select(self::SQL_OBTENER_MATERIA_UNICA, [
+                    'idpersonal' => $estudiante['id_personal'],
+                    'idperiodo' => $estudiante['idperiodo'],
+                    'idmalla' => $estudiante['idmalla']
+                ])[0];
+                // dd($datos_sql);
+
+                $fase = self::set_fase($datos_sql->idnivel);
+
+                $pasantia = Pasantia::create([
+                    'id_pasante' => $estudiante['id_personal'],
+                    'id_empresa' => $practica->empresa_id,
+                    'horas' => $datos_sql->creditos * self::NUMERO_HORAS_X_CREDITO_MATERIA,
+                    'id_carrera' => $estudiante['idescuela'],
+                    'titulo_pasantia' => $practica->titulo,
+                    'id_periodo' => $estudiante['idperiodo'],
+                    'id_materia_unica' => $datos_sql->idmateria_unica,
+                    'id_malla' => $estudiante['idmalla'],
+                    'fase' => $fase
+                ]);
+            } else {
+                $pasantia = Pasantia::create([
+                    'id_pasante' => $estudiante['id_personal'],
+                    'id_empresa' => $practica->empresa_id,
+                    'id_carrera' => $estudiante['idescuela'],
+                    'id_periodo' => $estudiante['idperiodo'],
+                    'id_malla' => $estudiante['idmalla'],
+                    'titulo_pasantia' => $practica->titulo
+                ]);
+            }
+
+            $estudiante_practica->pasantia_id = $pasantia->id_pasantia;
+
+            $estudiante_practica->save();
         } catch (\Throwable $th) {
+            dd($th);
             add_error('No es posible reservar una misma oferta de practica mas de una vez');
 
             return redirect()->route('estudiantes_practicas.index');
@@ -105,7 +229,14 @@ class EstudiantePracticaController extends Controller
     {
         $this->authorize('pass', $estudiante_practica);
 
+        $practica = $estudiante_practica->practica;
+
         $estudiante_practica->delete();
+
+        if ($practica->cupo < $practica->estudiantes_practicas->count()) {
+            $practica->visible = true;
+            $practica->save();
+        }
 
         return redirect()->route('estudiantes_practicas.index')
             ->with('status', 'Has eliminado tu cupo para esta oferta de PPP');

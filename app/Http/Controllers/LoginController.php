@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    private const SQL_FOR_LOGIN_SGA_24 =
+    private const SQL_FOR_LOGIN_SGA =
         "
             select
                 'LOGIN OK' r_tipo,
@@ -37,23 +37,6 @@ class LoginController extends Controller
         "
     ;
 
-    private const SQL_FOR_GETTING_THE_ESTUDIANTE_CARRERAS = '
-        select
-            fa.idfacultad,
-            fa.nombre facultad,
-            es.idescuela,
-            es.nombre escuela,
-            ma.idmalla,
-            ma.nombre malla,
-            may.habilitada
-        from
-            esq_inscripciones.facultad fa
-            inner join esq_inscripciones.escuela es on es.idfacultad=fa.idfacultad
-            inner join esq_mallas.malla_estudiante_escuela may on may.idescuela=es.idescuela
-            inner join esq_mallas.malla_escuela ma on ma.idmalla=may.idmalla and ma.idescuela=may.idescuela
-        where may.idpersonal=:idestudiante
-    ';
-
     private const SQL_FOR_GETTING_THE_ESTUDIANTE_CARRERAS_2 = '
         select
             fa.idfacultad,
@@ -67,7 +50,7 @@ class LoginController extends Controller
             inner join esq_inscripciones.escuela es on es.idfacultad=fa.idfacultad
             inner join esq_mallas.malla_estudiante_escuela may on may.idescuela=es.idescuela
             inner join esq_mallas.malla_escuela ma on ma.idmalla=may.idmalla and ma.idescuela=may.idescuela
-        where may.idpersonal=:idestudiante and may.habilitada=\'S\'
+        where may.idpersonal=:idestudiante and may.habilitada=\'S\' and (es.titulo_academico_m <> \'\' or es.nomenclatura <> \'\')
         group by es.idescuela, fa.idfacultad
     ';
 
@@ -90,16 +73,37 @@ class LoginController extends Controller
 
     private const SQL_VERIFICA_SI_ESTA_MATRICULADO_PPP = '
         SELECT count(*)
-        from esq_mallas.malla_materia_nivel mmn
-        inner join esq_inscripciones.inscripcion_detalle det on det.idmalla=mmn.idmalla and det.idmateria=mmn.idmateria
-        where mmn.materia_practica in (\'P\') and det.idpersonal=:idpersonal and det.idperiodo=:idperiodo and det.idmalla=:idmalla
+        from
+            esq_mallas.malla_materia_nivel mmn
+            inner join esq_inscripciones.inscripcion_detalle det on det.idmalla=mmn.idmalla and det.idmateria=mmn.idmateria
+        where
+            mmn.materia_practica in (\'P\')
+            and det.idpersonal=:idpersonal
+            and det.idperiodo=:idperiodo
+            and det.idmalla=:idmalla
+            and det.anulado = \'N\'
+            and det.aprobado <> \'A\'
+            and mmn.idnivel = (
+                SELECT MIN(mmn.idnivel) idnivel
+                from
+                    esq_mallas.malla_materia_nivel mmn
+                    inner join esq_inscripciones.inscripcion_detalle det on det.idmalla=mmn.idmalla
+                    and det.idmateria=mmn.idmateria
+                where
+                    mmn.materia_practica in (\'P\')
+                    and det.idpersonal=:idpersonal
+                    and det.idperiodo=:idperiodo
+                    and det.idmalla=:idmalla
+                    and det.anulado = \'N\'
+                    and det.aprobado <> \'A\'
+            )
     ';
 
     private const ID_ROL_RESPONSABLE_PRACTICA = 38; // este numero sive para verificar si el usuario tiene el rol de responsable de practicas que se encuentra en la tabla tbl_rol
 
     private static function login_sga_docentes($email, $password)
     {
-        $result = DB::connection('DB_db_sga_actual')->select(self::SQL_FOR_LOGIN_SGA_24, [
+        $result = DB::connection('DB_db_sga_actual')->select(self::SQL_FOR_LOGIN_SGA, [
             'user'          => $email,
             'pass'          => $password,
             'term'          => 'term',
@@ -162,7 +166,7 @@ class LoginController extends Controller
         // DB_db_sga_spca
         // DB_db_sga_actual
 
-        $result = DB::connection('DB_db_sga_actual')->select(self::SQL_FOR_LOGIN_SGA_24, [
+        $result = DB::connection('DB_db_sga_actual')->select(self::SQL_FOR_LOGIN_SGA, [
             'user'          => $request->get('email'),
             'pass'          => $request->get('password'),
             'term'          => 'term',
@@ -225,13 +229,9 @@ class LoginController extends Controller
 
         $is_redesign = DB::connection('DB_db_sga_actual')->select(self::SQL_VERIFICA_MALLA_REDESIGN, [
             'idmalla' => $idmalla
-        ]);
+        ])[0]->count ? true : false;
 
-        if ($is_redesign[0]->count) {
-            Session::put('is_redesign', true);
-        } else {
-            Session::put('is_redesign', false);
-        }
+        Session::put('is_redesign', $is_redesign);
 
         $peridodo_actual = DB::connection('DB_db_sga_actual')->select(self::SQL_PERIODO_ACTUAL, [
             'idmalla' => $idmalla
@@ -243,12 +243,14 @@ class LoginController extends Controller
             'idpersonal' => $estudiante_id,
             'idperiodo' => $peridodo_actual->idperiodo,
             'idmalla' => $idmalla
-        ]);
+        ])[0]->count ? true : false;
 
-        if ($is_matriculado[0]->count) {
-            Session::put('is_matriculado', true);
+        Session::put('is_matriculado', $is_matriculado);
+
+        if ($is_redesign && !$is_matriculado) {
+            Session::put('can_register_ppp', false);
         } else {
-            Session::put('is_matriculado', false);
+            Session::put('can_register_ppp', true);
         }
 
         return redirect()->action('EstudianteController@dashboard');

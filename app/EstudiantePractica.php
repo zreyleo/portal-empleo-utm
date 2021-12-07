@@ -16,4 +16,9 @@ class EstudiantePractica extends Model
     {
         return $this->belongsTo(Practica::class);
     }
+
+    public function pasantia()
+    {
+        return $this->belongsTo(Pasantia::class, 'pasantia_id', 'id_pasantia');
+    }
 }

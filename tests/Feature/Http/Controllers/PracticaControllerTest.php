@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\EstudiantePractica;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstudianteController;
 use App\Practica;
@@ -15,14 +16,19 @@ class PracticaControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_index_empty()
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $this->session([
             'id_empresa' => 44,
             'nombre_empresa' => 'EL DIARIO EDIASA',
             'role' => EmpresaController::get_role()
         ]);
+    }
 
+    public function test_index_empty()
+    {
         factory(Practica::class)->create([
             'empresa_id' => 14
         ]);
@@ -35,12 +41,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_index_with_data()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
-
         $practica = factory(Practica::class)->create([
             'empresa_id' => 44
         ]);
@@ -53,11 +53,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_store()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'role' => EmpresaController::get_role()
-        ]);
-
         $this->post(route('practicas.store'), [
             'titulo' => 'Se buscan pasantes',
             'requerimientos' => 'Para hacer un CRUD',
@@ -72,11 +67,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_store_validate()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'role' => EmpresaController::get_role()
-        ]);
-
         $this->post(route('practicas.store'), [
             'titulo' => 'Se buscan pasantes',
             'area' => 1,
@@ -105,12 +95,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_crate_form()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
-
         $this->get(route('practicas.create'))
             ->assertStatus(200)
             ->assertSee('Crear una Oferta de Práctica')
@@ -119,12 +103,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_show()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
-
         $practica = factory(Practica::class)->create([
             'empresa_id' => 44
         ]);
@@ -136,12 +114,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_show_policy()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
-
         $empleo = factory(Practica::class)->create([
             'empresa_id' => 14
         ]);
@@ -152,12 +124,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_edit()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
-
         $practica = factory(Practica::class)->create([
             'empresa_id' => 44
         ]);
@@ -169,12 +135,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_edit_policy()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
-
         $practica = factory(Practica::class)->create([
             'empresa_id' => 14
         ]);
@@ -185,12 +145,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_update()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
-
         $practica = factory(Practica::class)->create([
             'titulo' => 'Se necesita programador',
             'empresa_id' => 44
@@ -215,12 +169,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_update_policy()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
-
         $practica = factory(Practica::class)->create([
             'titulo' => 'Se necesita programador',
             'empresa_id' => 14
@@ -235,12 +183,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_update_validate()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
-
         $practica = factory(Practica::class)->create([
             'titulo' => 'Se necesita programador',
             'empresa_id' => 44
@@ -264,12 +206,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_destroy()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
-
         $practica = factory(Practica::class)->create([
             'empresa_id' => 44
         ]);
@@ -284,12 +220,6 @@ class PracticaControllerTest extends TestCase
 
     public function test_destroy_policy()
     {
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
-
         $practica = factory(Practica::class)->create([
             'empresa_id' => 14
         ]);
@@ -319,30 +249,12 @@ class PracticaControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->session([]);
-
-        $this->session([
-            'id_personal' => 66710, // id_personal of a random estudiante
-            'idfacultad' => 2,
-            'idescuela' => 1, // id = ingenieria en sistemas
-            'role' => EstudianteController::get_role()
-        ]);
-
         $practica = factory(Practica::class)->create([
             'empresa_id' => 44,
             'facultad_id' => 1
         ]);
 
-        $this->post(route('estudiantes_practicas.store', ['practica' => $practica->id]))
-            ->assertRedirect(route('estudiantes_practicas.index'));
-
-        $this->session([]);
-
-        $this->session([
-            'id_empresa' => 44,
-            'nombre_empresa' => 'EL DIARIO EDIASA',
-            'role' => EmpresaController::get_role()
-        ]);
+        factory(EstudiantePractica::class)->create();
 
         $this->delete(route('practicas.destroy', $practica->id))
             ->assertRedirect(route('practicas.index'));

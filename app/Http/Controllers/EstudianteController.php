@@ -21,6 +21,7 @@ class EstudianteController extends Controller
             'idfacultad' => Session::get('idfacultad'),
             'is_redesign' => Session::get('is_redesign'),
             'is_matriculado' => Session::get('is_matriculado'),
+            'can_register_ppp' => Session::get('can_register_ppp'),
             'role' => Session::get('role'),
         ];
 
