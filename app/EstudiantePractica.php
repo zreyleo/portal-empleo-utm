@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class EstudiantePractica extends Model
 {
+    protected $connection = 'DB_ppp_sistema_SCHEMA_esq_portal_empleos';
+
     protected $table = 'estudiantes_practicas';
 
     protected $fillable = [

@@ -46,6 +46,9 @@
         <li>
             <a href="{{ route('estudiantes_practicas.index') }}">Ver mis reservaciones de pr&aacute;cticas</a>
         </li>
+        <li>
+            <a href="{{ route('estudiantes_practicas.get_pasantias') }}">Ver mis Pr&aacute;caticas anteriores</a>
+        </li>
     </ul>
 </li>
 

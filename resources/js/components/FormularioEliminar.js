@@ -9,21 +9,28 @@ const FormularioEliminar = ({ ruta, csrf, pregunta = 'Seguro de querer eliminar?
 
         Swal.fire({
             title: pregunta,
+            icon: 'warning',
             showDenyButton: true,
             confirmButtonText: 'Eliminar',
             denyButtonText: `No Eliminar`,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
         }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire('Eliminado!', '', 'success')
+            Swal.fire('Eliminando...', '', 'warning')
 
-            setTimeout(() => {
-                Axios.post(ruta, {
-                    _method: 'DELETE',
-                    _token: csrf
-                }).then(() => {
+            Axios.post(ruta, {
+                _method: 'DELETE',
+                _token: csrf
+            }).then(() => {
+                Swal.fire('Eliminado!', '', 'success');
+
+                setTimeout(() => {
                     location.reload(true);
-                });
-            }, 250)
+                }, 100);
+            }).catch(() => {
+                Swal.fire('Ocurrió un error', '', 'error')
+            });
         } else if (result.isDenied) {
             Swal.fire(cancelMessage, '', 'info')
         }

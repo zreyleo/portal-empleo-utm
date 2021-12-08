@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\EstudiantePractica;
 use App\Pasantia;
 use App\Practica;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -40,6 +39,13 @@ class EstudiantePracticaController extends Controller
     ';
 
     private const NUMERO_HORAS_X_CREDITO_MATERIA = 48;
+
+    private const ESTADOS_QUE_IMPIDEN_QUE_UN_ESTUDIANTE_RESERVE_MAS_DE_UNA_PRACTICA = [0, 1];
+    // 0 = pendiente
+    // 1 = ejecutando
+    // 2 = terminado
+    // 3 = reprobado
+    // 4 = anulado
 
     private static function set_fase($nivel)
     {
@@ -132,7 +138,21 @@ class EstudiantePracticaController extends Controller
         if ($estudiantes_practicas_count >= $practica->cupo) {
             add_error('Lo sentimos pero esta PPP tiene cupo lleno');
 
+            $practica->visible = false;
+
+            $practica->save();
+
             return redirect()->route('practicas.show_practicas_offers');
+        }
+
+        $pasantias_incompletas = Pasantia::where([
+            ['id_pasante', '=', $estudiante['id_personal']]
+        ])->whereIn('estado', self::ESTADOS_QUE_IMPIDEN_QUE_UN_ESTUDIANTE_RESERVE_MAS_DE_UNA_PRACTICA)->get();
+
+        if ($pasantias_incompletas->count()) {
+            add_error('No puedes agregar mas practicas porque tienes otras pendientes');
+
+            return redirect()->route('estudiantes_practicas.index');
         }
 
         // if (EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])->get()->count() > 0) {
@@ -154,7 +174,7 @@ class EstudiantePracticaController extends Controller
                 'practica_id' => $practica->id,
             ]);
 
-            if ($practica->cupo >= ($practica->estudiantes_practicas->count() + 1)) {
+            if (($practica->estudiantes_practicas->count() + 1) >= $practica->cupo) {
                 $practica->visible = false;
                 $practica->save();
             }
@@ -197,7 +217,6 @@ class EstudiantePracticaController extends Controller
 
             $estudiante_practica->save();
         } catch (\Throwable $th) {
-            dd($th);
             add_error('No es posible reservar una misma oferta de practica mas de una vez');
 
             return redirect()->route('estudiantes_practicas.index');
@@ -229,11 +248,28 @@ class EstudiantePracticaController extends Controller
     {
         $this->authorize('pass', $estudiante_practica);
 
+        $pasantia = $estudiante_practica->pasantia;
+
+        if ($pasantia->estado != 0) {
+            add_error('No es posible eliminar su solicitud no tiene estado de pendiente');
+
+            return redirect()->route('estudiantes_practicas.index');
+        }
+
+        if ($pasantia->horarios->count() > 0) {
+            $pasantia->horarios()->delete();
+        }
+
+        $estudiante_practica->pasantia_id = null;
+        $estudiante_practica->save();
+
+        $pasantia->delete();
+
         $practica = $estudiante_practica->practica;
 
         $estudiante_practica->delete();
 
-        if ($practica->cupo < $practica->estudiantes_practicas->count()) {
+        if ($practica->estudiantes_practicas->count() < $practica->cupo) {
             $practica->visible = true;
             $practica->save();
         }
@@ -285,5 +321,18 @@ class EstudiantePracticaController extends Controller
             ->with('empresa', $empresa)
             ->with('estudiante', $estudiante)
             ->with('location', $location);
+    }
+
+    public function get_pasantias(Request $request)
+    {
+        $estudiante = get_session_estudiante();
+
+        $pasantias = Pasantia::where('id_pasante', $estudiante['id_personal'])
+            ->latest()->get();
+
+        return view('estudiantes_practicas.pasantias')
+            ->with('pasantias', $pasantias)
+            ->with('estudiante', $estudiante);;
+
     }
 }

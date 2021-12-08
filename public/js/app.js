@@ -69357,20 +69357,26 @@ var FormularioEliminar = function FormularioEliminar(_ref) {
     event.preventDefault();
     sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
       title: pregunta,
+      icon: 'warning',
       showDenyButton: true,
       confirmButtonText: 'Eliminar',
-      denyButtonText: "No Eliminar"
+      denyButtonText: "No Eliminar",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33'
     }).then(function (result) {
       if (result.isConfirmed) {
-        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Eliminado!', '', 'success');
-        setTimeout(function () {
-          axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(ruta, {
-            _method: 'DELETE',
-            _token: csrf
-          }).then(function () {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Eliminando...', '', 'warning');
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(ruta, {
+          _method: 'DELETE',
+          _token: csrf
+        }).then(function () {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Eliminado!', '', 'success');
+          setTimeout(function () {
             location.reload(true);
-          });
-        }, 250);
+          }, 100);
+        })["catch"](function () {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Ocurrió un error', '', 'error');
+        });
       } else if (result.isDenied) {
         sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire(cancelMessage, '', 'info');
       }
