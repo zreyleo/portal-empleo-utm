@@ -11,8 +11,8 @@ class NewEmpresaRegistrationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private string $nombreEmpresa;
-    private string $nombreFacultad;
+    private $nombreEmpresa;
+    private $nombreFacultad;
 
     public $subject = 'Una nueva empresa quiere registrarse';
 
@@ -21,7 +21,7 @@ class NewEmpresaRegistrationEmail extends Mailable
      *
      * @return void
      */
-    public function __construct(string $nombreEmpresa, string $nombreFacultad)
+    public function __construct($nombreEmpresa, $nombreFacultad)
     {
         $this->nombreEmpresa = $nombreEmpresa;
         $this->nombreFacultad = $nombreFacultad;

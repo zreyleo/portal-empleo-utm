@@ -69094,7 +69094,9 @@ __webpack_require__(/*! ./components/Notificacion */ "./resources/js/components/
 
 __webpack_require__(/*! ./components/ProvinciasCantonesParroquiasSelects */ "./resources/js/components/ProvinciasCantonesParroquiasSelects.js");
 
-__webpack_require__(/*! ./components/FormularioEliminar */ "./resources/js/components/FormularioEliminar.js"); // console.log('hola')
+__webpack_require__(/*! ./components/FormularioEliminar */ "./resources/js/components/FormularioEliminar.js");
+
+__webpack_require__(/*! ./components/FormularioAnularConDetalle */ "./resources/js/components/FormularioAnularConDetalle.js"); // console.log('hola')
 
 
 $(document).ready(function () {
@@ -69320,6 +69322,143 @@ if (document.getElementById('facultades-carreras-selects')) {
   var props = Object.assign({}, document.getElementById('facultades-carreras-selects').dataset);
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FacultadesCarrerasSelects, props), document.getElementById('facultades-carreras-selects'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/components/FormularioAnularConDetalle.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/FormularioAnularConDetalle.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+var FormularioAnularConDetalle = function FormularioAnularConDetalle(_ref) {
+  var ruta = _ref.ruta,
+      csrf = _ref.csrf,
+      _ref$pregunta = _ref.pregunta,
+      pregunta = _ref$pregunta === void 0 ? 'Seguro de querer anular?' : _ref$pregunta,
+      _ref$cancelMessage = _ref.cancelMessage,
+      cancelMessage = _ref$cancelMessage === void 0 ? 'Accion cancelada' : _ref$cancelMessage;
+
+  // console.table([ruta, csrf])
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      detalle = _useState2[0],
+      setDetalle = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      required = _useState4[0],
+      setRequired = _useState4[1];
+
+  var handleSubmit = function handleSubmit(event) {
+    event.preventDefault();
+
+    if (!detalle) {
+      setRequired(true);
+      return;
+    } else {
+      setRequired(false);
+    }
+
+    sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+      title: pregunta,
+      icon: 'warning',
+      showDenyButton: true,
+      confirmButtonText: 'Anular',
+      denyButtonText: "No Anular",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Anulando...', '', 'warning');
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(ruta, {
+          _method: 'DELETE',
+          _token: csrf,
+          detalle: detalle
+        }).then(function (reposnse) {
+          console.log(reposnse);
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Anulada!', '', 'success');
+          setTimeout(function () {
+            history.go(-3);
+          }, 200);
+        })["catch"](function () {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Ocurrió un error', '', 'error');
+        });
+      } else if (result.isDenied) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire(cancelMessage, '', 'info');
+      }
+    });
+    return;
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "cometario"
+  }, "Raz\xF3n para anular oferta de pr\xE1ctica"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+    name: "detalle",
+    id: "comentario",
+    rows: "5",
+    className: "form-control ".concat(required && 'is-invalid'),
+    style: {
+      resize: 'none'
+    },
+    value: detalle,
+    onChange: function onChange(e) {
+      return setDetalle(e.target.value);
+    }
+  }), required ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, "Se tiene que especificar una raz\xF3n para anular la oferta.") : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "submit",
+    value: "Anular",
+    className: "btn btn-danger"
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (FormularioAnularConDetalle);
+
+if (document.getElementById('formulario-anular-con-detalle')) {
+  var props = Object.assign({}, document.getElementById('formulario-anular-con-detalle').dataset);
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormularioAnularConDetalle, props), document.getElementById('formulario-anular-con-detalle'));
+} // const formulariosEliminar = document.getElementsByClassName('formulario-anular-con-detalle');
+// if (formulariosEliminar.length) {
+//     Array.prototype.forEach.call(formulariosEliminar, (formulario) => {
+//         const props = Object.assign({}, formulario.dataset);
+//         ReactDOM.render(<FormularioAnularConDetalle { ...props } />, formulario);
+//     })
+// }
 
 /***/ }),
 

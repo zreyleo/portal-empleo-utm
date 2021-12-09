@@ -31,4 +31,9 @@ class Practica extends Model
     {
         return $this->belongsTo(Facultad::class, 'facultad_id', 'idfacultad');
     }
+
+    public function pasantias()
+    {
+        return $this->belongsToMany(Pasantia::class, 'esq_portal_empleos.estudiantes_practicas', 'practica_id', 'pasantia_id');
+    }
 }

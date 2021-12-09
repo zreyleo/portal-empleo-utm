@@ -165,6 +165,11 @@ Route::prefix('dashboard/empresas')->group(function () {
     Route::resource('practicas', 'PracticaController')
         ->middleware('check.empresa.role.for.session');
 
+    // anular practica con estudiantes que han reservado
+    Route::get('practicas/{practica}/anular', 'PracticaController@anular')
+        ->middleware('check.empresa.role.for.session')
+        ->name('practicas.anular');
+
     // informacion de la empresa
     Route::get('password/edit', 'EmpresaController@passwordEdit')
         ->middleware('check.empresa.role.for.session')

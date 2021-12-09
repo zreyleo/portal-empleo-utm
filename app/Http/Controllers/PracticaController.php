@@ -7,6 +7,7 @@ use App\Practica;
 
 use App\Http\Requests\PracticaStoreRequest;
 use App\Http\Requests\PracticaUpdateRequest;
+use App\Jobs\AnularPasantiaJob;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -142,14 +143,44 @@ class PracticaController extends Controller
      * @param  \App\Practica  $practica
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Practica $practica)
+    public function destroy(Request $request, Practica $practica)
     {
         $this->authorize('pass', $practica);
+
+        $empresa = get_session_empresa();
+
+        if($practica->estudiantes_practicas->count()) {
+            if ($practica->pasantias->contains('estado', '>', 0)) {
+                add_error('Hay estudiantes realizando actividades en su institucion');
+
+                return redirect()->route('practicas.index');
+            } else {
+                dispatch(
+                    new AnularPasantiaJob(
+                        $practica->pasantias,
+                        $empresa['nombre_empresa'],
+                        $practica->titulo,
+                        $request->detalle
+                    )
+                )->afterResponse();
+            }
+        }
 
         $practica->delete();
 
         return redirect()->route('practicas.index')
             ->with('status', 'Se ha eliminado esta oferta de PPP');
+    }
+
+    public function anular(Practica $practica)
+    {
+        $this->authorize('pass', $practica);
+
+        $empresa = get_session_empresa();
+
+        return view('practicas.anular')
+            ->with('practica', $practica)
+            ->with('empresa', $empresa);
     }
 
     public function show_practicas_offers()

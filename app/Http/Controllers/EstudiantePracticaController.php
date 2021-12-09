@@ -125,6 +125,12 @@ class EstudiantePracticaController extends Controller
      */
     public function store(Request $request, Practica $practica)
     {
+        if (!$practica->visible) {
+            add_error('Lo sentimos pero esta PPP no esta visible');
+
+            return redirect()->route('practicas.show_practicas_offers');
+        }
+
         $estudiante = get_session_estudiante();
 
         $estudiantes_practicas_count = $practica->estudiantes_practicas->count();

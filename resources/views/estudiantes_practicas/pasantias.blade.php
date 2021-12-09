@@ -10,7 +10,7 @@
             <th scope="col">Empresa</th>
             <th scope="col">Estado</th>
             <th scope="col">horas</th>
-            <th scope="col">Opciones</th>
+            <th scope="col">Detalle</th>
         </tr>
     </thead>
     <tbody>
@@ -27,10 +27,10 @@
                     <span class="badge bg-warning text-black">Ejecutando</span>
                         @break
                     @case(2)
-                    <span class="badge bg-success text-black">Finalizado</span>
+                    <span class="badge bg-success text-white">Finalizado</span>
                         @break
                     @case(3)
-                    <span class="badge bg-danger text-white">Finalizado</span>
+                    <span class="badge bg-danger text-white">Reprobado</span>
                         @break
                     @case(4)
                     <span class="badge bg-dark text-white">Anulado</span>
@@ -40,9 +40,7 @@
                 @endswitch
             </td>
             <td>{{ $pasantia->horas }}</td>
-            <td class="d-flex">
-
-            </td>
+            <td>{{ $pasantia->detalle ?: 'SIN DETALLE' }}</td>
         </tr>
 
         @empty

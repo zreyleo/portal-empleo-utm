@@ -14,6 +14,11 @@ class EstudiantePractica extends Model
         'estudiante_id', 'practica_id'
     ];
 
+    public function personal()
+    {
+        return $this->belongsTo(Personal::class, 'estudiante_id', 'idpersonal');
+    }
+
     public function practica()
     {
         return $this->belongsTo(Practica::class);
