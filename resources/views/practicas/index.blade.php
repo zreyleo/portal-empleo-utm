@@ -45,10 +45,20 @@
                                 <input type="submit" value="Eliminar" class="btn btn-danger">
                             </form> --}}
 
-                            <div class="formulario-eliminar"
-                                data-ruta="{{ route('practicas.destroy', ['practica' => $practica->id]) }}"
-                                data-csrf="{{ csrf_token() }}"
-                            ></div>
+                            @if ($practica->estudiantes_practicas->count())
+                                @if ($practica->pasantias->contains('estado', '>', 0))
+                                    <button class="btn btn-outline-danger" disabled>No se puede eliminar</button>
+                                @else
+                                    <a href="{{ route('practicas.anular', ['practica' => $practica->id]) }}"
+                                        class="btn btn-danger">Anular
+                                    </a>
+                                @endif
+                            @else
+                                <div class="formulario-eliminar"
+                                    data-ruta="{{ route('practicas.destroy', ['practica' => $practica->id]) }}"
+                                    data-csrf="{{ csrf_token() }}"
+                                ></div>
+                            @endif
                         </td>
                     </tr>
 

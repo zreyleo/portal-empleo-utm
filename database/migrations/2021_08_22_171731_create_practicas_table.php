@@ -19,7 +19,7 @@ class CreatePracticasTable extends Migration
             $table->unsignedBigInteger('facultad_id');
             $table->unsignedTinyInteger('cupo');
             $table->text('requerimientos');
-            $table->boolean('visible');
+            $table->boolean('visible')->default(true);
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id_empresa')->on('public.tbl_empresa');
             $table->timestamps();

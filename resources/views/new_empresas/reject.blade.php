@@ -2,7 +2,7 @@
 
 @section('page-content')
 
-<a href="{{ route('new_empresas.index') }}" class="btn btn-outline-danger my-3">Volver</a>
+<a href="{{ route('new_empresas.index') }}" class="btn btn-primary my-3">Volver</a>
 
 <h2 class="text-center my-3">Rechazar Empresa</h2>
 

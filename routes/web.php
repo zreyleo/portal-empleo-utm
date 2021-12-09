@@ -165,6 +165,11 @@ Route::prefix('dashboard/empresas')->group(function () {
     Route::resource('practicas', 'PracticaController')
         ->middleware('check.empresa.role.for.session');
 
+    // anular practica con estudiantes que han reservado
+    Route::get('practicas/{practica}/anular', 'PracticaController@anular')
+        ->middleware('check.empresa.role.for.session')
+        ->name('practicas.anular');
+
     // informacion de la empresa
     Route::get('password/edit', 'EmpresaController@passwordEdit')
         ->middleware('check.empresa.role.for.session')
@@ -228,6 +233,11 @@ Route::prefix('dashboard/estudiantes')->group(function () {
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes_practicas.show_practica_details');
 
+    // pasantias
+    Route::get('pasantias', 'EstudiantePracticaController@get_pasantias')
+        ->middleware('check.estudiante.role.for.session')
+        ->name('estudiantes_practicas.get_pasantias');
+
     // empleos for estudiantes
     Route::get('empleos', 'EmpleoController@show_empleos_offers')
         ->middleware('check.estudiante.role.for.session')
@@ -252,6 +262,8 @@ Route::prefix('dashboard/estudiantes')->group(function () {
     Route::get('estudiantes_empleos/{estudiante_empleo}', 'EstudianteEmpleoController@show_empleo_details')
         ->middleware('check.estudiante.role.for.session')
         ->name('estudiantes_empleos.show_empleo_details');
+
+
 
     // perfil
     Route::get('perfil', 'PerfilController@show')

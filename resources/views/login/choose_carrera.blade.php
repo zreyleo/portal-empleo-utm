@@ -17,7 +17,7 @@
 
                         @foreach ($carreras as $carrera)
 
-                            <option value="{{ $carrera->idescuela }}">{{ $carrera->escuela }}</option>
+                            <option value="{{ $carrera->idescuela }}|{{ $carrera->idmalla }}">{{ $carrera->escuela }}</option>
 
                         @endforeach
                     </select>

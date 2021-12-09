@@ -35,7 +35,7 @@ class LoginControllerTest extends TestCase
         ->assertRedirect(route('login.choose_carrera_get'));
 
         $this->post(route('login.choose_carrera_post'), [
-            'carrera' => 1 // id of ingenieria en sistemas
+            'carrera' => '1|1' // id of ingenieria en sistemas malla 1
         ])->assertRedirect(route('estudiantes.dashboard'));
     }
 
