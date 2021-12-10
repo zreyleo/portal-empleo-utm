@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\EstudiantePractica;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstudianteController;
+use App\Pasantia;
 use App\Practica;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -243,30 +244,6 @@ class PracticaControllerTest extends TestCase
         $this->get(route('practicas.show_practicas_offers'))
             ->assertStatus(200)
             ->assertSee($practicas[0]->titulo);
-    }
-
-    public function test_empresa_can_delete_practica_offer_even_when_it_has_estudiante_practica_records_related()
-    {
-        $this->withoutExceptionHandling();
-
-        $practica = factory(Practica::class)->create([
-            'empresa_id' => 44,
-            'facultad_id' => 1
-        ]);
-
-        factory(EstudiantePractica::class)->create();
-
-        $this->delete(route('practicas.destroy', $practica->id))
-            ->assertRedirect(route('practicas.index'));
-
-        $this->assertDatabaseMissing('practicas', [
-                'id' => $practica->id
-        ]);
-
-        $this->assertDatabaseMissing('estudiantes_practicas', [
-            'estudiante_id' => 66710,
-            'practica_id' => $practica->id,
-        ]);
     }
 
     // public function test_()

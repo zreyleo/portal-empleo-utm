@@ -12,11 +12,7 @@ use Tests\TestCase;
 class PracticaTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic unit test example.
-     *
-     * @return void
-     */
+
     public function test_the_empresa_of_a_practica_is_instance_of_empresa_class()
     {
         $practica = factory(practica::class)->create([
