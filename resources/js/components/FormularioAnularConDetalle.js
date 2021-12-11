@@ -44,7 +44,7 @@ const FormularioAnularConDetalle = ({
                 Swal.fire('Anulada!', '', 'success');
 
                 setTimeout(() => {
-                    history.go(-3)
+                    history.go(-1)
                 }, 200);
             }).catch(() => {
                 Swal.fire('Ocurrió un error', '', 'error')

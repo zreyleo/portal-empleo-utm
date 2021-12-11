@@ -69407,7 +69407,7 @@ var FormularioAnularConDetalle = function FormularioAnularConDetalle(_ref) {
           console.log(reposnse);
           sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Anulada!', '', 'success');
           setTimeout(function () {
-            history.go(-3);
+            history.go(-1);
           }, 200);
         })["catch"](function () {
           sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Ocurrió un error', '', 'error');
