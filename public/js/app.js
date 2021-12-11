@@ -69407,7 +69407,7 @@ var FormularioAnularConDetalle = function FormularioAnularConDetalle(_ref) {
           console.log(reposnse);
           sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Anulada!', '', 'success');
           setTimeout(function () {
-            history.go(-3);
+            history.go(-1);
           }, 200);
         })["catch"](function () {
           sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Ocurrió un error', '', 'error');
@@ -69850,8 +69850,8 @@ if (document.getElementById('provincias-cantones-parroquias-selects')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/regzam/Sitios/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/regzam/Sitios/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
