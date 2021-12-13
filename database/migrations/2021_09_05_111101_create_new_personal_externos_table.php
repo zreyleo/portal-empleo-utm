@@ -33,6 +33,6 @@ class CreateNewPersonalExternosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('new_personal_externos');
+        Schema::dropIfExists('nuevo_personal_externo');
     }
 }

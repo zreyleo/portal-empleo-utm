@@ -73,7 +73,7 @@ class EstudiantePracticaControllerTest extends TestCase
             ->assertRedirect(route('estudiantes_practicas.index'));
 
         $this->post(route('estudiantes_practicas.store', ['practica' => $practica_2->id]))
-            ->assertRedirect(route('estudiantes_practicas.index'))
+            ->assertRedirect(route('estudiantes_practicas.get_pasantias'))
             ->assertSessionHasErrors();
 
         $estudiante_practica = EstudiantePractica::first();

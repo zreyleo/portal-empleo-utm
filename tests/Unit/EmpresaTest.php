@@ -18,7 +18,7 @@ class EmpresaTest extends TestCase
     {
         $empresa = Empresa::find(44); // Empresa = EL DIARIO EDIASA
         // dd($empresa);
-        $this->assertEquals('el-diario-ediasa', $empresa->slug);
+        $this->assertEquals('el-diario-ediasa-s.a.', $empresa->slug);
     }
 
     public function test_empleos_of_empresa_are_a_collection()
