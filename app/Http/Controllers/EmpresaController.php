@@ -140,4 +140,16 @@ class EmpresaController extends Controller
 
         return redirect()->route('empresas.informacion_edit')->with('status', 'Informacion Actualizada');
     }
+
+    public function cambiar_representante()
+    {
+        $empresa = get_session_empresa();
+
+        $empresa_data = Empresa::find($empresa['id_empresa']);
+
+        $representante = $empresa_data->representante;
+
+        return view('empresas.change_representante', compact('representante'))
+            ->with('empresa', $empresa);
+    }
 }
