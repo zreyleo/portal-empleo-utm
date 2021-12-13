@@ -158,7 +158,7 @@ class EstudiantePracticaController extends Controller
         if ($pasantias_incompletas->count()) {
             add_error('No puedes agregar mas practicas porque tienes otras pendientes');
 
-            return redirect()->route('estudiantes_practicas.index');
+            return redirect()->route('estudiantes_practicas.get_pasantias');
         }
 
         // if (EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])->get()->count() > 0) {
