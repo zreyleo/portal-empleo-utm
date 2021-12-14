@@ -28,6 +28,7 @@
         "tailwindcss": "^2.2.7"
     },
     "dependencies": {
+        "ec-dni-validator": "^1.0.9",
         "sweetalert2": "^11.1.10"
     }
 }

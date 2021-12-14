@@ -43,10 +43,13 @@
     </a>
     <ul class="collapse list-unstyled" id="empresa">
         <li>
-            <a href="{{ route('empresas.password_edit') }}">Cambiar Password</a>
+            <a href="{{ route('empresas.informacion') }}">Informaci&oacute;n</a>
         </li>
         <li>
-            <a href="{{ route('empresas.informacion') }}">Informaci&oacute;n</a>
+            <a href="{{ route('empresas.cambiar_representante') }}">Cambiar Representante</a>
+        </li>
+        <li>
+            <a href="{{ route('empresas.password_edit') }}">Cambiar Password</a>
         </li>
     </ul>
 </li>

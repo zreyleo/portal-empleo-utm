@@ -122,15 +122,15 @@ class EmpresaController extends Controller
 
         $representante = $empresa->representante;
 
-        $representante->apellido1 = $request->apellido_p;
-        $representante->apellido2 = $request->apellido_m;
-        $representante->nombres = $request->nombres;
-        $representante->titulo = $request->titulo;
-        $representante->genero = $request->genero;
+        $representante->apellido1 = strtoupper($request->apellido_p);
+        $representante->apellido2 = strtoupper($request->apellido_m);
+        $representante->nombres = strtoupper($request->nombres);
+        $representante->titulo = strtoupper($request->titulo);
+        $representante->genero = strtoupper($request->genero);
 
         $representante->save();
 
-        $empresa->direccion = $request->direccion;
+        $empresa->direccion = strtoupper($request->direccion);
         $empresa->telefono = $request->telefono;
         $empresa->descripcion = $request->descripcion;
         $empresa->area = $request->area;
@@ -139,5 +139,17 @@ class EmpresaController extends Controller
         $empresa->save();
 
         return redirect()->route('empresas.informacion_edit')->with('status', 'Informacion Actualizada');
+    }
+
+    public function cambiar_representante()
+    {
+        $empresa = get_session_empresa();
+
+        $empresa_data = Empresa::find($empresa['id_empresa']);
+
+        $representante = $empresa_data->representante;
+
+        return view('empresas.change_representante', compact('representante'))
+            ->with('empresa', $empresa);
     }
 }

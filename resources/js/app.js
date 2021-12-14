@@ -18,6 +18,7 @@ require('./components/Notificacion');
 require('./components/ProvinciasCantonesParroquiasSelects');
 require('./components/FormularioEliminar');
 require('./components/FormularioAnularConDetalle');
+require('./components/CambiarRepresentante');
 
 // console.log('hola')
 

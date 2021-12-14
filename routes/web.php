@@ -4,9 +4,8 @@ use App\Empresa;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,87 +20,15 @@ Route::get('logout', function () {
  * ************* Password Reset *************
  ********************************************/
 
-Route::get('forgot-password', function () {
-    return view('login.forgot_password');
-})->name('password.forgot_get');
+Route::get('forgot-password', 'PasswordController@forgot_password')
+    ->name('password.forgot_get');
 
-Route::post('reset_password_without_token', function (Request $request) {
-    $empresa = DB::connection('DB_ppp_sistema_SCHEMA_public')->table('tbl_empresa')->where('email', '=', $request->email)
-        ->first();
+Route::post('reset_password_without_token', 'PasswordController@reset_password_without_token')
+    ->name('password.forgot_post');
 
-    //Check if the empresa exists
-    if (!$empresa) {
-        return redirect()->back()->withErrors(['email' => 'El email no esta asociado a ninguna empresa']);
-    }
+Route::get('reset-password/{token}', 'PasswordController@reset_password')->name('password.reset_get');
 
-    $tokenData  = DB::table('password_resets')->where('email', $request->email)->get()->first();
-
-    if ($tokenData) {
-        add_error('ya se ha enviado un email para resetear password a ese correo');
-        return redirect()->route('login.empresas_get');
-    }
-
-    $token = Str::random(60);
-
-    //Create Password Reset Token
-    DB::table('password_resets')->insert([
-        'email' => $request->email,
-        'token' => $token,
-        'created_at' => now()
-    ]);
-
-    $enlace = config('app.url') . '/reset-password/' . $token;
-
-    $mensaje = "El enlace para restear su password es " . $enlace . ", si no envio esta peticion haga caso omiso.";
-
-    enviar_correo(
-        $request->email,
-        "Recuperar Password de Portal Empleo UTM",
-        $mensaje
-    );
-
-    return redirect()->back()->with('status', 'Se ha enviado un enlace para resetear su password');
-})->name('password.forgot_post');
-
-Route::get('reset-password/{token}', function ($token) {
-    $tokenData  = DB::table('password_resets')->where('token', $token)->get()->first();
-
-    if (!$tokenData) {
-        add_error('Enlace no valido');
-        return redirect()->route('login.empresas_get');
-    }
-
-    return view('login.reset_password')->with('token', $token);
-})->name('password.reset_get');
-
-Route::post('reset-password/{token}', function (Request $request, $token) {
-    $tokenData  = DB::table('password_resets')->where('token', $token)->get()->first();
-
-    if (!$tokenData) {
-        add_error('Enlace no valido');
-        return redirect()->route('login.empresas_get');
-    }
-
-    $request->validate([
-        'password' => 'required',
-        'confirm' => 'required'
-    ]);
-
-    if ($request->password != $request->confirm) {
-        add_error('Se debe confirmar el password correctamente');
-        return redirect()->back();
-    }
-
-    $empresa = Empresa::where('email', $tokenData->email)->get()->first();
-
-    $empresa->password = Hash::make($request->password);
-
-    $empresa->save();
-
-    DB::table('password_resets')->where('token', '=', $token)->delete();
-
-    return view('login.empresas')->with('status', 'Se ha cambiado el password exitosamente');
-})->name('password.reset_post');
+Route::post('reset-password/{token}', 'PasswordController@update_password')->name('password.reset_post');
 
 /*********************************************
  * ****************** Login ******************
@@ -190,6 +117,18 @@ Route::prefix('dashboard/empresas')->group(function () {
     Route::put('informacion', 'EmpresaController@informacion_update')
         ->middleware('check.empresa.role.for.session')
         ->name('empresas.informacion_update');
+
+    Route::get('representantes/cambiar', 'EmpresaController@cambiar_representante')
+        ->middleware('check.empresa.role.for.session')
+        ->name('empresas.cambiar_representante');
+
+    Route::post('representantes', 'RepresentanteController@registrar')
+        ->middleware('check.empresa.role.for.session')
+        ->name('representantes.registrar');
+
+    Route::put('representantes', 'RepresentanteController@actualizar')
+        ->middleware('check.empresa.role.for.session')
+        ->name('representantes.actualizar');
 });
 
 /*********************************************

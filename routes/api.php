@@ -21,3 +21,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('provincias', 'UbicacionController@provincias');
 Route::get('provincias/{provincia}', 'UbicacionController@cantones');
 Route::get('provincias/{provincia}/{canton}', 'UbicacionController@parroquias');
+
+Route::get('representantes', 'RepresentanteController@index')
+    ->middleware('check.empresa.role.for.session')
+    ->name('representantes.index');
+
+Route::get('representantes/{cedula}', 'RepresentanteController@buscar')
+    ->name('representantes.buscar');
+
+
+
