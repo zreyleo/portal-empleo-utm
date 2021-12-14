@@ -28,3 +28,6 @@ Route::get('representantes', 'RepresentanteController@index')
 
 Route::get('representantes/{cedula}', 'RepresentanteController@buscar')
     ->name('representantes.buscar');
+
+
+

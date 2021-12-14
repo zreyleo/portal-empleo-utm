@@ -69234,7 +69234,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var CambiarRepresentante = function CambiarRepresentante(_ref) {
-  var rutaBase = _ref.rutaBase;
+  var rutaBase = _ref.rutaBase,
+      rutaRegistro = _ref.rutaRegistro,
+      rutaExito = _ref.rutaExito,
+      csrf = _ref.csrf;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
       _useState2 = _slicedToArray(_useState, 2),
@@ -69246,18 +69249,69 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
       cedula = _useState4[0],
       setCedula = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
       _useState6 = _slicedToArray(_useState5, 2),
       cedulaError = _useState6[0],
       setCedulaError = _useState6[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState8 = _slicedToArray(_useState7, 2),
-      representante = _useState8[0],
-      setRepresentante = _useState8[1];
+      registroError = _useState8[0],
+      setRegistroError = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState10 = _slicedToArray(_useState9, 2),
+      representante = _useState10[0],
+      setRepresentante = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState12 = _slicedToArray(_useState11, 2),
+      idRepresentante = _useState12[0],
+      setIdRepresentante = _useState12[1];
+
+  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState14 = _slicedToArray(_useState13, 2),
+      apellido1 = _useState14[0],
+      setApellido1 = _useState14[1];
+
+  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState16 = _slicedToArray(_useState15, 2),
+      apellido2 = _useState16[0],
+      setApellido2 = _useState16[1];
+
+  var _useState17 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState18 = _slicedToArray(_useState17, 2),
+      nombres = _useState18[0],
+      setNombres = _useState18[1];
+
+  var _useState19 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState20 = _slicedToArray(_useState19, 2),
+      titulo = _useState20[0],
+      setTitulo = _useState20[1];
+
+  var _useState21 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState22 = _slicedToArray(_useState21, 2),
+      genero = _useState22[0],
+      setGenero = _useState22[1];
+
+  var resetRegisterForm = function resetRegisterForm() {
+    setCedula('');
+    setApellido1('');
+    setApellido2('');
+    setNombres('');
+    setTitulo('');
+    setGenero('');
+  };
 
   var handleChangeCedula = function handleChangeCedula(event) {
     setCedula(event.target.value);
+  };
+
+  var handleClickBuscar = function handleClickBuscar() {
+    setBuscar(!buscar);
+    setRepresentante({});
+    setIdRepresentante(null);
+    resetRegisterForm();
   };
 
   var handleSubmitBuscar = function handleSubmitBuscar(event) {
@@ -69275,14 +69329,65 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
       console.log(response);
       sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Persona encontrada', '', 'success');
       setRepresentante(response.data.data);
+      setIdRepresentante(response.data.data.id_personal_externo);
     })["catch"](function (error) {
-      console.log(error);
       sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Persona no encontrada', '', 'error');
       setRepresentante({});
+      setIdRepresentante(null);
     });
   };
 
-  var form = buscar ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+  var handleSubmitRegistrar = function handleSubmitRegistrar(event) {
+    event.preventDefault();
+
+    if (!Object(ec_dni_validator__WEBPACK_IMPORTED_MODULE_4__["isValidDNI"])(cedula)) {
+      setCedulaError('No es un número de cedula válido');
+      return;
+    } else {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(rutaBase + "/".concat(cedula)).then(function (response) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Esta cédula ya está registrada', '', 'warning');
+        setRepresentante(response.data.data);
+        setIdRepresentante(response.data.data.id_personal_externo);
+        setBuscar(true);
+      })["catch"](function (error) {
+        if (!apellido1 || !apellido2 || !nombres || !titulo || !genero) {
+          setRegistroError(true);
+          return;
+        }
+
+        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Registrando...', '', 'warning');
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(rutaRegistro, {
+          _token: csrf,
+          cedula: cedula,
+          apellido1: apellido1,
+          apellido2: apellido2,
+          nombres: nombres,
+          titulo: titulo,
+          genero: genero
+        }).then(function (response) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Representante Registrad@!', '', 'success');
+          setTimeout(function () {
+            window.location.assign(rutaExito);
+          }, 250);
+        });
+      });
+      setCedulaError('');
+    }
+  };
+
+  var handleClickActualizar = function handleClickActualizar() {
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.put(rutaRegistro, {
+      _token: csrf,
+      id_personal_externo: idRepresentante
+    }).then(function () {
+      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Representante Actualizad@!', '', 'success');
+      setTimeout(function () {
+        window.location.assign(rutaExito);
+      }, 250);
+    });
+  };
+
+  var form = buscar ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: handleSubmitBuscar
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
@@ -69294,62 +69399,136 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
   }), cedulaError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "invalid-feedback d-block",
     role: "alert"
-  }, "La c\xE9dula no es v\xE1lida")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+  }, cedulaError)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "submit",
     value: "Buscar",
     className: "btn btn-primary"
-  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "form para registrar");
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    disabled: !idRepresentante,
+    onClick: handleClickActualizar,
+    className: "mt-5 btn btn-success"
+  }, "Actualizar Representante")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmitRegistrar
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("legend", null, "Persona que representa a Recursos Humanos"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "C\xE9dula"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-control",
+    name: "cedula",
+    value: cedula,
+    onChange: handleChangeCedula
+  }), cedulaError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, cedulaError)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Apellido Paterno"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-control text-uppercase",
+    name: "cedula",
+    value: apellido1,
+    onChange: function onChange(e) {
+      return setApellido1(e.target.value);
+    }
+  }), registroError && !apellido1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, "Este campo es requerido")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Apellido Materno"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-control text-uppercase",
+    name: "cedula",
+    value: apellido2,
+    onChange: function onChange(e) {
+      return setApellido2(e.target.value);
+    }
+  }), registroError && !apellido2 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, "Este campo es requerido")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Nombres"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-control text-uppercase",
+    name: "cedula",
+    value: nombres,
+    onChange: function onChange(e) {
+      return setNombres(e.target.value);
+    }
+  }), registroError && !nombres && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, "Este campo es requerido")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Cargo en la Empresa o T\xEDtulo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-control text-uppercase",
+    name: "cedula",
+    value: titulo,
+    onChange: function onChange(e) {
+      return setTitulo(e.target.value);
+    }
+  }), registroError && !titulo && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, "Este campo es requerido")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "G\xE9nero"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    value: genero,
+    onChange: function onChange(e) {
+      return setGenero(e.target.value);
+    },
+    className: 'form-control'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    disabled: true,
+    value: ""
+  }, "-- seleccione --"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "M"
+  }, "MASCULINO"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "F"
+  }, "FEMENINO")), registroError && !genero && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, "Este campo es requerido"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "submit",
+    className: "btn btn-primary",
+    value: "Registrar y Cambiar"
+  }));
+  var datosRepresentante = buscar ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "C\xE9dula"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    type: "text",
+    className: "form-control"
+  }, representante.cedula)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Apellido Paterno"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    type: "text",
+    className: "form-control"
+  }, representante.apellido1)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Apellido Materno"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    type: "text",
+    className: "form-control"
+  }, representante.apellido2)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Nombres"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    type: "text",
+    className: "form-control"
+  }, representante.nombres)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Cargo en la Empresa"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    type: "text",
+    className: "form-control"
+  }, representante.titulo)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "G\xE9nero"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    type: "text",
+    className: "form-control"
+  }, representante.genero == 'M' ? 'MASCULINO' : representante.genero == 'F' ? 'FEMENINO' : ''))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Alerta");
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-6"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: function onClick(e) {
-      return setBuscar(!buscar);
-    }
-  }, "cambiar"), form), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    onClick: handleClickBuscar,
+    className: "btn btn-info mb-5"
+  }, buscar ? 'Registrar' : 'Buscar'), form), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-6"
-  }, rutaBase, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "form-group"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "C\xE9dula"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    disabled: true,
-    className: "form-control",
-    value: representante.cedula
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "form-group"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Apellido Paterno"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    disabled: true,
-    className: "form-control",
-    value: representante.apellido1
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "form-group"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Apellido Materno"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    disabled: true,
-    className: "form-control",
-    value: representante.apellido2
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "form-group"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Nombres"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    disabled: true,
-    className: "form-control",
-    value: representante.nombres
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "form-group"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Cargo en la Empresa"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    disabled: true,
-    className: "form-control",
-    value: representante.titulo
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "form-group"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "G\xE9nero"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    disabled: true,
-    className: "form-control",
-    value: representante.genero == 'M' ? 'MASCULINO' : representante.genero == 'F' ? 'FEMENINO' : ''
-  }))));
+  }, datosRepresentante));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (CambiarRepresentante);

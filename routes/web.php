@@ -118,9 +118,17 @@ Route::prefix('dashboard/empresas')->group(function () {
         ->middleware('check.empresa.role.for.session')
         ->name('empresas.informacion_update');
 
-    Route::get('representante/cambiar', 'EmpresaController@cambiar_representante')
+    Route::get('representantes/cambiar', 'EmpresaController@cambiar_representante')
         ->middleware('check.empresa.role.for.session')
         ->name('empresas.cambiar_representante');
+
+    Route::post('representantes', 'RepresentanteController@registrar')
+        ->middleware('check.empresa.role.for.session')
+        ->name('representantes.registrar');
+
+    Route::put('representantes', 'RepresentanteController@actualizar')
+        ->middleware('check.empresa.role.for.session')
+        ->name('representantes.actualizar');
 });
 
 /*********************************************
