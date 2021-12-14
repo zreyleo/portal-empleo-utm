@@ -52,7 +52,7 @@ const CambiarRepresentante = ({
             setCedulaError(false);
         }
 
-        Swal.fire('Buscando...', '', 'warning')
+        Swal.fire('Buscando...', '', 'info')
         Axios.get(rutaBase + `/${cedula}`)
             .then(response => {
                 console.log(response)
@@ -87,7 +87,7 @@ const CambiarRepresentante = ({
                         return;
                     }
 
-                    Swal.fire('Registrando...', '', 'warning');
+                    Swal.fire('Registrando...', '', 'info');
                     Axios.post(rutaRegistro, {
                         _token: csrf,
                         cedula,
@@ -101,7 +101,7 @@ const CambiarRepresentante = ({
 
                         setTimeout(() => {
                             window.location.assign(rutaExito);
-                        }, 250);
+                        }, 500);
                     });
                 });
             setCedulaError('');
@@ -109,6 +109,12 @@ const CambiarRepresentante = ({
     }
 
     const handleClickActualizar = () => {
+        if (!idRepresentante) {
+            Swal.fire('No se ha buscado una persona', '', 'warning');
+
+            return;
+        }
+
         Axios.put(rutaRegistro, {
             _token: csrf,
             id_personal_externo: idRepresentante
@@ -117,7 +123,7 @@ const CambiarRepresentante = ({
 
             setTimeout(() => {
                 window.location.assign(rutaExito);
-            }, 250);
+            }, 500);
         });
 
     }
