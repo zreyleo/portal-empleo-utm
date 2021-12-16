@@ -21,7 +21,10 @@ function ProvinciasCantonesParroquiasSelects(props) {
     const [parroquias, setParroquias] = useState([]); // array de provincias
     const [idParroquia, setIdParroquia] = useState('');
 
-    const baseUrl = window.location.origin + '/api/provincias';
+    const baseUrl = ruta;
+
+    // original
+    // const baseUrl = window.location.origin + '/api/provincias';
 
     // url para prubeas en el servidor de la universidad
     // const baseUrl = window.location.origin + '/portal-empleo-utm/public/api/provincias';
@@ -164,10 +167,10 @@ function ProvinciasCantonesParroquiasSelects(props) {
 
 export default ProvinciasCantonesParroquiasSelects;
 
-if (document.getElementById('provincias-cantones-parroquias-selects')) {
-    const props = Object.assign({}, document.getElementById('provincias-cantones-parroquias-selects').dataset);
+if (document.getElementById('provincias-cantones-parroquias-selects2')) {
+    const props = Object.assign({}, document.getElementById('provincias-cantones-parroquias-selects2').dataset);
     ReactDOM.render(
         <ProvinciasCantonesParroquiasSelects { ...props } />,
-        document.getElementById('provincias-cantones-parroquias-selects')
+        document.getElementById('provincias-cantones-parroquias-selects2')
     );
 }

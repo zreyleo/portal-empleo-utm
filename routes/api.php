@@ -18,7 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('provincias', 'UbicacionController@provincias');
+Route::get('provincias', 'UbicacionController@provincias')
+    ->name('ubicacion.provincias');
 Route::get('provincias/{provincia}', 'UbicacionController@cantones');
 Route::get('provincias/{provincia}/{canton}', 'UbicacionController@parroquias');
 

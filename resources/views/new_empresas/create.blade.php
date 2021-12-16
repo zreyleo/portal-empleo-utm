@@ -100,8 +100,29 @@
                 @enderror
             </div>
 
-            <div
+            {{-- <div
                 id="provincias-cantones-parroquias-selects"
+
+                @if (old('provincia')) data-provincia-value="{{ old('provincia') }}" @endif
+                @error('provincia')
+                    data-provincia-error="{{ $message }}"
+                @enderror
+
+                @if (old('canton')) data-canton-value="{{ old('canton') }}" @endif
+                @error('canton')
+                    data-canton-error="{{ $message }}"
+                @enderror
+
+                @if (old('parroquia')) data-parroquia-value="{{ old('parroquia') }}" @endif
+                @error('parroquia')
+                    data-parroquia-error="{{ $message }}"
+                @enderror
+            ></div> --}}
+
+            <div
+                id="provincias-cantones-parroquias-selects2"
+
+                data-ruta="{{ route('ubicacion.provincias') }}"
 
                 @if (old('provincia')) data-provincia-value="{{ old('provincia') }}" @endif
                 @error('provincia')

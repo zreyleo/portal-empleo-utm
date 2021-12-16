@@ -16,6 +16,7 @@ require('./components/Example');
 require('./components/FacultadesCarrerasSelects');
 require('./components/Notificacion');
 require('./components/ProvinciasCantonesParroquiasSelects');
+require('./components/ProvinciasCantonesParroquiasSelects2');
 require('./components/FormularioEliminar');
 require('./components/FormularioAnularConDetalle');
 require('./components/CambiarRepresentante');

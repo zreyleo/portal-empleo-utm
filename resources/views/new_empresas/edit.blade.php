@@ -170,8 +170,41 @@
                 @enderror
             </div>
 
-            <div
+            {{-- <div
                 id="provincias-cantones-parroquias-selects"
+
+                @if (old('provincia'))
+                    data-provincia-value="{{ old('provincia') }}"
+                @else
+                    data-provincia-value="{{ $empresa->id_provincia }}"
+                @endif
+                @error('provincia')
+                    data-provincia-error="{{ $message }}"
+                @enderror
+
+                @if (old('canton'))
+                    data-canton-value="{{ old('canton') }}"
+                @else
+                    data-canton-value="{{ $empresa->id_canton }}"
+                @endif
+                @error('canton')
+                    data-canton-error="{{ $message }}"
+                @enderror
+
+                @if (old('parroquia'))
+                    data-parroquia-value="{{ old('parroquia') }}"
+                @else
+                    data-parroquia-value="{{ $empresa->id_parroquia }}"
+                @endif
+                @error('parroquia')
+                    data-parroquia-error="{{ $message }}"
+                @enderror
+            ></div> --}}
+
+            <div
+                id="provincias-cantones-parroquias-selects2"
+
+                data-ruta="{{ route('ubicacion.provincias') }}"
 
                 @if (old('provincia'))
                     data-provincia-value="{{ old('provincia') }}"
