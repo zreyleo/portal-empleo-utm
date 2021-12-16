@@ -2,6 +2,8 @@
 
 @section('page-content')
 
+    <a href="{{ route('empleos.create') }}" class="btn btn-primary my-3">Crear Oferta de empleo</a>
+
     <h2 class="my-5 text-center">Tus Ofertas de Empleo</h2>
 
     <div class="row">
@@ -21,8 +23,7 @@
                     <tr>
                         <td scope="row">{{ $empleo->id }}</td>
                         <td>{{ $empleo->titulo }}</td>
-                        {{-- <td>{{ $empleo->aspirantes->count() }}</td> --}}
-                        <td>&nbsp;</td>
+                        <td>{{ $empleo->estudiantes_empleos->count() }}</td>
                         <td class="d-flex">
                             <a href="{{ route('empleos.show', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-success">Ver</a>
@@ -31,7 +32,7 @@
                                 class="btn btn-warning mx-2">Editar</a>
 
                             <a href="{{ route('empleos.show_estudiantes_empleos', ['empleo' => $empleo->id]) }}"
-                                class="btn btn-info text-white mr-2">Ver Aspirantes</a>
+                                class="btn btn-info mr-2">Ver Aspirantes</a>
 
                             {{-- <form action="{{ route('empleos.destroy', ['empleo' => $empleo->id]) }}" method="POST"
                                 onsubmit="

@@ -11225,6 +11225,19 @@ table.table tbody tr td span.badge {
 }
 
 /* ---------------------------------------------------
+    TRIX-EDITOR
+----------------------------------------------------- */
+
+.requerimientos {
+  overflow-y: scroll;
+  min-height: 30vh;
+}
+
+.trix-button-group.trix-button-group--file-tools {
+  display: none;
+}
+
+/* ---------------------------------------------------
     NOTIFICACION
 ----------------------------------------------------- */
 

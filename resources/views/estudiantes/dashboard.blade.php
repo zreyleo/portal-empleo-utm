@@ -5,12 +5,14 @@
 @endsection
 
 @section('enlaces')
+
 <li>
     <a href="{{ route('estudiantes.dashboard') }}">
         <i class="fas fa-house-user"></i>
         Inicio
     </a>
 </li>
+
 <li>
     <a href="{{ route('perfil.show') }}">
         <i class="fas fa-user"></i>
@@ -24,6 +26,7 @@
         <i class="fas fa-briefcase"></i>
         Empleos
     </a>
+
     <ul class="collapse list-unstyled" id="empleos">
         <li>
             <a href="{{ route('empleos.show_empleos_offers') }}">Ofertas de empleo</a>
@@ -39,6 +42,7 @@
         <i class="fas fa-user-graduate"></i>
         Prácticas
     </a>
+
     <ul class="collapse list-unstyled" id="practicas">
         <li>
             <a href="{{ route('practicas.show_practicas_offers') }}">Ver Ofertas de Pr&aacute;cticas</a>

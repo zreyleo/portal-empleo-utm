@@ -69147,6 +69147,10 @@ $(document).ready(function () {
   $('#sidebarCollapse').on('click', function () {
     $('#sidebar').toggleClass('active');
   });
+}); // prevents attachments:
+
+document.addEventListener("trix-file-accept", function (event) {
+  event.preventDefault();
 });
 
 /***/ }),
@@ -69324,7 +69328,7 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
       setCedulaError(false);
     }
 
-    sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Buscando...', '', 'warning');
+    sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Buscando...', '', 'info');
     axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(rutaBase + "/".concat(cedula)).then(function (response) {
       console.log(response);
       sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Persona encontrada', '', 'success');
@@ -69355,7 +69359,7 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
           return;
         }
 
-        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Registrando...', '', 'warning');
+        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Registrando...', '', 'info');
         axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(rutaRegistro, {
           _token: csrf,
           cedula: cedula,
@@ -69368,7 +69372,7 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
           sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Representante Registrad@!', '', 'success');
           setTimeout(function () {
             window.location.assign(rutaExito);
-          }, 250);
+          }, 500);
         });
       });
       setCedulaError('');
@@ -69376,6 +69380,11 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
   };
 
   var handleClickActualizar = function handleClickActualizar() {
+    if (!idRepresentante) {
+      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('No se ha buscado una persona', '', 'warning');
+      return;
+    }
+
     axios__WEBPACK_IMPORTED_MODULE_3___default.a.put(rutaRegistro, {
       _token: csrf,
       id_personal_externo: idRepresentante
@@ -69383,7 +69392,7 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
       sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Representante Actualizad@!', '', 'success');
       setTimeout(function () {
         window.location.assign(rutaExito);
-      }, 250);
+      }, 500);
     });
   };
 

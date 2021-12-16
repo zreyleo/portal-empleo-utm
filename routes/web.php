@@ -68,6 +68,10 @@ Route::post('/registro', 'NewEmpresaController@store')->name('new_empresas.store
  ********************************************/
 
 Route::prefix('dashboard/empresas')->group(function () {
+    Route::get('', 'EmpresaController@dashboard')
+        ->middleware('check.empresa.role.for.session')
+        ->name('empresas.dashboard');
+
     // empleos
     Route::resource('empleos', 'EmpleoController')
         ->middleware('check.empresa.role.for.session');

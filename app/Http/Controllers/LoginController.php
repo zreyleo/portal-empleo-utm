@@ -148,7 +148,7 @@ class LoginController extends Controller
         Session::put('nombre_empresa', $empresa->nombre_empresa);
         Session::put('role', EmpresaController::get_role());
 
-        return redirect()->route('empleos.index');
+        return redirect()->route('empresas.dashboard');
     }
 
     public function estudiantes_get()

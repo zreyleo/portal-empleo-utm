@@ -48,6 +48,14 @@ class EmpresaController extends Controller
         return self::ROLE;
     }
 
+    public function dashboard()
+    {
+        $empresa = get_session_empresa();
+
+        return view('empresas.dashboard')
+            ->with('empresa', $empresa);
+    }
+
     public function passwordEdit()
     {
         $empresa = get_session_empresa();

@@ -277,3 +277,16 @@ table.table tbody tr td span.badge {
     background-color: rgb(238, 148, 166);
     color: rgb(163, 0, 33);
 }
+
+/* ---------------------------------------------------
+    TRIX-EDITOR
+----------------------------------------------------- */
+
+.requerimientos {
+    overflow-y: scroll;
+    min-height: 30vh;
+}
+
+.trix-button-group.trix-button-group--file-tools {
+    display:none;
+}

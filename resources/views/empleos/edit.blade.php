@@ -14,64 +14,63 @@
 
 @section('page-content')
 
-<a href="{{ route('empleos.index') }}" class="btn btn-outline-danger my-3">Volver</a>
+<a href="{{ route('empleos.index') }}" class="btn btn-secondary my-3">Volver</a>
 
 <h2 class="my-3 text-center">Formulario para editar una oferta de empleo</h2>
 
-<div class="row mb-3">
-    <div class="col-md-8 mx-auto">
-        <form action="{{ route('empleos.update', ['empleo' => $empleo->id]) }}" method="POST" novalidate>
-            @csrf
-            @method('PUT')
+<form action="{{ route('empleos.update', ['empleo' => $empleo->id]) }}" method="POST" novalidate class="row mb-3">
+    <div class="col-md-6">
+        @csrf
+        @method('PUT')
 
-            <div class="form-group">
-                <label for="titulo">Titulo de la oferta</label>
-                <input
-                    type="text"
-                    class="form-control @error ('titulo') is-invalid @enderror"
-                    name="titulo"
-                    value="{{ $empleo->titulo }}"
-                >
+        <div class="form-group">
+            <label for="titulo">Titulo de la oferta</label>
+            <input
+                type="text"
+                class="form-control @error ('titulo') is-invalid @enderror"
+                name="titulo"
+                value="{{ $empleo->titulo }}"
+            >
 
-                @error('titulo')
-                    <span
-                        class="invalid-feedback d-block" role="alert"
-                    >{{ $message }}</span>
-                @enderror
-            </div>
+            @error('titulo')
+                <span
+                    class="invalid-feedback d-block" role="alert"
+                >{{ $message }}</span>
+            @enderror
+        </div>
 
-            <div id="facultades-carreras-selects" data-carreras="{{ json_encode($carreras) }}"
-                data-carrera_id="{{ $empleo->carrera_id }}"
-                data-invalid="@error ('carrera') true @enderror"
-            ></div>
-
-            <div class="form-group">
-                <label for="requerimienos">Requerimientos</label>
-
-                <input
-                    type="hidden"
-                    id="requerimientos"
-                    name="requerimientos"
-                    value="{{ $empleo->requerimientos }}"
-                />
-
-                <trix-editor input="requerimientos"
-                    class="form-control @error ('requerimientos') is-invalid @enderror"
-                    style="overflow-y: scroll"
-                ></trix-editor>
-
-                @error('requerimientos')
-                    <span
-                        class="invalid-feedback d-block" role="alert"
-                    >{{ $message }}</span>
-                @enderror
-            </div>
-
-            <button type="submit" class="btn btn-primary">Guardar Oferta</button>
-        </form>
-
+        <div id="facultades-carreras-selects" data-carreras="{{ json_encode($carreras) }}"
+            data-carrera_id="{{ $empleo->carrera_id }}"
+            data-invalid="@error ('carrera') true @enderror"
+        ></div>
     </div>
-</div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="requerimienos">Requerimientos</label>
+
+            <input
+                type="hidden"
+                id="requerimientos"
+                name="requerimientos"
+                value="{{ $empleo->requerimientos }}"
+            />
+
+            <trix-editor input="requerimientos"
+                class="form-control @error ('requerimientos') is-invalid @enderror requerimientos"
+                style="overflow-y: scroll"
+            ></trix-editor>
+
+            @error('requerimientos')
+                <span
+                    class="invalid-feedback d-block" role="alert"
+                >{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Oferta</button>
+</form>
 
 @endsection
 

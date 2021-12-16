@@ -29,3 +29,8 @@ $(document).ready(function () {
     });
 
 });
+
+// prevents attachments:
+document.addEventListener("trix-file-accept", function(event) {
+    event.preventDefault();
+});

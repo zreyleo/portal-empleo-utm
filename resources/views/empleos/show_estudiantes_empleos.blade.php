@@ -2,7 +2,7 @@
 
 @section('page-content')
 
-    <a href="{{ route('empleos.index') }}" class="btn btn-outline-danger my-3">volver</a>
+    <a href="{{ route('empleos.index') }}" class="btn btn-secondary my-3">Volver</a>
 
     <h2 class="my-2 text-center">Aspirantes</h2>
 
