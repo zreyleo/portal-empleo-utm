@@ -13,18 +13,18 @@
         <p><strong>Tel&eacute;fono:</strong> {{ $empresa_informacion->telefono }}</p>
         <p><strong>E-mail:</strong> {{ $empresa_informacion->email }}</p>
 
-        <h3 class="my-3">Ubicaci&oacute;n</h3>
-
-        <p><strong>Provincia:</strong> {{ $location->provincia }}</p>
-        <p><strong>Canton:</strong> {{ $location->canton }}</p>
-        <p><strong>Parroquia:</strong> {{ $location->parroquia }}</p>
-        <p><strong>Direcci&oacute;n:</strong> {{ $empresa_informacion->direccion }}</p>
-
         <h2>Representante</h2>
 
         <p><strong>C&eacute;dula:</strong> {{ $representante->cedula }}</p>
         <p><strong>Nombre del Representante:</strong> {{ $representante->nombres_completos }}</p>
         <p><strong>T&iacute;tulo:</strong> {{ $representante->titulo }}</p>
+
+        <h2 class="my-3">Ubicaci&oacute;n</h2>
+
+        <p><strong>Provincia:</strong> {{ $location->provincia }}</p>
+        <p><strong>Canton:</strong> {{ $location->canton }}</p>
+        <p><strong>Parroquia:</strong> {{ $location->parroquia }}</p>
+        <p><strong>Direcci&oacute;n:</strong> {{ $empresa_informacion->direccion }}</p>
     </div>
 
     <div class="col-md-6">

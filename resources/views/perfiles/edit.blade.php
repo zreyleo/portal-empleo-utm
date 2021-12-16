@@ -51,7 +51,7 @@
                 />
 
                 <trix-editor input="description"
-                    class="form-control @error ('description') is-invalid @enderror"
+                    class="form-control @error ('description') is-invalid @enderror requerimientos"
                 ></trix-editor>
 
                 @error('description')

@@ -2,8 +2,6 @@
 
 @section('page-content')
 
-    {{-- {{ $practica }} --}}
-
     <div class="w-full d-flex justify-content-between">
         <a href="{{ route('empleos.show_empleos_offers') }}" class="btn btn-secondary my-3">Volver</a>
 
@@ -14,16 +12,6 @@
     </div>
 
     <h1 class="text-center">{{ $empleo->titulo }}</h1>
-
-    {{-- <p><strong>Empresa: </strong> {{ $empleo->empresa->nombre_empresa }}</p>
-    <p><strong>Carrera: </strong>
-        {{ $empleo->escuela->nombre }}
-    </p>
-    <p><strong>Creacion de Oferta: </strong> {{ $empleo->created_at->format('d/m/Y') }}</p>
-
-    <div class="practicas-requerimientos">
-        {!! $empleo->requerimientos !!}
-    </div> --}}
 
     <div class="row">
         <div class="col-md-6">

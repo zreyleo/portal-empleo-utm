@@ -2,7 +2,7 @@
 
 @section('page-content')
 
-<a href="{{ url()->previous() }}" class="btn btn-secondary my-3">Volver</a>
+<a href="{{ route('empleos.index') }}" class="btn btn-secondary my-3">Volver</a>
 
 <h1 class="text-center my-5">{{ $empleo->titulo }}</h1>
 

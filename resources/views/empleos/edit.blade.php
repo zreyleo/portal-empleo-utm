@@ -19,7 +19,7 @@
 <h2 class="my-3 text-center">Formulario para editar una oferta de empleo</h2>
 
 <form action="{{ route('empleos.update', ['empleo' => $empleo->id]) }}" method="POST" novalidate class="row mb-3">
-    <div class="col-md-6">
+    <div class="col-md-5">
         @csrf
         @method('PUT')
 
@@ -45,7 +45,7 @@
         ></div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-7">
         <div class="form-group">
             <label for="requerimienos">Requerimientos</label>
 
@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Guardar Oferta</button>
+    <button type="submit" class="btn btn-primary ml-auto">Guardar Oferta</button>
 </form>
 
 @endsection

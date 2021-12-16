@@ -12,11 +12,6 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($estudiantes_empleos as $estudiante_empleo)
-
-
-
-            @endforeach
 
             @forelse ($estudiantes_empleos as $estudiante_empleo)
 

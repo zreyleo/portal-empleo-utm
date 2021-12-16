@@ -14,18 +14,10 @@
 </li>
 
 <li>
-    <a href="#practicas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+    <a href="{{ route('practicas.index') }}">
         <i class="fas fa-university"></i>
-        Prácticas
+        Pr&aacute;cticas
     </a>
-    <ul class="collapse list-unstyled" id="practicas">
-        <li>
-            <a href="{{ route('practicas.index') }}">Tus ofertas de Pr&aacute;cticas</a>
-        </li>
-        <li>
-            <a href="{{ route('practicas.create') }}">Crear Oferta de Pr&aacute;cticas</a>
-        </li>
-    </ul>
 </li>
 
 <li>

@@ -21,7 +21,7 @@
 <form action="{{ route('empleos.store') }}" method="POST" novalidate
     class="bg-white p-3 row mb-3"
 >
-    <div class="col-md-6">
+    <div class="col-md-5">
         @csrf
 
         <div class="form-group">
@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-7">
         <div class="form-group">
             <label for="requerimienos">Requerimientos</label>
 
@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Guardar Oferta</button>
+    <button type="submit" class="btn btn-primary ml-auto">Guardar Oferta</button>
 
 </form>
 

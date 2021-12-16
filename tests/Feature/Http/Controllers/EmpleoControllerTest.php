@@ -119,7 +119,8 @@ class EmpleoControllerTest extends TestCase
         ]);
 
         $empleo = factory(Empleo::class)->create([
-            'empresa_id' => 44
+            'empresa_id' => 44,
+            'carrera_id' => 1
         ]);
 
         $this->get(route('empleos.show', $empleo->id))
@@ -136,7 +137,8 @@ class EmpleoControllerTest extends TestCase
         ]);
 
         $empleo = factory(Empleo::class)->create([
-            'empresa_id' => 14
+            'empresa_id' => 14,
+            'carrera_id' => 1
         ]);
 
         $this->get(route('empleos.show', $empleo->id))

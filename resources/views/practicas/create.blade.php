@@ -14,103 +14,101 @@
 
 @section('page-content')
 
-<h2 class="my-3 text-center">Crear una Oferta de Práctica</h2>
+<a href="{{ route('practicas.index') }}" class="btn btn-secondary my-3">Volver</a>
 
-<div class="row mb-3">
-    <div class="col-md-8 mx-auto">
-        <form action="{{ route('practicas.store') }}" method="POST" novalidate
-            class="bg-white p-3"
-        >
-            @csrf
+<h2 class="my-3 text-center">Crear una Oferta de Pr&aacute;ctica</h2>
 
-            <div class="form-group">
-                <label for="titulo">T&iacute;tulo</label>
-                <input
-                    type="text"
-                    class="form-control @error ('titulo') is-invalid @enderror"
-                    name="titulo"
-                    value="{{ old('titulo') }}"
-                >
+<form action="{{ route('practicas.store') }}" method="POST" novalidate
+    class="bg-white p-3 row mb-3"
+>
+    <div class="col-md-5">
+        @csrf
 
-                @error('titulo')
-                    <span
-                        class="invalid-feedback d-block" role="alert"
-                    >{{ $message }}</span>
-                @enderror
-            </div>
+        <div class="form-group">
+            <label for="titulo">T&iacute;tulo</label>
+            <input
+                type="text"
+                class="form-control @error ('titulo') is-invalid @enderror"
+                name="titulo"
+                value="{{ old('titulo') }}"
+            >
 
-            <div class="form-group">
-                <label for="area">Área</label>
-                <select
-                    class="form-control @error ('area') is-invalid @enderror"
-                    id="area"
-                    name="area"
-                >
-                    <option value="" selected disabled>-- seleccione --</option>
+            @error('titulo')
+                <span
+                    class="invalid-feedback d-block" role="alert"
+                >{{ $message }}</span>
+            @enderror
+        </div>
 
-                    @foreach ($facultades as $facultad)
-                        <option value="{{ $facultad->idfacultad }}"
-                            {{ old('area') == $facultad->idfacultad ? 'selected' : '' }}
-                        >{{ $facultad->nombre }}</option>
-                    @endforeach
-                </select>
+        <div class="form-group">
+            <label for="area">Área</label>
+            <select
+                class="form-control @error ('area') is-invalid @enderror"
+                id="area"
+                name="area"
+            >
+                <option value="" selected disabled>-- seleccione --</option>
 
-                @error('area')
-                    <span
-                        class="invalid-feedback d-block" role="alert"
-                    >{{ $message }}</span>
-                @enderror
-            </div>
+                @foreach ($facultades as $facultad)
+                    <option value="{{ $facultad->idfacultad }}"
+                        {{ old('area') == $facultad->idfacultad ? 'selected' : '' }}
+                    >{{ $facultad->nombre }}</option>
+                @endforeach
+            </select>
 
-            <div class="form-group">
-                <label for="cupo">Cupo para aceptar estudiantes</label>
-                <input
-                    type="number"
-                    class="form-control @error ('cupo') is-invalid @enderror"
-                    name="cupo"
-                    min="1"
-                    step="1"
-                    value="{{ old('cupo') ? old('cupo') : 1 }}"
-                >
+            @error('area')
+                <span
+                    class="invalid-feedback d-block" role="alert"
+                >{{ $message }}</span>
+            @enderror
+        </div>
 
-                @error('cupo')
-                    <span
-                        class="invalid-feedback d-block" role="alert"
-                    >{{ $message }}</span>
-                @enderror
-            </div>
+        <div class="form-group">
+            <label for="cupo">Cupo para aceptar estudiantes</label>
+            <input
+                type="number"
+                class="form-control @error ('cupo') is-invalid @enderror"
+                name="cupo"
+                min="1"
+                step="1"
+                value="{{ old('cupo') ? old('cupo') : 1 }}"
+            >
+
+            @error('cupo')
+                <span
+                    class="invalid-feedback d-block" role="alert"
+                >{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
 
 
-            <div class="form-group">
-                <label for="requerimienos">Requerimientos</label>
+    <div class="col-md-7">
+        <div class="form-group">
+            <label for="requerimienos">Requerimientos</label>
 
-                <input
-                    type="hidden"
-                    id="requerimientos"
-                    name="requerimientos"
-                    value="{{ old('requerimientos') }}"
-                />
+            <input
+                type="hidden"
+                id="requerimientos"
+                name="requerimientos"
+                value="{{ old('requerimientos') }}"
+            />
 
-                <trix-editor input="requerimientos" class="@error ('titulo') is-invalid @enderror"></trix-editor>
-                {{-- <textarea
-                    class="form-control"
-                    id="requerimientos"
-                    rows="5"
-                    style="resize: none"
-                ></textarea> --}}
+            <trix-editor input="requerimientos"
+                class="@error ('titulo') is-invalid @enderror requerimientos"
+            ></trix-editor>
 
-                @error('requerimientos')
-                    <span
-                        class="invalid-feedback d-block" role="alert"
-                    >{{ $message }}</span>
-                @enderror
-            </div>
-
-            <button type="submit" class="btn btn-primary">Crear Oferta</button>
-        </form>
+            @error('requerimientos')
+                <span
+                    class="invalid-feedback d-block" role="alert"
+                >{{ $message }}</span>
+            @enderror
+        </div>
 
     </div>
-</div>
+
+    <button type="submit" class="btn btn-primary ml-auto">Crear Oferta</button>
+</form>
 
 @endsection
 

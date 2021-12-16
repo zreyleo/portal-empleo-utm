@@ -18,7 +18,7 @@
 
                 <tr>
                     <td>{{ $practica->titulo }}</td>
-                    <td>{{ $practica->cupo }}</td>
+                    <td>{{ $practica->cupo - $practica->estudiantes_practicas->count() }}</td>
                     <td>{{ $practica->empresa->nombre_empresa }}</td>
                     <td class="d-flex">
                         <a href="{{ route('practicas.show_practica_details', ['practica' => $practica->id]) }}"

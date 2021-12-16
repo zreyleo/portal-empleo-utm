@@ -2,22 +2,26 @@
 
 @section('page-content')
 
-    {{-- {{ $practica }} --}}
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Empresa: </strong> {{ $empleo->empresa->nombre_empresa }}</p>
 
-    <div class="w-full d-flex justify-content-between">
-        <a href="{{ route('estudiantes_empleos.index') }}" class="btn btn-outline-danger my-3">Volver</a>
-    </div>
+            <p><strong>&Aacute;rea: </strong> {{ $empleo->escuela->facultad->nombre }}</p>
 
-    <h1 class="text-center">{{ $empleo->titulo }}</h1>
+            <p><strong>Carrera: </strong>
+                {{ $empleo->escuela->nombre }}
+            </p>
 
-    <p><strong>Empresa: </strong> {{ $empleo->empresa->nombre_empresa }}</p>
-    <p><strong>Carrera: </strong>
-        {{ $empleo->escuela->nombre }}
-    </p>
-    <p><strong>Creacion de Oferta: </strong> {{ $empleo->created_at->format('d/m/Y') }}</p>
+            <p><strong>Fecha de creaci&oacute;n:</strong> {{ $empleo->created_at->format('d/m/Y') }}</p>
+        </div>
 
-    <div>
-        {!! $empleo->requerimientos !!}
+        <div class="col-md-6">
+            <p><strong>T&iacute;tulo de la oferta: </strong>{{ $empleo->titulo }}</p>
+            <p><strong>Requerimientos: </strong></p>
+            <div class="practicas-requerimientos">
+                {!! $empleo->requerimientos !!}
+            </div>
+        </div>
     </div>
 
 @endsection

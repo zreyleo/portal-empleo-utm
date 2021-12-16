@@ -2,9 +2,9 @@
 
 @section('page-content')
 
-    <h2 class="my-5 text-center">Tus Ofertas de Pr&aacute;cticas</h2>
+    <a href="{{ route('practicas.create') }}" class="btn btn-primary my-3">Crear Oferta de pr&aacute;ctica</a>
 
-    {{-- {{ $empleos }} --}}
+    <h2 class="my-5 text-center">Tus Ofertas de Pr&aacute;cticas</h2>
 
     <div class="row">
         <table class="table">
@@ -23,11 +23,12 @@
                     <tr>
                         <td scope="row">{{ $practica->id }}</td>
                         <td>{{ $practica->titulo }}</td>
-                        {{-- <td>{{ $practica->aspirantes->count() }}</td> --}}
+                        <td>{{ $practica->estudiantes_practicas->count() }}</td>
                         <td>&nbsp;</td>
                         <td class="d-flex">
                             <a href="{{ route('practicas.show', ['practica' => $practica->id]) }}"
                                 class="btn btn-success">Ver</a>
+
                             <a href="{{ route('practicas.edit', ['practica' => $practica->id]) }}"
                                 class="btn btn-warning mx-2">Editar</a>
                             {{-- <a href="{{ route('practicas.ver_aspirantes', ['practica' => $practica->id]) }}"
