@@ -21,23 +21,6 @@
 </li>
 
 <li>
-
-    <a href="#empleos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-        <i class="fas fa-briefcase"></i>
-        Empleos
-    </a>
-
-    <ul class="collapse list-unstyled" id="empleos">
-        <li>
-            <a href="{{ route('empleos.show_empleos_offers') }}">Ofertas de empleo</a>
-        </li>
-        <li>
-            <a href="{{ route('estudiantes_empleos.index') }}">Tus postulaciones</a>
-        </li>
-    </ul>
-</li>
-
-<li>
     <a href="#practicas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fas fa-university"></i>
         Prácticas
@@ -52,6 +35,23 @@
         </li>
         <li>
             <a href="{{ route('estudiantes_practicas.get_pasantias') }}">Ver mis Pr&aacute;caticas anteriores</a>
+        </li>
+    </ul>
+</li>
+
+<li>
+
+    <a href="#empleos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fas fa-briefcase"></i>
+        Empleos
+    </a>
+
+    <ul class="collapse list-unstyled" id="empleos">
+        <li>
+            <a href="{{ route('empleos.show_empleos_offers') }}">Ofertas de empleo</a>
+        </li>
+        <li>
+            <a href="{{ route('estudiantes_empleos.index') }}">Tus postulaciones</a>
         </li>
     </ul>
 </li>

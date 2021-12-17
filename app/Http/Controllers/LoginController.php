@@ -101,6 +101,11 @@ class LoginController extends Controller
 
     private const ID_ROL_RESPONSABLE_PRACTICA = 38; // este numero sive para verificar si el usuario tiene el rol de responsable de practicas que se encuentra en la tabla tbl_rol
 
+    private const IDS_FACULTADES_QUE_NO_PUEDEN_USAR_EL_SISTEMA = [
+        3, // FILOSOFIA Y LETRAS
+        9 // SALUD
+    ];
+
     private static function login_sga_docentes($email, $password)
     {
         $result = DB::connection('DB_db_sga_actual')->select(self::SQL_FOR_LOGIN_SGA, [
@@ -210,10 +215,16 @@ class LoginController extends Controller
         $idescuela = explode('|', $request->carrera)[0];
         $idmalla = explode('|', $request->carrera)[1];
 
+        $escuela = Escuela::find($idescuela);
+
+        if (in_array($escuela->idfacultad, self::IDS_FACULTADES_QUE_NO_PUEDEN_USAR_EL_SISTEMA)) {
+            Session::flush();
+
+            return redirect()->route('landing')->with('status', 'Lo sentimos pero tu carrera no puede usar el sistema');
+        }
+
         $request->session()->put('idescuela', $idescuela);
         $request->session()->put('idmalla', $idmalla);
-
-        $escuela = Escuela::find($idescuela);
 
         $request->session()->put('idfacultad', $escuela->idfacultad);
 
@@ -283,6 +294,7 @@ class LoginController extends Controller
 
         if ($personal_rol_array->count() <= 0) {
             add_error("El usuario '{$data['email']}' no tiene acceso");
+
             return redirect()->back();
         } else {
             $personal_rol = $personal_rol_array[0];
