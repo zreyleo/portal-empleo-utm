@@ -15,7 +15,7 @@ class Pasantia extends Model
     protected $primaryKey = 'id_pasantia';
 
     protected $fillable = [
-        'id_pasante', 'id_empresa', 'horas', 'id_carrera', 'titulo_pasantia', 'id_periodo',
+        'id_pasante', 'id_supervisor', 'id_empresa', 'horas', 'id_carrera', 'titulo_pasantia', 'id_periodo',
         'id_materia_unica', 'id_malla', 'fase'
     ];
 

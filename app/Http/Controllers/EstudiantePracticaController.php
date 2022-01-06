@@ -161,19 +161,6 @@ class EstudiantePracticaController extends Controller
             return redirect()->route('estudiantes_practicas.get_pasantias');
         }
 
-        // if (EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])->get()->count() > 0) {
-        //     $last_estudiante_practica = EstudiantePractica::where('estudiante_id', $estudiante['id_personal'])
-        //         ->latest()->get()[0];
-
-        //     $date_last_estudiante_practica = Carbon::create($last_estudiante_practica->created_at->format('d.m.Y'));
-
-        //     if ($date_last_estudiante_practica->addMonth()->greaterThan(now())) {
-        //         add_error('No es posible reservar otro cupo de una practica hasta despues de un mes');
-
-        //         return redirect()->route('estudiantes_practicas.index');
-        //     }
-        // }
-
         try {
             $estudiante_practica = EstudiantePractica::create([
                 'estudiante_id' => $estudiante['id_personal'],

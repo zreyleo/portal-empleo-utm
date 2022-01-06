@@ -5,6 +5,7 @@ import Axios from 'axios';
 
 const FormularioAnularConDetalle = ({
     ruta,
+    rutaExito,
     csrf,
     pregunta = 'Seguro de querer anular?',
     cancelMessage = 'Accion cancelada'
@@ -44,7 +45,7 @@ const FormularioAnularConDetalle = ({
                 Swal.fire('Anulada!', '', 'success');
 
                 setTimeout(() => {
-                    history.go(-1)
+                    window.location.assign(rutaExito)
                 }, 200);
             }).catch(() => {
                 Swal.fire('Ocurrió un error', '', 'error')

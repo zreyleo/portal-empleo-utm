@@ -27,7 +27,11 @@
                 @switch($estudiante_practica->pasantia->estado)
                     @case(0)
                         @if (!$estudiante_practica->pasantia->fecha_inicio)
-                            <span class="badge bg-info text-black">Completar Datos</span>
+                            {{-- <span class="badge bg-info text-black">Completar Datos</span> --}}
+                            <a href="http://192.168.112.21/pasantias"
+                                target="_blank"
+                                class="btn btn-info"
+                            >Completar Datos</a>
                         @else
                             <span class="badge bg-secondary text-white">Pendiente</span>
                         @endif

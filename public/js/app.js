@@ -69310,6 +69310,7 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
   };
 
   var handleChangeCedula = function handleChangeCedula(event) {
+    if (cedulaError) setCedulaError('');
     setCedula(event.target.value);
   };
 
@@ -69324,10 +69325,11 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
     event.preventDefault();
 
     if (!Object(ec_dni_validator__WEBPACK_IMPORTED_MODULE_4__["isValidDNI"])(cedula)) {
-      setCedulaError(true);
+      setCedulaError('No es un número de cedula válido');
+      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Numero de cedula no valida', '', 'warning');
       return;
     } else {
-      setCedulaError(false);
+      setCedulaError('');
     }
 
     sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Buscando...', '', 'info');
@@ -69404,7 +69406,7 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "C\xE9dula"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "text",
-    className: "form-control",
+    className: "form-control ".concat(cedulaError && 'is-invalid'),
     value: cedula,
     onChange: handleChangeCedula
   }), cedulaError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -69533,12 +69535,12 @@ var CambiarRepresentante = function CambiarRepresentante(_ref) {
     className: "form-control"
   }, representante.genero == 'M' ? 'MASCULINO' : representante.genero == 'F' ? 'FEMENINO' : ''))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Alerta");
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-6"
+    className: "col-md-5"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: handleClickBuscar,
     className: "btn btn-info mb-5"
   }, buscar ? 'Registrar' : 'Buscar'), form), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-6"
+    className: "col-md-7"
   }, datosRepresentante));
 };
 
@@ -69760,6 +69762,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var FormularioAnularConDetalle = function FormularioAnularConDetalle(_ref) {
   var ruta = _ref.ruta,
+      rutaExito = _ref.rutaExito,
       csrf = _ref.csrf,
       _ref$pregunta = _ref.pregunta,
       pregunta = _ref$pregunta === void 0 ? 'Seguro de querer anular?' : _ref$pregunta,
@@ -69806,7 +69809,7 @@ var FormularioAnularConDetalle = function FormularioAnularConDetalle(_ref) {
           console.log(reposnse);
           sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Anulada!', '', 'success');
           setTimeout(function () {
-            history.go(-1);
+            window.location.assign(rutaExito);
           }, 200);
         })["catch"](function () {
           sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Ocurrió un error', '', 'error');
@@ -70466,8 +70469,8 @@ if (document.getElementById('provincias-cantones-parroquias-selects2')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/regzam/Sitios/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/regzam/Sitios/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

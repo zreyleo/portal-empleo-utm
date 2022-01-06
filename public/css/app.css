@@ -11238,6 +11238,14 @@ table.table tbody tr td span.badge {
 }
 
 /* ---------------------------------------------------
+    CAMBIAR REPRESENTANTE
+----------------------------------------------------- */
+
+#cambiar-representante .col-md-7 .form-group .form-control {
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------
     NOTIFICACION
 ----------------------------------------------------- */
 

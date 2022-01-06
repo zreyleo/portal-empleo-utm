@@ -266,14 +266,23 @@ class NewEmpresaController extends Controller
 
         $nuevo_personal_externo = $nueva_empresa->representante;
 
-        $personal_externo = PersonalExterno::create([
-            'cedula' => $nuevo_personal_externo->cedula,
-            'nombres' => $nuevo_personal_externo->nombres,
-            'apellido1' => $nuevo_personal_externo->apellido_p,
-            'apellido2' => $nuevo_personal_externo->apellido_m,
-            'titulo' => $nuevo_personal_externo->titulo,
-            'genero' => $nuevo_personal_externo->genero
-        ]);
+        $old_personal_externo = PersonalExterno::where('cedula', $nuevo_personal_externo->cedula)->get()->first();
+
+        $personal_externo = null;
+
+        if ($old_personal_externo) {
+            $personal_externo = $old_personal_externo;
+        } else {
+            $personal_externo = PersonalExterno::create([
+                'cedula' => $nuevo_personal_externo->cedula,
+                'nombres' => $nuevo_personal_externo->nombres,
+                'apellido1' => $nuevo_personal_externo->apellido_p,
+                'apellido2' => $nuevo_personal_externo->apellido_m,
+                'titulo' => $nuevo_personal_externo->titulo,
+                'genero' => $nuevo_personal_externo->genero
+            ]);
+        }
+
 
         $password = bcrypt($nueva_empresa->ruc);
 

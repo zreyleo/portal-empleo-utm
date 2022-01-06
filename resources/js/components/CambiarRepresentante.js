@@ -32,6 +32,7 @@ const CambiarRepresentante = ({
     }
 
     const handleChangeCedula = (event) => {
+        if (cedulaError) setCedulaError('');
         setCedula(event.target.value);
     }
 
@@ -46,10 +47,11 @@ const CambiarRepresentante = ({
         event.preventDefault();
 
         if (!isValidDNI(cedula)) {
-            setCedulaError(true);
+            setCedulaError('No es un número de cedula válido');
+            Swal.fire('Numero de cedula no valida', '', 'warning')
             return;
         } else {
-            setCedulaError(false);
+            setCedulaError('');
         }
 
         Swal.fire('Buscando...', '', 'info')
@@ -125,7 +127,6 @@ const CambiarRepresentante = ({
                 window.location.assign(rutaExito);
             }, 500);
         });
-
     }
 
     const form = buscar
@@ -134,7 +135,7 @@ const CambiarRepresentante = ({
                 <form onSubmit={handleSubmitBuscar}>
                     <div className="form-group">
                         <label>C&eacute;dula</label>
-                        <input type="text" className="form-control"
+                        <input type="text" className={`form-control ${cedulaError && 'is-invalid'}`}
                             value={cedula}
                             onChange={handleChangeCedula}
                         />
@@ -287,12 +288,12 @@ const CambiarRepresentante = ({
 
     return (
         <>
-            <div className="col-md-6">
+            <div className="col-md-5">
                 <button onClick={handleClickBuscar} className="btn btn-info mb-5">{ buscar ? 'Registrar' : 'Buscar' }</button>
                 {form}
             </div>
 
-            <div className="col-md-6">
+            <div className="col-md-7">
                 { datosRepresentante }
             </div>
         </>

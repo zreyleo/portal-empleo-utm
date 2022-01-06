@@ -290,3 +290,11 @@ table.table tbody tr td span.badge {
 .trix-button-group.trix-button-group--file-tools {
     display:none;
 }
+
+/* ---------------------------------------------------
+    CAMBIAR REPRESENTANTE
+----------------------------------------------------- */
+
+#cambiar-representante .col-md-7 .form-group .form-control {
+    cursor: not-allowed;
+}

@@ -26,6 +26,7 @@
 
         <div id="formulario-anular-con-detalle"
             data-ruta="{{ route('practicas.destroy', ['practica' => $practica->id]) }}"
+            data-ruta-exito="{{ route('practicas.index') }}"
             data-csrf="{{ csrf_token() }}"
         ></div>
 

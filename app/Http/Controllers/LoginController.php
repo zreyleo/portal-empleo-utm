@@ -73,10 +73,10 @@ class LoginController extends Controller
 
     private const SQL_VERIFICA_SI_ESTA_MATRICULADO_PPP = '
         SELECT count(*)
-        from
+        FROM
             esq_mallas.malla_materia_nivel mmn
             inner join esq_inscripciones.inscripcion_detalle det on det.idmalla=mmn.idmalla and det.idmateria=mmn.idmateria
-        where
+        WHERE
             mmn.materia_practica in (\'P\')
             and det.idpersonal=:idpersonal
             and det.idperiodo=:idperiodo
@@ -97,6 +97,15 @@ class LoginController extends Controller
                     and det.anulado = \'N\'
                     and det.aprobado <> \'A\'
             )
+    ';
+
+    private const SQL_HORAS_PPP_CARRERA = 'SELECT co.minimo_horas AS horas FROM tbl_coordinador co WHERE co.id_carrera=:idcarrera limit 1';
+
+    private const SQL_HORAS_PPP_ESTUDIANTE = '
+        SELECT SUM(p.horas) AS horas
+        FROM tbl_pasantia p
+        WHERE p.id_pasante = :idpasante AND p.id_carrera = :idcarrera AND p.estado = 2
+        GROUP BY p.id_pasante, p.id_carrera, p.estado
     ';
 
     private const ID_ROL_RESPONSABLE_PRACTICA = 38; // este numero sive para verificar si el usuario tiene el rol de responsable de practicas que se encuentra en la tabla tbl_rol
@@ -199,7 +208,7 @@ class LoginController extends Controller
     {
         $estudiante_id = request()->session()->get('id_personal');
 
-        $carreras = DB::connection('DB_db_sga')->select(self::SQL_FOR_GETTING_THE_ESTUDIANTE_CARRERAS_2, [
+        $carreras = DB::connection('DB_db_sga_actual')->select(self::SQL_FOR_GETTING_THE_ESTUDIANTE_CARRERAS_2, [
             'idestudiante' => $estudiante_id
         ]);
 
@@ -216,12 +225,6 @@ class LoginController extends Controller
         $idmalla = explode('|', $request->carrera)[1];
 
         $escuela = Escuela::find($idescuela);
-
-        if (in_array($escuela->idfacultad, self::IDS_FACULTADES_QUE_NO_PUEDEN_USAR_EL_SISTEMA)) {
-            Session::flush();
-
-            return redirect()->route('landing')->with('status', 'Lo sentimos pero tu carrera no puede usar el sistema');
-        }
 
         $request->session()->put('idescuela', $idescuela);
         $request->session()->put('idmalla', $idmalla);
@@ -242,6 +245,17 @@ class LoginController extends Controller
             'idmalla' => $idmalla
         ])[0]->count ? true : false;
 
+        $total_horas_ppp_carrera = DB::connection('DB_ppp_sistema_SCHEMA_public')->select(self::SQL_HORAS_PPP_CARRERA, [
+            'idcarrera' => $idescuela
+        ])[0];
+
+        $result_total_horas_ppp_estudiante = DB::connection('DB_ppp_sistema_SCHEMA_public')->select(self::SQL_HORAS_PPP_ESTUDIANTE, [
+            'idpasante' => $estudiante_id,
+            'idcarrera' => $idescuela
+        ]);
+
+        $total_horas_ppp_estudiante = count($result_total_horas_ppp_estudiante) ? $result_total_horas_ppp_estudiante[0]->horas : 0;
+
         Session::put('is_redesign', $is_redesign);
 
         $peridodo_actual = DB::connection('DB_db_sga_actual')->select(self::SQL_PERIODO_ACTUAL, [
@@ -258,7 +272,10 @@ class LoginController extends Controller
 
         Session::put('is_matriculado', $is_matriculado);
 
-        if ($is_redesign && !$is_matriculado) {
+        if (($is_redesign && !$is_matriculado) ||
+            (in_array($escuela->idfacultad, self::IDS_FACULTADES_QUE_NO_PUEDEN_USAR_EL_SISTEMA)) ||
+            (($total_horas_ppp_carrera->horas - $total_horas_ppp_estudiante) == 0)
+        ) {
             Session::put('can_register_ppp', false);
         } else {
             Session::put('can_register_ppp', true);
