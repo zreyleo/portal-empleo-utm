@@ -274,7 +274,7 @@ class LoginController extends Controller
 
         if (($is_redesign && !$is_matriculado) ||
             (in_array($escuela->idfacultad, self::IDS_FACULTADES_QUE_NO_PUEDEN_USAR_EL_SISTEMA)) ||
-            (($total_horas_ppp_carrera->horas - $total_horas_ppp_estudiante) == 0)
+            (($total_horas_ppp_carrera->horas - $total_horas_ppp_estudiante) <= 0)
         ) {
             Session::put('can_register_ppp', false);
         } else {

@@ -6,6 +6,7 @@ use App\Empleo;
 use App\EstudianteEmpleo;
 use App\Jobs\SendAcceptedEmailJob;
 use App\Jobs\SendRejectedEmailJob;
+use App\Pasantia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -131,6 +132,11 @@ class EstudianteEmpleoController extends Controller
             from f_obtiene_persona_str('$cedula_aspirante');
         ";
 
+        $pasantias_realizadas = Pasantia::where([
+            ['id_pasante', '=', $estudiante_empleo->estudiante_id],
+            ['estado', '=', 2]
+        ])->get();
+
         $result = DB::connection('DB_ppp_sistema_SCHEMA_public')->select($sql_datos_aspirante)[0];
 
         // dd($result);
@@ -141,6 +147,7 @@ class EstudianteEmpleoController extends Controller
             ->with('empresa', $empresa)
             ->with('empleo', $empleo)
             ->with('estudiante_empleo', $estudiante_empleo)
+            ->with('pasantias_realizadas', $pasantias_realizadas)
             ->with('datos_aspirante', $datos_aspirante);
     }
 

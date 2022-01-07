@@ -23,7 +23,9 @@
                     <tr>
                         <td scope="row">{{ $empleo->id }}</td>
                         <td>{{ $empleo->titulo }}</td>
-                        <td>{{ $empleo->estudiantes_empleos->count() }}</td>
+                        <td>{{ $empleo->estudiantes_empleos->filter(function ($ee, $key) {
+                            return $ee->estado != 'RECHAZADO';
+                        })->count() }}</td>
                         <td class="d-flex">
                             <a href="{{ route('empleos.show', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-success">Ver</a>

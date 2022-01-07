@@ -72,6 +72,11 @@ Route::prefix('dashboard/empresas')->group(function () {
         ->middleware('check.empresa.role.for.session')
         ->name('empresas.dashboard');
 
+    // lista de carreras
+    Route::get('carreras', 'EmpresaController@lista_carreras')
+        ->middleware('check.empresa.role.for.session')
+        ->name('empresas.carreras');
+
     // empleos
     Route::resource('empleos', 'EmpleoController')
         ->middleware('check.empresa.role.for.session');

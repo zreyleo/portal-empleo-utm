@@ -21,6 +21,14 @@
 
         <fieldset class="col-md-4">
             <legend>Informaci&oacute;n de la Persona que registra la Empresa</legend>
+
+            <div class="alert alert-info">
+                <p style="font-size: 20px" class="text-justify">La persona que registra la empresa es una que dirige los
+                    recursos humanos de la misma, esta persona también se considera que es la que va a supervisar
+                    a los estudiantes que reservan en sus ofertas de prácticas.
+                </p>
+            </div>
+
             <div class="form-group">
                 <label for="cedula">C&eacute;dula</label>
                 <input type="text" class="form-control @error('cedula') is-invalid @enderror" id="cedula" name="cedula"

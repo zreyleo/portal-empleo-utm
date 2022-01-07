@@ -7,11 +7,16 @@
 
 
 <div class="row">
-    <div class="col-md-3">
-        <label for="cv">Link de tu CV</label>
+    <div class="col-md-4">
+        <label for="cv">Link de descarga de tu Hoja de Vida</label>
         <a href="{{ $perfil->cv_link }}">{{ $perfil->cv_link }}</a>
+
+        <br>
+
+
     </div>
-    <div class="col-md-9">
+    <div class="col-md-8">
+        <h2>Acerca de Usted:</h2>
         <div>
             {!! $perfil->description !!}
         </div>

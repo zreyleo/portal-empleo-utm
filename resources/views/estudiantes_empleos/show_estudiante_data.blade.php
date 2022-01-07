@@ -37,12 +37,23 @@
                 {{ $datos_aspirante->provincia }} -
                 {{ $datos_aspirante->canton }}
             </p>
+
+            <h2 class="mt-5">Pr&aacute;cticas Realizadas</h2>
+            <ul>
+                @forelse ($pasantias_realizadas as $pr)
+                    <li>
+                        {{ $pr->empresa->nombre_empresa }} - {{ $pr->horas }} Horas
+                    </li>
+                @empty
+
+                @endforelse
+            </ul>
         </div>
 
         <div class="col-md-6">
             @if ($estudiante_empleo->perfil)
-                <p><strong class="text-uppercase">CV: </strong>{{ $estudiante_empleo->perfil->cv_link }}</p>
-                <p><strong class="text-uppercase">Sobre {{ $estudiante_empleo->personal->nombres_completos }}: </strong></p>
+                <p><strong class="text-uppercase">Hoja de Vida: </strong>{{ $estudiante_empleo->perfil->cv_link }}</p>
+                <p><strong class="text-uppercase">Acerca de {{ $estudiante_empleo->personal->nombres_completos }}: </strong></p>
 
                 <div>
                     {!! $estudiante_empleo->perfil->description !!}

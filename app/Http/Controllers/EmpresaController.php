@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
+use App\Facultad;
 use App\Http\Requests\UpdateEmpresaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +53,29 @@ class EmpresaController extends Controller
     {
         $empresa = get_session_empresa();
 
+        // $carreras = EmpleoController::get_carreras();
+
+        $facultades = Facultad::where([
+            ['idfacultad', '<', 12]
+        ])->get();
+
         return view('empresas.dashboard')
+            ->with('facultades', $facultades)
+            ->with('empresa', $empresa);
+    }
+
+    public function lista_carreras()
+    {
+        $empresa = get_session_empresa();
+
+        // $carreras = EmpleoController::get_carreras();
+
+        // $facultades = Facultad::where([
+        //     ['idfacultad', '<', 12]
+        // ])->get();
+
+        return view('empresas.lista_carreras')
+            // ->with('facultades', $facultades)
             ->with('empresa', $empresa);
     }
 

@@ -25,7 +25,7 @@
             @method('PUT')
 
             <div class="form-group">
-                <label for="titulo">Link de CV</label>
+                <label for="titulo">Link de descarga de Hoja de Vida</label>
                 <input
                     type="text"
                     class="form-control @error ('titulo') is-invalid @enderror"
@@ -41,7 +41,7 @@
             </div>
 
             <div class="form-group">
-                <label for="description">Sobre usted</label>
+                <label for="description">Acerca de usted:</label>
 
                 <input
                     type="hidden"

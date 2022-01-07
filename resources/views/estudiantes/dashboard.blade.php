@@ -62,16 +62,44 @@
 
 <div class="row mt-3">
     <div class="col-md-8">
-        {{ var_dump($estudiante) }}
+        {{-- {{ var_dump($estudiante) }} --}}
+        <br>
+        <h2>Bienvenido al Portal de Empleo UTM</h2>
+
+        <p>Como estudiante, podr&aacute;s visualizar las ofertas de empleo que est&aacute;n para tu carrera actualmente.</p>
+
+        <p>Cuentas con un perfil para describir mejor tus capacidades laborales y describir tu experiencia de trabajo,
+            lo puedes actualizar
+            <a class="text-primary underline"
+                style="text-decoration: underline"
+                href="{{ route('perfil.show') }}"
+            >aqu&iacute;</a>
+        </p>
+
+        <p>Adem&aacute;s, si estas habilitado para registrar horas de
+            <span class="text-capitalize">pr&aacute;cticas pre profesional</span>
+            podr&aacute;s reservar un cupo de las ofertas de pr&aacute;ctica que est&aacute;n abiertas para tu Facultad
+        </p>
     </div>
     <div class="col-md-4">
         @if (!$estudiante['can_register_ppp'])
             <div class="alert alert-danger">
-                hola si es de rediseño y no estas matriculado
+                <p>Actualmente no estas habilitado para reservar horas de
+                    <span class="text-capitalize">pr&aacute;cticas pre profesional</span>
+                    por la siguiente raz&oacute;n: <br />
+                    @if ($estudiante['is_redesign'])
+                        No estas matriculado para registrar horas de pr&aacute;cticas.
+                    @else
+                        Ya has completado el m&iacute;nimo de horas requeridas en tu carrera.
+                    @endif
+                </p>
+
             </div>
         @else
             <div class="alert alert-primary">
-                hola si estas apto para registrar ppp
+                Actualemente puedes registrar horas de pr&aacute;cticas,
+                pero ten encuenta que no podr&aacute;s reservar una oferta si ya tienes una pasantia en ejecuci&oacute;n,
+                puedes verificar <a class="text-dark underline" style="text-decoration: underline" href="{{ route('estudiantes_practicas.get_pasantias') }}">aqu&iacute;</a>.
             </div>
         @endif
     </div>
