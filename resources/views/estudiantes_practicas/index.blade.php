@@ -28,7 +28,7 @@
                     @case(0)
                         @if (!$estudiante_practica->pasantia->fecha_inicio)
                             {{-- <span class="badge bg-info text-black">Completar Datos</span> --}}
-                            <a href="http://192.168.112.21/pasantias"
+                            <a href="http://192.168.112.21/pasantias/"
                                 target="_blank"
                                 class="btn btn-info"
                             >Completar Datos</a>
@@ -85,7 +85,7 @@
                 </form> --}}
 
                 {{-- si el estado es distinto a 0 que es pendiente no puede eliminar --}}
-                @if ($estudiante_practica->pasantia->estado)
+                @if ($estudiante_practica->pasantia->estado != 0)
                     <button class="btn btn-outline-danger" disabled>No se puede eliminar</button>
                 @else
                     <div class="formulario-eliminar"

@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class PersonalRol extends Model
 {
-    protected $connection = 'DB_db_sga_SCHEMA_esq_roles';
+    protected $connection = 'DB_db_sga_actual';
 
-    protected $table = 'tbl_personal_rol';
+    protected $table = 'esq_roles.tbl_personal_rol';
 
     // protected $primaryKey = null;
 

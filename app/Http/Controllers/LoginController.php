@@ -108,7 +108,10 @@ class LoginController extends Controller
         GROUP BY p.id_pasante, p.id_carrera, p.estado
     ';
 
-    private const ID_ROL_RESPONSABLE_PRACTICA = 38; // este numero sive para verificar si el usuario tiene el rol de responsable de practicas que se encuentra en la tabla tbl_rol
+    private const IDS_ROL_RESPONSABLE_PRACTICA = [
+        38,
+        108
+    ]; // este numero sive para verificar si el usuario tiene el rol de responsable de practicas que se encuentra en la tabla tbl_rol
 
     private const IDS_FACULTADES_QUE_NO_PUEDEN_USAR_EL_SISTEMA = [
         3, // FILOSOFIA Y LETRAS
@@ -306,8 +309,7 @@ class LoginController extends Controller
 
         $personal_rol_array = PersonalRol::where([
             ['id_personal', '=', $result->r_idpersonal],
-            ['id_rol', '=', self::ID_ROL_RESPONSABLE_PRACTICA]
-        ])->get();
+        ])->whereIn('id_rol', self::IDS_ROL_RESPONSABLE_PRACTICA)->get();
 
         if ($personal_rol_array->count() <= 0) {
             add_error("El usuario '{$data['email']}' no tiene acceso");
