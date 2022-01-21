@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
+use App\Facultad;
 use App\Practica;
 
 use App\Http\Requests\PracticaStoreRequest;
@@ -206,5 +207,29 @@ class PracticaController extends Controller
         return view('practicas.show_practica_details')
             ->with('practica', $practica)
             ->with('estudiante', $estudiante);
+    }
+
+    public function responsables_practicas()
+    {
+        $docente = get_session_docente();
+
+        $id_facultad = $docente['id_facultad'];
+
+        $facultad = Facultad::find($id_facultad);
+
+        $practicas = $facultad->practicas;
+
+        return view('practicas.responsables')
+            ->with('practicas', $practicas)
+            ->with('docente', $docente);
+    }
+
+    public function responsables_practicas_ver_detalles(Practica $practica)
+    {
+        $docente = get_session_docente();
+
+        return view('practicas.responsable_ver_detalles')
+            ->with('practica', $practica)
+            ->with('docente', $docente);
     }
 }

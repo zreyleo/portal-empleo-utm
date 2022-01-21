@@ -20,6 +20,10 @@
         <i class="far fa-chart-bar"></i>
         Estad&iacute;sticas
     </a>
+    <a href="{{ route('responsables.practicas') }}" >
+        <i class="fas fa-university"></i>
+        Pr&aacute;cticas
+    </a>
     {{-- <a href="#estadisticas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="far fa-chart-bar"></i>
         Estad&iacute;sticas
@@ -59,5 +63,23 @@
         </li>
     </ul>
 </li> --}}
+
+@endsection
+
+@section('page-content')
+
+<div class="row mt-3">
+    <div class="col-md-8">
+        {{-- {{ var_dump($estudiante) }} --}}
+        <br>
+        <p>
+            Bienvenido al Portal de Empleo UTM, como docente responsable de prácticas usted podrá ver las ofertas de PPP
+            que hay para sus Facultad y ver cuales son sus participantes.
+        </p>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
 
 @endsection

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 const BuscarPersonal = (props) => {
     console.log(props)
-    const { rutaBuscar, email, rutaRegistro, token } = props
+    const { rutaBuscar, email, rutaRegistro, token, rutaExito } = props
 
     const [cedula, setCedula] = useState('');
     const [cedulaError, setCedulaError] = useState('');
@@ -59,7 +59,12 @@ const BuscarPersonal = (props) => {
             email,
             cedula,
             _token: token
-        }).then(response => console.log(response))
+        }).then(response => {
+            Swal.fire('Departamento Habilitado!', '', 'success');
+            setTimeout(() => {
+                window.location.assign(rutaExito);
+            }, 500);
+        })
         .catch(error => {
             console.log(error)
         });

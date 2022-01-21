@@ -282,4 +282,12 @@ Route::prefix('dashboard/responsables')->group(function () {
     Route::post('departamentos', 'DepartamentoController@store')
         ->middleware('check.responsable.role.for.session')
         ->name('departamentos.store');
+
+    Route::get('practicas', 'PracticaController@responsables_practicas')
+        ->middleware('check.responsable.role.for.session')
+        ->name('responsables.practicas');
+
+    Route::get('practicas/{practica}', 'PracticaController@responsables_practicas_ver_detalles')
+        ->middleware('check.responsable.role.for.session')
+        ->name('responsables.practicas_ver_detalles');
 });

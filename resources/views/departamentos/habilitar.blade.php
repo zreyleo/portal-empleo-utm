@@ -13,5 +13,6 @@
         data-email="{{ $email }}"
         data-ruta-registro="{{ route('departamentos.habilitar', ['token' => $token]) }}"
         data-token="{{ csrf_token() }}"
+        data-ruta-exito="{{ route('login.departamentos_get') }}"
     ></div>
 @endsection
