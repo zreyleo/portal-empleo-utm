@@ -26,8 +26,13 @@
             <a class="text-white" href="{{ route('login.empresas_get') }}">Empresas</a>
             <a class="text-white mx-5" href="{{ route('login.estudiantes_get') }}">Estudiantes</a>
             <a class="text-white" href="{{ route('login.responsables_get') }}">Docentes</a>
+            <a class="text-white ml-5" href="{{ route('login.departamentos_get') }}">Departamentos UTM</a>
         </div>
     </nav>
+
+    @if (session('status'))
+        <div id="notificacion" data-mensaje="{{ session('status') }}"  data-clase="bg-success"></div>
+    @endif
 
     <div class="container">
 

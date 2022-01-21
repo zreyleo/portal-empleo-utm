@@ -28,7 +28,7 @@
                     @case(0)
                         @if (!$estudiante_practica->pasantia->fecha_inicio)
                             {{-- <span class="badge bg-info text-black">Completar Datos</span> --}}
-                            <a href="http://192.168.112.21/pasantias/"
+                            <a href="https://pasantias.utm.edu.ec"
                                 target="_blank"
                                 class="btn btn-info"
                             >Completar Datos</a>

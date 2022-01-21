@@ -23,7 +23,7 @@
                     <tr>
                         <td scope="row">{{ $practica->id }}</td>
                         <td>{{ $practica->titulo }}</td>
-                        <td>{{ $practica->estudiantes_practicas->count() }}</td>
+                        <td>{{ $practica->estudiantes_practicas->count() }} / {{ $practica->cupo }}</td>
                         <td>&nbsp;</td>
                         <td class="d-flex">
                             <a href="{{ route('practicas.show', ['practica' => $practica->id]) }}"

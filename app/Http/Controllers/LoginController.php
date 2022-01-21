@@ -140,6 +140,11 @@ class LoginController extends Controller
         return view('login.empresas');
     }
 
+    public function departamentos_get()
+    {
+        return view('login.departamentos');
+    }
+
     public function empresas_post(Request $request)
     {
         $data = $request->validate([

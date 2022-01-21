@@ -26,7 +26,7 @@
         @method('PUT')
 
         <div class="form-group">
-            <label for="titulo">T&iacute;tulo</label>
+            <label for="titulo">T&iacute;tulo (Ej: Estudiantes de Ingeniería Civil para estudio topográfico)</label>
             <input
                 type="text"
                 class="form-control @error ('titulo') is-invalid @enderror"
@@ -42,7 +42,7 @@
         </div>
 
         <div class="form-group">
-            <label for="area">Área</label>
+            <label for="area">Área de Desenvolvimiento</label>
             <select
                 class="form-control @error ('area') is-invalid @enderror"
                 id="area"
@@ -86,7 +86,7 @@
 
     <div class="col-md-7">
         <div class="form-group">
-            <label for="requerimienos">Requerimientos</label>
+            <label for="requerimienos">Descripción de la Actividad</label>
 
             <input
                 type="hidden"

@@ -70,7 +70,7 @@
 
         <p>Cuentas con un perfil para describir mejor tus capacidades laborales y describir tu experiencia de trabajo,
             lo puedes actualizar
-            <a class="text-primary underline"
+            <a class="text-primary"
                 style="text-decoration: underline"
                 href="{{ route('perfil.show') }}"
             >aqu&iacute;</a>
@@ -79,6 +79,15 @@
         <p>Adem&aacute;s, si estas habilitado para registrar horas de
             <span class="text-capitalize">pr&aacute;cticas pre profesional</span>
             podr&aacute;s reservar un cupo de las ofertas de pr&aacute;ctica que est&aacute;n abiertas para tu Facultad
+        </p>
+
+        <p>Si logras reservar una práctica con éxito, tendrás que completar los datos que faltan
+            <a
+                style="text-decoration: underline"
+                class="text-primary underline"
+                href="https://pasantias.utm.edu.ec/"
+                target="__blank"
+            >https://pasantias.utm.edu.ec</a>
         </p>
     </div>
     <div class="col-md-4">

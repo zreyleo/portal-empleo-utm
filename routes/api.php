@@ -30,5 +30,15 @@ Route::get('representantes', 'RepresentanteController@index')
 Route::get('representantes/{cedula}', 'RepresentanteController@buscar')
     ->name('representantes.buscar');
 
+Route::get('personal', 'RepresentanteController@index')
+    ->middleware('check.empresa.role.for.session')
+    ->name('personal.index');
+
+Route::get('personal/{cedula}', 'RepresentanteController@buscar_personal')
+    ->name('personal.buscar');
+
+Route::post('departamentos/{token}', 'DepartamentoController@registro_departamento_post')
+    ->name('departamentos.habilitar');
+
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +21,7 @@ class PasswordController extends Controller
         $empresa = DB::connection('DB_ppp_sistema_SCHEMA_public')->table('tbl_empresa')->where('email', '=', $request->email)
             ->first();
 
-        //Check if the empresa exists
+        // Check if the empresa exists
         if (!$empresa) {
             return redirect()->back()->withErrors(['email' => 'El email no esta asociado a ninguna empresa']);
         }
@@ -28,8 +29,15 @@ class PasswordController extends Controller
         $tokenData  = DB::table('password_resets')->where('email', $request->email)->get()->first();
 
         if ($tokenData) {
-            add_error('ya se ha enviado un email para resetear password a ese correo');
-            return redirect()->route('login.empresas_get');
+            $tokenFecha = Carbon::parse($tokenData->created_at);
+
+            if ($tokenFecha->lessThanOrEqualTo(now()->subMinutes(15))) {
+                DB::table('password_resets')->where('email', $request->email)->delete();
+            } else {
+                add_error('ya se ha enviado un email para resetear password a ese correo, vuelve a intentar en 15 minutos');
+
+                return redirect()->route('login.empresas_get');
+            }
         }
 
         $token = Str::random(60);
@@ -41,7 +49,7 @@ class PasswordController extends Controller
             'created_at' => now()
         ]);
 
-        $enlace = config('app.url') . '/reset-password/' . $token;
+        $enlace = env('APP_URL') . '/reset-password/' . $token;
 
         $mensaje = "El enlace para restear su password es " . $enlace . ", si no envio esta peticion haga caso omiso.";
 

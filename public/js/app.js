@@ -69142,7 +69142,9 @@ __webpack_require__(/*! ./components/FormularioEliminar */ "./resources/js/compo
 
 __webpack_require__(/*! ./components/FormularioAnularConDetalle */ "./resources/js/components/FormularioAnularConDetalle.js");
 
-__webpack_require__(/*! ./components/CambiarRepresentante */ "./resources/js/components/CambiarRepresentante.js"); // console.log('hola')
+__webpack_require__(/*! ./components/CambiarRepresentante */ "./resources/js/components/CambiarRepresentante.js");
+
+__webpack_require__(/*! ./components/BuscarPersonal */ "./resources/js/components/BuscarPersonal.js"); // console.log('hola')
 
 
 $(document).ready(function () {
@@ -69199,6 +69201,182 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/BuscarPersonal.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/BuscarPersonal.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var ec_dni_validator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ec-dni-validator */ "./node_modules/ec-dni-validator/lib/index.js");
+/* harmony import */ var ec_dni_validator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ec_dni_validator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_4__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+var BuscarPersonal = function BuscarPersonal(props) {
+  console.log(props);
+  var rutaBuscar = props.rutaBuscar,
+      email = props.email,
+      rutaRegistro = props.rutaRegistro,
+      token = props.token;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      cedula = _useState2[0],
+      setCedula = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      cedulaError = _useState4[0],
+      setCedulaError = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState6 = _slicedToArray(_useState5, 2),
+      personal = _useState6[0],
+      setPersonal = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState8 = _slicedToArray(_useState7, 2),
+      apellido1 = _useState8[0],
+      setApellido1 = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState10 = _slicedToArray(_useState9, 2),
+      apellido2 = _useState10[0],
+      setApellido2 = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState12 = _slicedToArray(_useState11, 2),
+      nombres = _useState12[0],
+      setNombres = _useState12[1];
+
+  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState14 = _slicedToArray(_useState13, 2),
+      genero = _useState14[0],
+      setGenero = _useState14[1];
+
+  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState16 = _slicedToArray(_useState15, 2),
+      nombreDepartamento = _useState16[0],
+      setNombreDepartamento = _useState16[1];
+
+  var handleChangeCedula = function handleChangeCedula(event) {
+    if (cedulaError) setCedulaError('');
+    setCedula(event.target.value);
+  };
+
+  var handleClick = function handleClick(event) {
+    if (!Object(ec_dni_validator__WEBPACK_IMPORTED_MODULE_2__["isValidDNI"])(cedula)) {
+      setCedulaError('No es un número de cedula válido');
+      return;
+    }
+
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(rutaBuscar + '/' + cedula).then(function (response) {
+      console.log(response);
+      setPersonal(response.data);
+      setApellido1(response.data.apellido1);
+      setApellido2(response.data.apellido2);
+      setNombres(response.data.nombres);
+      setGenero(response.data.genero);
+    });
+  };
+
+  var habilitarDepartamento = function habilitarDepartamento() {
+    if (!Object.keys(personal).length || !nombreDepartamento) {
+      sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('No olvides Completar datos', 'Falta la cedula de la Autoridad y/o Nombre del departamento', 'warning');
+      return;
+    }
+
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(rutaRegistro, {
+      apellido1: apellido1,
+      apellido2: apellido2,
+      nombres: nombres,
+      genero: genero,
+      nombreDepartamento: nombreDepartamento,
+      email: email,
+      cedula: cedula,
+      _token: token
+    }).then(function (response) {
+      return console.log(response);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-6"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "En el siguiente cuadro escriba el n\xFAmero de cedula de la persona que es autoridad en el departamento."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Cedula"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    className: "form-control ".concat(cedulaError && 'is-invalid'),
+    value: cedula,
+    onChange: handleChangeCedula
+  }), cedulaError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "invalid-feedback d-block",
+    role: "alert"
+  }, cedulaError)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: handleClick,
+    className: "btn btn-info"
+  }, "Buscar"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Personal"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "form-control"
+  }, personal.apellido1, " ", personal.apellido2, " ", personal.nombres))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-6"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Nombre del departamento"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    value: nombreDepartamento,
+    onChange: function onChange(e) {
+      return setNombreDepartamento(e.target.value);
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Email Departamental"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "form-control"
+  }, email)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: habilitarDepartamento,
+    className: "btn btn-primary"
+  }, "Habilitar departamento")));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (BuscarPersonal);
+
+if (document.getElementById('buscar-personal')) {
+  var props = Object.assign({}, document.getElementById('buscar-personal').dataset);
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BuscarPersonal, props), document.getElementById('buscar-personal'));
+}
 
 /***/ }),
 
@@ -70469,8 +70647,8 @@ if (document.getElementById('provincias-cantones-parroquias-selects2')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/regzam/Sites/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/regzam/Sitios/portal-empleo-utm/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/regzam/Sitios/portal-empleo-utm/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

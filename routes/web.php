@@ -1,11 +1,6 @@
 <?php
 
-use App\Empresa;
 use Illuminate\Support\Facades\Route;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,6 +26,22 @@ Route::get('reset-password/{token}', 'PasswordController@reset_password')->name(
 Route::post('reset-password/{token}', 'PasswordController@update_password')->name('password.reset_post');
 
 /*********************************************
+ * ******* Departamentos Internos UTM *******
+ ********************************************/
+
+Route::get('solicitar_registro', 'DepartamentoController@solicitar_registro')
+    ->name('departamento.solicitar_registro');
+
+Route::post('solicitar_registro_post', 'DepartamentoController@solicitar_registro_post')
+    ->name('departamento.solicitar_registro_post');
+
+Route::get('registro_departamento/{token}', 'DepartamentoController@registro_departamento_get')
+    ->name('departamento.registro_departamento_get');
+
+Route::post('registro_departamento/{token}', 'DepartamentoController@registro_departamento_post')
+    ->name('departamento.registro_departamento_post');
+
+/*********************************************
  * ****************** Login ******************
  ********************************************/
 
@@ -51,7 +62,9 @@ Route::prefix('login')->group(function () {
     });
 
     Route::get('reponsables', 'LoginController@responsables_get')->name('login.responsables_get');
-    Route::post('reponsable', 'LoginController@responsables_post')->name('login.responsables_post');
+    Route::post('reponsables', 'LoginController@responsables_post')->name('login.responsables_post');
+
+    Route::get('departamentos', 'LoginController@departamentos_get')->name('login.departamentos_get');
 });
 
 /*********************************************

@@ -20,6 +20,7 @@ require('./components/ProvinciasCantonesParroquiasSelects2');
 require('./components/FormularioEliminar');
 require('./components/FormularioAnularConDetalle');
 require('./components/CambiarRepresentante');
+require('./components/BuscarPersonal');
 
 // console.log('hola')
 

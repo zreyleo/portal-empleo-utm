@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Empresa;
 use App\Http\Resources\RepresentanteResource;
+use App\Personal;
 use App\PersonalExterno;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,13 @@ class RepresentanteController extends Controller
         $representante = new RepresentanteResource($personalExterno);
 
         return $representante;
+    }
+
+    public function buscar_personal($cedula)
+    {
+        $personal = Personal::where('cedula', $cedula)->get()->first();
+
+        return $personal;
     }
 
     public function registrar(Request $request)
