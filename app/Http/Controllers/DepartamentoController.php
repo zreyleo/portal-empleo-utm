@@ -102,6 +102,8 @@ class DepartamentoController extends Controller
 
     public function registro_departamento_post(Request $request, $token)
     {
+        // return $request->all();
+
         $personalExternoId = PersonalExterno::create([
             'cedula' => $request->cedula,
             'apellido1' => strtoupper($request->apellido1),
@@ -110,6 +112,7 @@ class DepartamentoController extends Controller
             'titulo' => 'FUNCIONARIO UTM',
             'genero' => $request->genero
         ])->id_personal_externo;
+
 
         $departamento = new Departamento();
 
@@ -131,6 +134,13 @@ class DepartamentoController extends Controller
 
         DB::table('departamento_registration')
             ->where('token', $token)->delete();
+
+        $mensaje = "
+            El departamento {$request->nombreDepartamento} está habilitado para publicar ofertas de
+            prácticas pre profesionales, recuerde que la clave para acceder por primera vez es PortalEmpleo2021
+        ";
+
+        enviar_correo($request->email, 'Departamento Habilitado para el Portal de Empleo UTM', $mensaje);
 
         return response()->json([], 201);
     }

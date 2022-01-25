@@ -6,6 +6,8 @@
 
 {{-- {{ var_dump($practicas) }} --}}
 
+<a href="{{ route('estadisticas.tabla') }}" class="btn btn-info my-5">Descargar Información de la Reservas de Prácticas</a>
+
 <table class="table">
     <thead>
         <tr>

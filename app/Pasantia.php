@@ -35,4 +35,9 @@ class Pasantia extends Model
     {
         return $this->belongsTo(Empresa::class, 'id_empresa', 'id_empresa');
     }
+
+    public function escuela()
+    {
+        return $this->belongsTo(Escuela::class, 'id_carrera', 'idescuela');
+    }
 }

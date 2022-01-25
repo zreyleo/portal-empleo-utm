@@ -15,4 +15,8 @@
         data-token="{{ csrf_token() }}"
         data-ruta-exito="{{ route('login.departamentos_get') }}"
     ></div>
+
+    <form action="{{ route('departamentos.habilitar', ['token' => $token]) }}" method="post">
+        <input type="submit" value="Hola">
+    </form>
 @endsection

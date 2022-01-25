@@ -419,4 +419,30 @@ class EstadisticaController extends Controller
 
         return $pdf->download('estadisticas.pdf');
     }
+
+    public function get_practicas_en_tabla_pdf()
+    {
+        $docente = get_session_docente();
+
+        $id_facultad = $docente['id_facultad'];
+
+        $facultad = Facultad::find($id_facultad);
+
+        $practicas = $facultad->practicas;
+
+        $fecha_inicio = $practicas[0]->created_at;
+        $fecha_fin = $practicas[count($practicas) - 1]->created_at;
+
+        /** @var PDF $pdf */
+        $pdf = app('dompdf.wrapper');
+
+        $pdf->loadView('estadisticas.tabla', compact(
+            'practicas',
+            'fecha_inicio',
+            'fecha_fin',
+            'facultad'
+        ));
+
+        return $pdf->download('estadisticas.tabla');
+    }
 }

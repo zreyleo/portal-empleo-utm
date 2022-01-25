@@ -5,7 +5,6 @@ import Axios from 'axios';
 import Swal from 'sweetalert2';
 
 const BuscarPersonal = (props) => {
-    console.log(props)
     const { rutaBuscar, email, rutaRegistro, token, rutaExito } = props
 
     const [cedula, setCedula] = useState('');
@@ -32,7 +31,6 @@ const BuscarPersonal = (props) => {
 
         Axios.get(rutaBuscar + '/' + cedula)
             .then(response => {
-                console.log(response)
                 setPersonal(response.data)
                 setApellido1(response.data.apellido1)
                 setApellido2(response.data.apellido2)
@@ -50,6 +48,8 @@ const BuscarPersonal = (props) => {
             return
         }
 
+        Swal.fire('Esperando...', '', 'info');
+
         Axios.post(rutaRegistro, {
             apellido1,
             apellido2,
@@ -60,6 +60,7 @@ const BuscarPersonal = (props) => {
             cedula,
             _token: token
         }).then(response => {
+            console.log(response)
             Swal.fire('Departamento Habilitado!', '', 'success');
             setTimeout(() => {
                 window.location.assign(rutaExito);
@@ -67,6 +68,7 @@ const BuscarPersonal = (props) => {
         })
         .catch(error => {
             console.log(error)
+            Swal.fire('¡Ocurrió un error!', '', 'error');
         });
     }
 
