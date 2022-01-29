@@ -279,6 +279,10 @@ Route::prefix('dashboard/responsables')->group(function () {
         ->middleware('check.responsable.role.for.session')
         ->name('estadisticas.tabla');
 
+    Route::get('estadisticas/tabla-empleos', 'EstadisticaController@get_empleos_en_tabla_pdf')
+        ->middleware('check.responsable.role.for.session')
+        ->name('estadisticas.tabla-empleos');
+
     Route::get('departamentos/create', 'DepartamentoController@create')
         ->middleware('check.responsable.role.for.session')
         ->name('departamentos.create');
@@ -290,6 +294,11 @@ Route::prefix('dashboard/responsables')->group(function () {
     Route::get('practicas', 'PracticaController@responsables_practicas')
         ->middleware('check.responsable.role.for.session')
         ->name('responsables.practicas');
+
+    Route::get('empleos', 'EmpleoController@responsables_empleo')
+        ->middleware('check.responsable.role.for.session')
+        ->name('responsables.empleos');
+
 
     Route::get('practicas/{practica}', 'PracticaController@responsables_practicas_ver_detalles')
         ->middleware('check.responsable.role.for.session')

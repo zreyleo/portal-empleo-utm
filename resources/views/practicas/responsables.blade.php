@@ -2,7 +2,7 @@
 
 @section('page-content')
 
-<h2 class="text-center my-3">Estad&iacute;sticas de PPP</h2>
+<h2 class="text-center my-3">Reporte de PPP</h2>
 
 {{-- {{ var_dump($practicas) }} --}}
 

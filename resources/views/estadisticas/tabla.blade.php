@@ -55,7 +55,7 @@
         @empty
 
             <tr>
-                <td colspan="4">Los estudiantes no han reservado ninguna práctica</td>
+                <td colspan="5">Los estudiantes no han reservado ninguna práctica</td>
             </tr>
 
         @endforelse

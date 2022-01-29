@@ -6,6 +6,7 @@ use App\Empleo;
 use App\Empresa;
 use App\Escuela;
 use App\EstudianteEmpleo;
+use App\Facultad;
 use App\Http\Requests\EmpleoStoreRequest;
 use App\Http\Requests\EmpleoUpdateRequest;
 
@@ -216,5 +217,26 @@ class EmpleoController extends Controller
             ->with('empleo', $empleo)
             ->with('estudiantes_empleos', $estudiantes_empleos)
             ->with('empresa', $empresa);
+    }
+
+    public function responsables_empleo() {
+        $docente = get_session_docente();
+
+        $id_facultad = $docente['id_facultad'];
+
+        $facultad = Facultad::find($id_facultad);
+
+        $escuelas = $facultad->escuelas->filter(function ($escuela) {
+            if ($escuela->nomenclatura && $escuela->titulo_academico_m) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        return view('empleos.responsables')
+            ->with('docente', $docente)
+            ->with('facultad', $facultad)
+            ->with('escuelas', $escuelas);
     }
 }

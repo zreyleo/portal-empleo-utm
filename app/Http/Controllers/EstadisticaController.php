@@ -443,6 +443,34 @@ class EstadisticaController extends Controller
             'facultad'
         ));
 
-        return $pdf->download('estadisticas.tabla');
+
+        return $pdf->download('reporte-ppp.pdf');
+    }
+
+    public function get_empleos_en_tabla_pdf()
+    {
+        $docente = get_session_docente();
+
+        $id_facultad = $docente['id_facultad'];
+
+        $facultad = Facultad::find($id_facultad);
+
+        $escuelas = $facultad->escuelas->filter(function ($escuela) {
+            if ($escuela->nomenclatura && $escuela->titulo_academico_m) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        /** @var PDF $pdf */
+        $pdf = app('dompdf.wrapper');
+
+        $pdf->loadView('estadisticas.tabla-empleos', compact(
+            'escuelas',
+            'facultad'
+        ));
+
+        return $pdf->download('reporte-empleos.pdf');
     }
 }
