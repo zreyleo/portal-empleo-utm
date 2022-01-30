@@ -16,7 +16,7 @@
         data-ruta-exito="{{ route('login.departamentos_get') }}"
     ></div>
 
-    <form action="{{ route('departamentos.habilitar', ['token' => $token]) }}" method="post">
+    {{-- <form action="{{ route('departamentos.habilitar', ['token' => $token]) }}" method="post">
         <input type="submit" value="Hola">
-    </form>
+    </form> --}}
 @endsection

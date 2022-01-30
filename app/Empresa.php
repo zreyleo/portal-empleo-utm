@@ -18,7 +18,8 @@ class Empresa extends Model
     ];
 
     protected $attributes = [
-        'estado' => 1
+        'estado' => 1,
+        'departamento_interno' => false
     ];
 
     protected $hidden = [

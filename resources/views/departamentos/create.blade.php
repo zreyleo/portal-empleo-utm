@@ -21,7 +21,12 @@
 
         <fieldset class="col-md-4">
             <legend>Informaci&oacute;n del Persona supervisora del Departamento</legend>
-            <div class="form-group">
+
+            <div id="buscar-autoridad"
+                data-ruta-buscar="{{ route('personal.index') }}"
+            ></div>
+
+            {{-- <div class="form-group">
                 <label for="cedula">C&eacute;dula</label>
                 <input type="text" class="form-control @error('cedula') is-invalid @enderror" id="cedula" name="cedula"
                     value="{{ old('cedula') }}">
@@ -76,14 +81,14 @@
                 @error('genero')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
-            </div>
+            </div> --}}
         </fieldset>
 
         <fieldset class="col-md-6 offset-md-2">
             <legend>Información del Departamento Interno UTM</legend>
 
             <div class="form-group">
-                <label for="nombre_empresa">Nombre</label>
+                <label for="nombre_empresa">Nombre del Departamento</label>
                 <input type="text" class="form-control @error('nombre_empresa') is-invalid @enderror text-uppercase"
                     id="nombre_empresa" name="nombre_empresa" value="{{ old('nombre_empresa') }}">
                 @error('nombre_empresa')
@@ -91,16 +96,16 @@
                 @enderror
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="nomenclatura">Nomenclatura</label>
                 <input type="text" class="form-control @error('nomenclatura') is-invalid @enderror text-uppercase"
                     id="nomenclatura" name="nomenclatura" value="{{ old('nomenclatura') }}">
                 @error('nomenclatura')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
-            </div>
+            </div> --}}
 
-            <div
+            {{-- <div
                 id="provincias-cantones-parroquias-selects"
 
                 @if (old('provincia'))
@@ -132,40 +137,39 @@
                 @error('parroquia')
                     data-parroquia-error="{{ $message }}"
                 @enderror
-            ></div>
+            ></div> --}}
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="direccion">Direcci&oacute;n</label>
                 <input type="text" class="form-control @error('direccion') is-invalid @enderror text-uppercase" id="direccion"
                     name="direccion" value="{{ old('direccion') }}">
                 @error('direccion')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
-            </div>
+            </div> --}}
 
             <div class="form-group">
                 <label for="email">Email de contacto</label>
-                <input type="email" class="form-control @error('email') is-invalid @enderror text-lowercase" id="email" name="email"
-                    value="{{ old('email') }}">
+                <input type="email" class="form-control @error('email') is-invalid @enderror text-lowercase"
+                    id="email" name="email"
+                    value="{{ old('email') }}"
+                >
                 @error('email')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="telefono">Tel&eacute;fono de contacto</label>
                 <input type="text" class="form-control @error('telefono') is-invalid @enderror text-uppercase" id="telefono"
                     name="telefono" value="{{ old('telefono') }}">
                 @error('telefono')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
-            </div>
+            </div> --}}
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="descripcion">Descripci&oacute;n</label>
-
-                {{-- <textarea type="text" class="form-control @error('descripcion') is-invalid @enderror" id="descripcion"
-                    name="descripcion" cols="4" style="resize: none">{{old('descripcion')}}</textarea> --}}
 
                 <input
                     type="hidden"
@@ -182,9 +186,7 @@
                 @error('descripcion')
                     <span class="invalid-feedback d-block" role="alert">{{ $message }}</span>
                 @enderror
-            </div>
-
-
+            </div> --}}
 
             <div class="form-group d-flex justify-content-end mt-5">
                 <input type="submit" value="Enviar" class="btn btn-block btn-primary">

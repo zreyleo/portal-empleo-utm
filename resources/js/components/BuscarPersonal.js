@@ -102,7 +102,7 @@ const BuscarPersonal = (props) => {
             <div className='col-md-6'>
                 <div className='form-group'>
                     <label>Nombre del departamento</label>
-                    <input type="text" className='form-control'
+                    <input type="text" className='form-control text-uppercase'
                         value={nombreDepartamento}
                         onChange={e => setNombreDepartamento(e.target.value)}
                     />

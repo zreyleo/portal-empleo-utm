@@ -104,14 +104,24 @@ class DepartamentoController extends Controller
     {
         // return $request->all();
 
-        $personalExternoId = PersonalExterno::create([
-            'cedula' => $request->cedula,
-            'apellido1' => strtoupper($request->apellido1),
-            'apellido2' => strtoupper($request->apellido2),
-            'nombres' => strtoupper($request->nombres),
-            'titulo' => 'FUNCIONARIO UTM',
-            'genero' => $request->genero
-        ])->id_personal_externo;
+        $personalExternoId = null;
+        $personal = null;
+
+        if (PersonalExterno::where('cedula', $request->cedula)->get()->count() > 0) {
+            $personal = PersonalExterno::where('cedula', $request->cedula)->get()[0];
+
+            $personalExternoId = $personal->id_personal_externo;
+        } else {
+            $personalExternoId = PersonalExterno::create([
+                'cedula' => $request->cedula,
+                'apellido1' => strtoupper($request->apellido1),
+                'apellido2' => strtoupper($request->apellido2),
+                'nombres' => strtoupper($request->nombres),
+                'titulo' => 'FUNCIONARIO UTM',
+                'genero' => $request->genero
+            ])->id_personal_externo;
+        }
+
 
 
         $departamento = new Departamento();
@@ -126,7 +136,7 @@ class DepartamentoController extends Controller
         $departamento->telefono = '053-701-695';
 
 
-        $departamento->nomenclatura = 'DEPARTAMENTO UTM';
+        $departamento->departamento_interno = true;
 
         $departamento->password = Hash::make(self::DEFAULT_PASSWORD);
 
@@ -175,40 +185,84 @@ class DepartamentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDepartamentoRequest $request)
+    public function store(Request $request)
     {
+        $request->validate([
+            'email' => ['required', 'email'],
+            'cedula' => 'required',
+            'apellido1' => 'required',
+            'apellido2' => 'required',
+            'nombres' => 'required',
+            'genero' => 'required',
+            'nombre_empresa' => 'required'
+        ]);
+
+        if (!str_ends_with($request->email, '@utm.edu.ec')) {
+            add_error('Este correo no pertenece a la UTM');
+
+            return redirect()->route('departamentos.create');
+        }
+
+        $personal = Personal::where('correo_personal_institucional', $request->email)->get();
+
+        if ($personal->count()) {
+            add_error('Este correo pertenece a un personal de la UTM');
+
+            return redirect()->route('departamentos.create');
+        }
+
+        $departamento = Empresa::where('email', $request->email)->get()->first();
+
+        if ($departamento) {
+            add_error('Este correo ya está habilitado, prosiga a recuperar password');
+
+            return redirect()->route('departamentos.create');
+        }
+
+        $personalExternoId = null;
+        $personal = null;
+
+        if (PersonalExterno::where('cedula', $request->cedula)->get()->count() > 0) {
+            $personal = PersonalExterno::where('cedula', $request->cedula)->get()[0];
+
+            $personalExternoId = $personal->id_personal_externo;
+        } else {
+            $personalExternoId = PersonalExterno::create([
+                'cedula' => $request->cedula,
+                'apellido1' => strtoupper($request->apellido1),
+                'apellido2' => strtoupper($request->apellido2),
+                'nombres' => strtoupper($request->nombres),
+                'titulo' => 'FUNCIONARIO UTM',
+                'genero' => $request->genero
+            ])->id_personal_externo;
+        }
 
         // dd($request->all());
-        $PersonalExternoId = PersonalExterno::create([
-            'cedula' => $request->cedula,
-            'apellido1' => strtoupper($request->apellido_p),
-            'apellido2' => strtoupper($request->apellido_m),
-            'nombres' => strtoupper($request->nombres),
-            'titulo' => strtoupper($request->titulo),
-            'genero' => $request->genero
-        ])->id_personal_externo;
 
         $departamento = new Departamento();
 
         $departamento->nombre_empresa = strtoupper($request->nombre_empresa);
         $departamento->email = strtolower($request->email);
-        $departamento->id_provincia = $request->provincia;
-        $departamento->id_canton = $request->canton;
-        $departamento->id_parroquia = $request->parroquia;
-        $departamento->direccion = $request->direccion;
-        $departamento->id_representante = $PersonalExternoId;
+        $departamento->id_provincia = 13;
+        $departamento->id_canton = 1;
+        $departamento->id_parroquia = 2;
+        $departamento->direccion = 'AVENIDA URBINA Y CHE GUEVARA';
+        $departamento->id_representante = $personalExternoId;
 
-        if ($request->telefono) {
-            $departamento->telefono = $request->telefono;
-        }
+        $departamento->telefono = '053-701-695';
 
-        if ($request->nomenclatura) {
-            $departamento->nomenclatura = strtoupper($request->nomenclatura);
-        }
+        $departamento->departamento_interno = true;
 
         $departamento->password = Hash::make(self::DEFAULT_PASSWORD);
 
         $departamento->save();
+
+        $mensaje = "
+            El departamento {$request->nombre_empresa} está habilitado para publicar ofertas de
+            prácticas pre profesionales, recuerde que la clave para acceder por primera vez es PortalEmpleo2021
+        ";
+
+        enviar_correo($request->email, 'Departamento Habilitado para el Portal de Empleo UTM', $mensaje);
 
         return redirect()->route('responsables.dashboard')->with('status', 'Se ha registrado un nuevo departamento UTM');
     }

@@ -14,7 +14,7 @@ class AddIdResponsableDescriptionAreaRucToEmpresasTable extends Migration
         Schema::connection('DB_ppp_sistema_SCHEMA_public')->table('tbl_empresa', function (Blueprint $table) {
             $table->string('password')->nullable();
             $table->string('ruc')->unique()->nullable();
-            $table->string('nomenclatura')->unique()->nullable();
+            $table->boolean('departamento_interno')->default(false);
             $table->text('descripcion')->nullable();
             $table->unsignedBigInteger('area')->nullable();
             $table->unsignedBigInteger('registrado_por')->nullable();
@@ -24,7 +24,7 @@ class AddIdResponsableDescriptionAreaRucToEmpresasTable extends Migration
     public function down()
     {
         Schema::connection('DB_ppp_sistema_SCHEMA_public')->table('tbl_empresa', function (Blueprint $table) {
-            $table->dropColumn(['password', 'ruc', 'nomenclatura', 'descripcion', 'area', 'registrado_por']);
+            $table->dropColumn(['password', 'ruc', 'departamento_interno', 'descripcion', 'area', 'registrado_por']);
         });
     }
 }

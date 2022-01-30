@@ -18,7 +18,8 @@ class Departamento extends Model
     ];
 
     protected $attributes = [
-        'estado' => 1
+        'estado' => 1,
+        'departamento_interno' => true
     ];
 
     protected $hidden = [
