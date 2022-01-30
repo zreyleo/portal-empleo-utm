@@ -14,6 +14,10 @@ class Empleo extends Model
         'titulo', 'requerimientos', 'carrera_id', 'empresa_id'
     ];
 
+    protected $attributes = [
+        'visible' => true
+    ];
+
     public function empresa()
     {
         return $this->belongsTo(Empresa::class, 'empresa_id', 'id_empresa');

@@ -3,8 +3,8 @@
 @section('page-content')
 
 <a href="{{ route('perfil.edit') }}" class="btn btn-warning my-3">Editar</a>
-<h1 class="text-center">Tu Perfil</h1>
 
+<br class="my-3">
 
 <div class="row">
     <div class="col-md-4">

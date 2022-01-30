@@ -94,6 +94,10 @@ Route::prefix('dashboard/empresas')->group(function () {
     Route::resource('empleos', 'EmpleoController')
         ->middleware('check.empresa.role.for.session');
 
+    Route::get('empleos/{empleo}/toggleVisible', 'EmpleoController@toggleVisibleEmpleo')
+        ->middleware('check.empresa.role.for.session')
+        ->name('empleos.toggleVisible');
+
     Route::get('empleos/{empleo}/estudiantes_empleos', 'EmpleoController@show_estudiantes_empleos')
         ->middleware('check.empresa.role.for.session')
         ->name('empleos.show_estudiantes_empleos');

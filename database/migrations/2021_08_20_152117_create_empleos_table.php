@@ -19,6 +19,7 @@ class CreateEmpleosTable extends Migration
             $table->text('requerimientos');
             $table->unsignedBigInteger('carrera_id');
             $table->unsignedBigInteger('empresa_id');
+            $table->boolean('visible')->default(true);
             $table->foreign('empresa_id')->references('id_empresa')->on('public.tbl_empresa');
             $table->timestamps();
         });

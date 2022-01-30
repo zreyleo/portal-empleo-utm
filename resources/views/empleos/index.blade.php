@@ -13,6 +13,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Titulo</th>
                     <th scope="col">Aspirantes</th>
+                    <th scope="col">Estado</th>
                     <th scope="col">Opciones</th>
                 </tr>
             </thead>
@@ -23,9 +24,16 @@
                     <tr>
                         <td scope="row">{{ $empleo->id }}</td>
                         <td>{{ $empleo->titulo }}</td>
-                        <td>{{ $empleo->estudiantes_empleos->filter(function ($ee, $key) {
-                            return $ee->estado != 'RECHAZADO';
-                        })->count() }}</td>
+                        <td>{{ $empleo->estudiantes_empleos->count() }}</td>
+
+                        <td>
+                            @if ($empleo->visible)
+                                <span class="badge badge-success">Abierta</span>
+                            @else
+                                <span class="badge badge-warning">Cerrada</span>
+                            @endif
+                        </td>
+
                         <td class="d-flex">
                             <a href="{{ route('empleos.show', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-success">Ver</a>
@@ -35,6 +43,19 @@
 
                             <a href="{{ route('empleos.show_estudiantes_empleos', ['empleo' => $empleo->id]) }}"
                                 class="btn btn-info mr-2">Ver Aspirantes</a>
+
+
+                            @if ($empleo->visible)
+                                <a href="{{ route('empleos.toggleVisible', ['empleo' => $empleo->id]) }}"
+                                    class="btn btn-outline-danger mr-2"
+                                >Cerrar</a>
+                            @else
+                                <a href="{{ route('empleos.toggleVisible', ['empleo' => $empleo->id]) }}"
+                                    class="btn btn-outline-success mr-2"
+                                >Abrir</a>
+                            @endif
+
+
 
                             {{-- <form action="{{ route('empleos.destroy', ['empleo' => $empleo->id]) }}" method="POST"
                                 onsubmit="

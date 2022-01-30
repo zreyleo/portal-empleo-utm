@@ -2,13 +2,18 @@
 
 @section('page-content')
 
-    <div class="w-full d-flex justify-content-between">
-        <a href="{{ route('empleos.show_empleos_offers') }}" class="btn btn-secondary my-3">Volver</a>
+    <div class="w-full d-flex justify-content-between my-3">
+        <a href="{{ route('empleos.show_empleos_offers') }}" class="btn btn-secondary">Volver</a>
 
-        <form action="{{ route('estudiantes_empleos.store', ['empleo' => $empleo->id]) }}" method="post">
-            @csrf
-            <input type="submit" class="btn btn-primary my-3" value="Postular">
-        </form>
+        @if ($empleo->visible)
+            <form action="{{ route('estudiantes_empleos.store', ['empleo' => $empleo->id]) }}" method="post">
+                @csrf
+                <input type="submit" class="btn btn-primary" value="Postular">
+            </form>
+        @else
+            <button disabled class="btn btn-outline-danger">Esta Oferta ya no Acepta Aspirantes</button>
+        @endif
+
     </div>
 
     <h1 class="text-center">{{ $empleo->titulo }}</h1>

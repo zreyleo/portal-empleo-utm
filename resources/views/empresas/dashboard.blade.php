@@ -57,7 +57,7 @@
 @section('page-content')
 
 <div class="row mt-3">
-    <div class="col-md-12">
+    <div class="col-md-8">
         {{-- {{ var_dump($empresa) }} --}}
 
         <h2>Bienvenido al Portal de Empleos UTM</h2>
@@ -68,11 +68,13 @@
         </p>
 
         <p>
-            Puede administrar sus ofertas de empleo y pr&aacute;cticas en la barra lateral izquierda.
+            Puede administrar sus ofertas de empleo y pr&aacute;cticas en la barra lateral izquierda
         </p>
 
         <p>Cuando los estudiantes postulen a sus ofertas de trabajo, usted tendr&aacute;
-            acceso a los datos de contacto del estudiante, ademas podr&aacute; clasificarlos como candidatos.</p>
+            acceso a los datos de contacto del estudiante, ademas podr&aacute; clasificarlos como candidatos.
+            Tiene la opción de eliminar las ofertas que el usuario haya creado o tambien tiene la opción de ya no aceptar más aspirantes.
+        </p>
 
         <div class="alert alert-info w-75">
             <p>Nota: Si ha publicado ofertas de Pr&aacute;cticas Pre Profesional, pero las desea eliminar,

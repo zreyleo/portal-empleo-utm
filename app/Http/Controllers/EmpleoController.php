@@ -21,7 +21,7 @@ class EmpleoController extends Controller
         $sql = 'select idescuela, es.nombre as "nombre_carrera", titulo_academico_m, fa.nombre as "nombre_facultad", fa.idfacultad as "idfacultad"
         from esq_inscripciones.escuela es
         INNER JOIN esq_inscripciones.facultad fa on es.idfacultad = fa.idfacultad
-        where titulo_academico_m is not null';
+        where titulo_academico_m is not null and es.nomenclatura is not null';
 
         // $sql = 'select facultad.idfacultad, facultad.nombre from esq_inscripciones.facultad where facultad.idfacultad < 11';
 
@@ -144,12 +144,6 @@ class EmpleoController extends Controller
     {
         $this->authorize('pass', $empleo);
 
-        // $data = $request->validate([
-        //     'titulo' => 'required|min:8',
-        //     'requerimientos' => 'required',
-        //     'carrera' => 'required'
-        // ]);
-
         $empleo->titulo = $request['titulo'];
         $empleo->requerimientos = $request['requerimientos'];
         $empleo->carrera_id = $request['carrera'];
@@ -158,6 +152,21 @@ class EmpleoController extends Controller
 
         return redirect()->route('empleos.edit', $empleo->id)
             ->with('status', 'Se ha editado esta oferta de trabajo');
+    }
+
+    public function toggleVisibleEmpleo(Empleo $empleo) {
+        $this->authorize('pass', $empleo);
+
+        $mensaje = $empleo->visible
+            ? 'Se ha cerrado esta oferta de empleo'
+            : 'Se ha re-abierto esta oferta de empleo';
+
+        $empleo->visible = !$empleo->visible;
+
+        $empleo->save();
+
+        return redirect()->route('empleos.index')
+            ->with('status', $mensaje);
     }
 
     /**
@@ -182,13 +191,23 @@ class EmpleoController extends Controller
 
         $escuela = Escuela::find($estudiante['idescuela']);
 
-        // dd($escuela);
-
         $empleos = $escuela->empleos;
+
+        $facultad = Facultad::find($estudiante['idfacultad']);
+
+        $escuelas = $facultad->escuelas->filter(function ($escuela) {
+            if ($escuela->nomenclatura && $escuela->titulo_academico_m) {
+                return true;
+            } else {
+                return false;
+            }
+        });
 
         return view('empleos.show_empleos_offers')
             ->with('estudiante', $estudiante)
             ->with('escuela', $escuela)
+            ->with('facultad', $facultad)
+            ->with('escuelas', $escuelas)
             ->with('empleos', $empleos);
     }
 

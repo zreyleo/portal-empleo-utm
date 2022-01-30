@@ -49,7 +49,9 @@
         </p>
     </div>
     <div class="col-md-4">
-
+        <div class="alert alert-info">
+            <p>Se recomienda no poner en ejecución las práctica hasta recibir confirmación de la empresa</p>
+        </div>
     </div>
 </div>
 
